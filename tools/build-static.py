@@ -150,7 +150,45 @@ for root, _dirs, files in os.walk(os.path.join(SRC, "assets")):
         shutil.copy2(src, dst)
         copied += 1
 
+# ---------------------------------------------------------------- host config
+# Written here rather than kept by hand, because this script rmtree's OUT.
+# Cloudflare Pages and Netlify both read _headers / _redirects.
+with open(os.path.join(OUT, "_headers"), "w", encoding="utf-8") as f:
+    f.write("/assets/*\n  Cache-Control: public, max-age=31536000, immutable\n\n"
+            "/*\n  X-Content-Type-Options: nosniff\n"
+            "  Referrer-Policy: strict-origin-when-cross-origin\n")
+
+with open(os.path.join(OUT, "_redirects"), "w", encoding="utf-8") as f:
+    f.write("# PHP entry points do not exist on a static host.\n"
+            "/index.php    /       301\n"
+            "/shop.php     /shop/  301\n"
+            "/home         /       301\n")
+
+with open(os.path.join(OUT, "404.html"), "w", encoding="utf-8") as f:
+    f.write("""<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Page not found | The Gayatri Decors</title>
+<style>
+ body{background:#26301A;color:#F7F5E8;min-height:100vh;display:flex;align-items:center;
+      justify-content:center;text-align:center;font-family:system-ui,sans-serif;padding:24px}
+ h1{font-size:clamp(3rem,12vw,6rem);color:#6B7A2F;margin:0;letter-spacing:.05em}
+ p{color:#D8DEC9;max-width:34rem;margin:1rem auto 2rem}
+ a.g{background:#6B7A2F;color:#26301A;padding:.75rem 1.75rem;font-weight:700;
+     text-decoration:none;display:inline-block}
+ a.o{border:1px solid #6B7A2F;color:#F7F5E8;padding:.75rem 1.75rem;text-decoration:none;
+     display:inline-block;margin-left:.5rem}
+</style></head><body><div>
+<h1>404</h1>
+<p>That page isn't part of this preview. This is a visual demo of
+   The Gayatri Decors - browsing and the size/LED selector work, but
+   accounts and checkout are disabled.</p>
+<a class="g" href="/">Back to Home</a><a class="o" href="/shop/">Browse Products</a>
+</div></body></html>
+""")
+
 size = sum(os.path.getsize(os.path.join(r, f))
            for r, _d, fs in os.walk(OUT) for f in fs)
 print(f"assets copied: {copied}  (orphans skipped: {skipped})")
+print(f"wrote _headers, _redirects, 404.html")
 print(f"snapshot size: {size/1024/1024:.1f} MB")
