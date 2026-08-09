@@ -7,8 +7,12 @@ $featured_stmt = $pdo->query("SELECT p.*, c.name as category_name
                               LEFT JOIN categories c ON p.category_id = c.id 
                               WHERE p.is_featured = 1 
                               ORDER BY p.id DESC
-                              LIMIT 8");
+                              LIMIT 12");
 $featured_products = $featured_stmt->fetchAll();
+
+// Client asked for 3 slides of products on the home page: 12 featured items
+// split into 3 slides of 4 (2-up on tablet, 1-up on phones).
+$featured_slides = array_chunk($featured_products, 4);
 
 // Fetch categories with product count
 $cat_stmt = $pdo->query("SELECT c.*, COUNT(p.id) as item_count 
@@ -64,19 +68,19 @@ $categories = $cat_stmt->fetchAll();
     <div class="container">
         <div class="row g-3">
             <div class="col-6 col-md-3 stat-item">
-                <div class="stat-num" style="color: #6B7A2F !important;">5,000+</div>
+                <div class="stat-num" style="color: #A3B18A !important;">5,000+</div>
                 <div class="stat-label" style="color: #E3E7D9 !important;">Happy Homes</div>
             </div>
             <div class="col-6 col-md-3 stat-item">
-                <div class="stat-num" style="color: #6B7A2F !important;">100%</div>
+                <div class="stat-num" style="color: #A3B18A !important;">100%</div>
                 <div class="stat-label" style="color: #E3E7D9 !important;">Handcrafted MDF</div>
             </div>
             <div class="col-6 col-md-3 stat-item">
-                <div class="stat-num" style="color: #6B7A2F !important;">4.9 ★</div>
+                <div class="stat-num" style="color: #A3B18A !important;">4.9 ★</div>
                 <div class="stat-label" style="color: #E3E7D9 !important;">Customer Rating</div>
             </div>
             <div class="col-6 col-md-3 stat-item">
-                <div class="stat-num" style="color: #6B7A2F !important;">Pan-India</div>
+                <div class="stat-num" style="color: #A3B18A !important;">Pan-India</div>
                 <div class="stat-label" style="color: #E3E7D9 !important;">Express Delivery</div>
             </div>
         </div>
@@ -92,28 +96,22 @@ $categories = $cat_stmt->fetchAll();
             <div style="width: 60px; height: 3px; background-color: #6B7A2F; margin: 15px auto;"></div>
         </div>
         <div class="row g-4">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="feature-box text-center" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.3) !important; padding: 30px 20px; border-radius: 12px;">
                     <i class="bi bi-gem fs-1 text-warning mb-3 d-block"></i>
                     <h5 class="text-white font-serif mb-2">Laser-Cut Precision</h5>
                     <p class="small mb-0" style="color: #D8DEC9 !important;">Multi-layered 3D depth carved with state-of-the-art German laser machinery.</p>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="feature-box text-center" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.3) !important; padding: 30px 20px; border-radius: 12px;">
                     <i class="bi bi-palette fs-1 text-warning mb-3 d-block"></i>
                     <h5 class="text-white font-serif mb-2">Bespoke Customization</h5>
                     <p class="small mb-0" style="color: #D8DEC9 !important;">Custom family names, sizes, color palettes, and optional LED backlighting.</p>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="feature-box text-center" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.3) !important; padding: 30px 20px; border-radius: 12px;">
-                    <i class="bi bi-box-seam fs-1 text-warning mb-3 d-block"></i>
-                    <h5 class="text-white font-serif mb-2">Transit Protection</h5>
-                    <p class="small mb-0" style="color: #D8DEC9 !important;">5-layer foam & wooden crate packaging guaranteeing zero transit damage.</p>
-                </div>
-            </div>
-            <div class="col-md-3">
+<?php // "Transit Protection" removed at the client's request. ?>
+            <div class="col-md-4">
                 <div class="feature-box text-center" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.3) !important; padding: 30px 20px; border-radius: 12px;">
                     <i class="bi bi-truck fs-1 text-warning mb-3 d-block"></i>
                     <h5 class="text-white font-serif mb-2">Pan-India Express</h5>
@@ -140,7 +138,7 @@ $categories = $cat_stmt->fetchAll();
                 <div class="col-lg-4 col-md-6">
                     <div class="card category-card" style="height: 350px; background: #26301A !important; border: 1px solid rgba(212,175,55,0.3) !important; border-radius: 12px !important; overflow: hidden; position: relative;">
                         <span class="category-tag" style="position: absolute; top: 15px; left: 15px; background: #6B7A2F !important; color: #26301A !important; font-weight: 700; font-size: 0.7rem; padding: 4px 10px; border-radius: 4px; z-index: 5; text-transform: uppercase;"><?= $tag ?></span>
-                        <span class="category-badge-count" style="position: absolute; top: 15px; right: 15px; background: rgba(15,23,42,0.9) !important; color: #6B7A2F !important; border: 1px solid rgba(212,175,55,0.5) !important; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; z-index: 5; text-transform: uppercase;"><?= $cat['item_count'] ?> Products</span>
+                        <span class="category-badge-count" style="position: absolute; top: 15px; right: 15px; background: rgba(15,23,42,0.9) !important; color: #A3B18A !important; border: 1px solid rgba(212,175,55,0.5) !important; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; z-index: 5; text-transform: uppercase;"><?= $cat['item_count'] ?> Products</span>
                         <?= responsive_img($cat['image_url'], $cat['name'], SIZES_CATEGORY, ['style' => 'width: 100%; height: 100%; object-fit: cover;']) ?>
                         <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; top: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 25%, rgba(15, 23, 42, 0.2) 75%) !important; padding: 25px; display: flex; flex-direction: column; justify-content: flex-end;">
                             <h3 class="category-title" style="color: #FFFFFF !important; font-size: 1.5rem; margin-bottom: 8px;"><?= sanitize($cat['name']) ?></h3>
@@ -176,8 +174,13 @@ $categories = $cat_stmt->fetchAll();
             <p style="color: #94A3B8 !important;">Our most loved hand-carved clocks, sacred yantras, and custom entrance nameplates.</p>
             <div style="width: 60px; height: 3px; background-color: #6B7A2F; margin: 15px auto;"></div>
         </div>
+        <!-- 3 product slides -->
+        <div id="featuredCarousel" class="carousel slide product-carousel" data-bs-ride="carousel" data-bs-interval="6000" data-bs-touch="true">
+          <div class="carousel-inner">
+          <?php foreach ($featured_slides as $slide_index => $slide): ?>
+            <div class="carousel-item <?= $slide_index === 0 ? 'active' : '' ?>">
         <div class="row g-4">
-            <?php foreach ($featured_products as $product): ?>
+            <?php foreach ($slide as $product): ?>
                 <div class="col-lg-3 col-md-6">
                     <div class="card product-card" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.25) !important; border-radius: 12px; overflow: hidden; margin-bottom: 0;">
                         <div class="img-container" style="position: relative; height: 260px; overflow: hidden; background: #26301A;">
@@ -201,7 +204,7 @@ $categories = $cat_stmt->fetchAll();
                             </div>
                         </div>
                         <div class="product-info" style="padding: 18px; text-align: center; background: #39452A !important;">
-                            <span class="product-cat" style="color: #6B7A2F !important; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;"><?= sanitize($product['category_name']) ?></span>
+                            <span class="product-cat" style="color: #A3B18A !important; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;"><?= sanitize($product['category_name']) ?></span>
                             <h4 class="product-title" style="margin: 6px 0;">
                                 <a href="<?= BASE_URL ?>/product.php?slug=<?= sanitize($product['slug']) ?>" style="color: #FFFFFF !important; font-size: 1.05rem; text-decoration: none;"><?= sanitize($product['name']) ?></a>
                             </h4>
@@ -217,12 +220,12 @@ $categories = $cat_stmt->fetchAll();
                                 <?php $from = product_from_price($pdo, $product['id']); ?>
                                 <?php if ($from !== null): ?>
                                     <small style="color: #94A3B8 !important;">from</small>
-                                    <span style="color: #6B7A2F !important; font-weight: 700; font-size: 1.1rem;"><?= format_price($from) ?></span>
+                                    <span style="color: #A3B18A !important; font-weight: 700; font-size: 1.1rem;"><?= format_price($from) ?></span>
                                 <?php elseif (!empty($product['sale_price'])): ?>
                                     <del style="color: #66705A !important; margin-right: 8px;"><?= format_price($product['price']) ?></del>
-                                    <span style="color: #6B7A2F !important; font-weight: 700; font-size: 1.1rem;"><?= format_price($product['sale_price']) ?></span>
+                                    <span style="color: #A3B18A !important; font-weight: 700; font-size: 1.1rem;"><?= format_price($product['sale_price']) ?></span>
                                 <?php else: ?>
-                                    <span style="color: #6B7A2F !important; font-weight: 700; font-size: 1.1rem;"><?= format_price($product['price']) ?></span>
+                                    <span style="color: #A3B18A !important; font-weight: 700; font-size: 1.1rem;"><?= format_price($product['price']) ?></span>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -230,6 +233,30 @@ $categories = $cat_stmt->fetchAll();
                 </div>
             <?php endforeach; ?>
         </div>
+            </div>
+          <?php endforeach; ?>
+          </div>
+
+          <?php if (count($featured_slides) > 1): ?>
+            <button class="carousel-control-prev" type="button" data-bs-target="#featuredCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous products</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#featuredCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next products</span>
+            </button>
+
+            <div class="carousel-indicators product-carousel-dots">
+              <?php foreach ($featured_slides as $i => $_): ?>
+                <button type="button" data-bs-target="#featuredCarousel" data-bs-slide-to="<?= $i ?>"
+                        class="<?= $i === 0 ? 'active' : '' ?>"
+                        aria-label="Product slide <?= $i + 1 ?>"></button>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
+        </div>
+
         <div class="text-center mt-5">
             <a href="<?= BASE_URL ?>/shop.php" class="btn btn-gold btn-lg"><i class="bi bi-grid-3x3-gap"></i> Explore All Products</a>
         </div>
@@ -289,9 +316,12 @@ $categories = $cat_stmt->fetchAll();
                 </div>
             </div>
             <div class="col-lg-7 text-center text-lg-start">
-                <div class="d-inline-flex align-items-center gap-2 bg-success bg-opacity-20 text-success border border-success px-3 py-1 rounded-pill mb-2">
-                    <i class="bi bi-whatsapp fs-5"></i>
-                    <span style="font-weight: 700; font-size: 0.88rem; letter-spacing: 0.5px;">INSTANT WHATSAPP CHAT</span>
+<?php // bg-opacity-20 is not a Bootstrap step (10/25/50/75/100 only), so this
+      // fell back to solid green with green text on top - an unreadable blob. ?>
+                <div class="d-inline-flex align-items-center gap-2 border border-success px-3 py-1 rounded-pill mb-2"
+                     style="background: rgba(37, 211, 102, 0.15); color: #ffffff;">
+                    <i class="bi bi-whatsapp fs-5" style="color: #25D366;"></i>
+                    <span style="font-weight: 700; font-size: 0.82rem; letter-spacing: 0.5px;">INSTANT WHATSAPP CHAT</span>
                 </div>
                 <h3 class="font-serif text-white mb-2" style="font-size: 1.75rem;">Need Custom Sizes or Personalized Decor?</h3>
                 <p class="text-white-50 mb-0" style="font-size: 1rem; line-height: 1.5;">Connect directly with <strong>The Gayatri Decors</strong> on WhatsApp. Get instant design consultation, custom size quotes, LED backlit previews, and order updates.</p>
@@ -301,9 +331,9 @@ $categories = $cat_stmt->fetchAll();
                    target="_blank" 
                    rel="noopener noreferrer" 
                    class="btn btn-success btn-lg px-4 py-3 d-inline-flex align-items-center justify-content-center gap-2 shadow-lg" 
-                   style="border-radius: 50px; font-weight: 700; background-color: #25D366; border: none; font-size: 1.1rem; transition: transform 0.3s ease;">
+                   style="border-radius: 50px; font-weight: 700; background-color: #25D366; border: none; font-size: 1.05rem; transition: transform 0.3s ease;">
                     <i class="bi bi-whatsapp fs-3"></i>
-                    <span>Chat +91 9227147646</span>
+                    <span>Message Us on WhatsApp</span>
                 </a>
             </div>
         </div>
@@ -393,7 +423,10 @@ $categories = $cat_stmt->fetchAll();
                     <p class="mb-0" style="color: #D8DEC9 !important;">Our artisans can customize any design with your family name, specific dimension, custom color theme, or LED illumination.</p>
                 </div>
                 <div class="col-lg-4 text-center text-lg-end">
-                    <a href="https://wa.me/919876543210?text=Hi,%20I%20want%20to%20customize%20a%20decor%20piece" target="_blank" class="btn btn-gold btn-lg me-2 mb-2"><i class="bi bi-whatsapp"></i> Chat on WhatsApp</a>
+<?php // This pointed at 919876543210 - a placeholder that is not the business number. ?>
+                    <a href="https://wa.me/919227147646?text=Hello%20The%20Gayatri%20Decors%2C%20I%20would%20like%20a%20custom%20design%20quote."
+                       target="_blank" rel="noopener noreferrer"
+                       class="btn btn-gold btn-lg me-2 mb-2"><i class="bi bi-whatsapp"></i> Start a Custom Order</a>
                     <a href="<?= BASE_URL ?>/shop.php" class="btn btn-outline-gold btn-lg mb-2"><i class="bi bi-grid"></i> Browse Catalog</a>
                 </div>
             </div>

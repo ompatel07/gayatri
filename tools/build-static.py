@@ -13,7 +13,7 @@ import os, re, shutil, sqlite3, urllib.request, urllib.parse
 
 SRC   = r"e:\ANTIGRAVITY\client2\gayatri"
 OUT   = os.path.join(SRC, "netlify-static")
-BASE  = "http://localhost:8000"
+BASE  = "http://127.0.0.1:8000"   # IPv4 explicitly; the PHP dev server binds it
 LOCAL = BASE + "/"
 
 db = sqlite3.connect(os.path.join(SRC, "database.sqlite"))

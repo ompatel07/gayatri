@@ -100,8 +100,8 @@ require_once __DIR__ . '/includes/header.php';
         
         <div class="text-center">
             <p class="small text-muted mb-0">Don't have an account yet? <a href="register.php<?= !empty($redirect) ? '?redirect=' . $redirect : '' ?>" class="text-gold text-decoration-none fw-bold">Register here</a></p>
-            <p class="small text-muted mt-2 mb-0">Admin Demo login: <span class="fw-bold">admin@tgd.com / admin123</span></p>
-            <p class="small text-muted mb-0">Customer Demo login: <span class="fw-bold">customer@tgd.com / customer123</span></p>
+            <?php // Admin credentials are deliberately not printed here - this page is publicly reachable. ?>
+            <p class="small text-muted mt-2 mb-0">Demo login: <span class="fw-bold">customer@tgd.com / customer123</span></p>
         </div>
     </div>
 </div>

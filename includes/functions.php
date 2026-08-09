@@ -192,11 +192,17 @@ function get_variant($pdo, $variant_id) {
     }
 }
 
+// "13x13 in - With LED" where an option applies, plain "12x12 in" where the
+// product varies by size only (wall clocks, tabletop).
 function variant_label($v) {
     if (!$v) {
         return '';
     }
-    return $v['size_label'] . ' in - ' . (!empty($v['has_led']) ? 'With LED' : 'Without LED');
+    $label = $v['size_label'] . ' in';
+    if (!empty($v['option_label'])) {
+        $label .= ' - ' . $v['option_label'];
+    }
+    return $label;
 }
 
 // ---------------------------------------------------------------------------

@@ -1,5 +1,4 @@
-# The PHP entry points do not exist on a static host; point them at the
-# rendered equivalents so any old links keep working.
+# PHP entry points do not exist on a static host.
 /index.php    /       301
 /shop.php     /shop/  301
 /home         /       301

@@ -57,7 +57,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="<?= BASE_URL ?>/index.php">
             <img src="<?= BASE_URL ?>/assets/images/gayatri-full-logo.png" alt="The Gayatri Decors Logo" class="navbar-full-logo">
@@ -77,7 +77,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Categories
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark">
+                    <ul class="dropdown-menu">
                         <?php
                         $cat_stmt = $pdo->query("SELECT * FROM categories LIMIT 6");
                         while($cat = $cat_stmt->fetch()) {
@@ -118,7 +118,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             <i class="bi bi-person-circle fs-5"></i>
                             <span class="d-none d-xl-inline"><?= sanitize(get_user_name()) ?></span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                        <ul class="dropdown-menu dropdown-menu-end">
                             <?php if (is_admin()): ?>
                                 <li><a class="dropdown-item" href="<?= BASE_URL ?>/admin/dashboard.php"><i class="bi bi-speedometer2 me-2"></i>Admin Console</a></li>
                                 <li><hr class="dropdown-divider"></li>

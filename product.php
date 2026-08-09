@@ -40,10 +40,22 @@ foreach ($variants as $v) {
         'stock' => (int)$v['stock'],
     ];
 }
-$variant_sizes   = array_keys($variant_sizes);
-$led_states      = array_values(array_unique(array_map(fn($v) => (int)$v['has_led'], $variants)));
-$has_led_choice  = count($led_states) > 1;
-$default_variant = $variants[0] ?? null;
+$variant_sizes = array_keys($variant_sizes);
+
+// Some products vary by size only; others also carry an option dimension
+// (currently "Lighting": With LED / Without LED). Keyed by has_led so the
+// option radio values line up with the variant map.
+$option_group   = null;
+$option_choices = [];
+foreach ($variants as $v) {
+    if (!empty($v['option_group'])) {
+        $option_group = $v['option_group'];
+        $option_choices[(int)$v['has_led']] = $v['option_label'];
+    }
+}
+krsort($option_choices);                     // "With LED" first
+$has_option_choice = count($option_choices) > 1;
+$default_variant   = $variants[0] ?? null;
 $in_stock        = $variants
     ? array_sum(array_map(fn($v) => (int)$v['stock'], $variants)) > 0
     : $product['stock'] > 0;
@@ -214,7 +226,7 @@ $related_products = $related_stmt->fetchAll();
                         <?php if ($variants): ?>
                             <input type="hidden" name="variant_id" id="variantId" value="<?= (int)$default_variant['id'] ?>">
 
-                            <div class="mb-3">
+                            <div class="mb-3 variant-picker">
                                 <label class="form-label fw-bold text-uppercase small letter-spacing-1">Size (inches)</label>
                                 <div class="d-flex flex-wrap gap-2" id="sizeOptions">
                                     <?php foreach ($variant_sizes as $i => $size): ?>
@@ -225,24 +237,29 @@ $related_products = $related_stmt->fetchAll();
                                 </div>
                             </div>
 
-                            <?php if ($has_led_choice): ?>
-                                <div class="mb-3">
-                                    <label class="form-label fw-bold text-uppercase small letter-spacing-1">Lighting</label>
+                            <?php if ($has_option_choice): ?>
+                                <div class="mb-3 variant-picker">
+                                    <label class="form-label fw-bold text-uppercase small letter-spacing-1"><?= sanitize($option_group) ?></label>
                                     <div class="d-flex flex-wrap gap-2" id="ledOptions">
-                                        <input type="radio" class="btn-check" name="led" id="ledOn" value="1" checked>
-                                        <label class="btn btn-outline-gold btn-sm" for="ledOn"><i class="bi bi-lightbulb-fill me-1"></i> With LED</label>
-                                        <input type="radio" class="btn-check" name="led" id="ledOff" value="0">
-                                        <label class="btn btn-outline-gold btn-sm" for="ledOff"><i class="bi bi-lightbulb me-1"></i> Without LED</label>
+                                        <?php foreach ($option_choices as $val => $label): ?>
+                                            <input type="radio" class="btn-check" name="led" id="opt<?= (int)$val ?>"
+                                                   value="<?= (int)$val ?>" <?= (int)$val === (int)$default_variant['has_led'] ? 'checked' : '' ?>>
+                                            <label class="btn btn-outline-gold btn-sm" for="opt<?= (int)$val ?>">
+                                                <i class="bi bi-lightbulb<?= $val ? '-fill' : '' ?> me-1"></i><?= sanitize($label) ?>
+                                            </label>
+                                        <?php endforeach; ?>
                                     </div>
                                 </div>
                             <?php else: ?>
                                 <input type="hidden" name="led" value="<?= (int)$default_variant['has_led'] ?>">
-                                <p class="small text-muted mb-3">
-                                    <i class="bi bi-lightbulb-fill text-warning me-1"></i>
-                                    <?= !empty($default_variant['has_led'])
-                                        ? 'Supplied with LED backlighting.'
-                                        : 'Supplied without LED backlighting.' ?>
-                                </p>
+                                <?php if (!empty($default_variant['option_label'])): ?>
+                                    <p class="small text-muted mb-3">
+                                        <i class="bi bi-lightbulb-fill text-warning me-1"></i>
+                                        <?= sanitize($option_group) ?>:
+                                        <strong><?= sanitize($default_variant['option_label']) ?></strong>
+                                        &mdash; standard on this design.
+                                    </p>
+                                <?php endif; ?>
                             <?php endif; ?>
                         <?php endif; ?>
 
@@ -275,7 +292,7 @@ $related_products = $related_stmt->fetchAll();
                        class="btn btn-outline-success w-100 py-2 d-flex align-items-center justify-content-center gap-2" 
                        style="border-radius: 0; font-weight: 600;">
                         <i class="bi bi-whatsapp fs-5 text-success"></i>
-                        <span>Inquire / Customize on WhatsApp (+91 9227147646)</span>
+                        <span>Ask About This Design</span>
                     </a>
                 </div>
                 
