@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gayatri Decors | Premium Home Décor & Clocks</title>
+    <meta name="description" content="Shop premium 3D MDF wall clocks, metal wall art, canvas frames, tabletop structures, and decorative mirrors from The Gayatri Decors.">
+        <!-- Preload the hero background (the LCP element) only on the page that has a hero -->
+    <link rel="preload" as="image" type="image/webp"
+          href="/assets/images/products/responsive/metal_leaf_art-1024.webp">
+        <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- GSAP & Lenis Smooth Scroll -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script>
+        // Initialize Lenis globally on window object for high-performance scroll syncing
+        window.lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential easing for premium inertia
+            smoothWheel: true,     // Smooth wheel scrolling for desktops
+            smoothTouch: false,    // Native touch inertia on mobile to prevent stutters
+            wheelMultiplier: 1.0,
+            touchMultiplier: 1.2
+        });
+
+        // Sync with GSAP ScrollTrigger if available (prevents layout thrashing on scroll trigger updates)
+        if (typeof ScrollTrigger !== 'undefined' && typeof gsap !== 'undefined') {
+            window.lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => {
+                window.lenis.raf(time * 1000);
+            });
+            gsap.ticker.lagSmoothing(0);
+        } else {
+            function raf(time) {
+                window.lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+        }
+    </script>
+    <!-- Custom Style -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="/assets/images/gayatri-full-logo.png" alt="The Gayatri Decors Logo" class="navbar-full-logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/shop/">Products</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categories
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-menu-item dropdown-item" href="/shop/category/wall-art/">Wall Art</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/wall-clock/">Wall Clock</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/wall-frames/">Wall Frames</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/nameplates/">Nameplates</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/tabletop/">Tabletop</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/wall-art-mirrors/">Wall Art Mirrors</a></li>                    </ul>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+                <!-- Search -->
+                <form action="/shop/" method="GET" class="d-flex" role="search">
+                    <input type="search" name="search" class="form-control form-control-sm border-secondary"
+                           placeholder="Search products..." aria-label="Search products"
+                           value=""
+                           style="border-radius: 0; max-width: 170px;">
+                    <button class="btn btn-gold btn-sm" type="submit" aria-label="Search">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+
+                <!-- Cart -->
+                                <a href="/cart/"
+                   class="nav-link position-relative "
+                   aria-label="Shopping cart">
+                    <i class="bi bi-bag fs-5"></i>
+                                    </a>
+
+                <!-- Account -->
+                                    <a href="/login/" class="btn btn-outline-gold btn-sm">Login</a>
+                    <a href="/register/" class="btn btn-gold btn-sm d-none d-xl-inline-block">Register</a>
+                            </div>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container -->
+</nav>
+
+<!-- Luxury Cinematic Intro overlay -->
+<div id="luxury-intro">
+    <div id="intro-bg"></div>
+    <div id="intro-radial"></div>
+    <canvas id="intro-canvas"></canvas>
+    <button class="intro-skip-btn" id="skipIntroBtn">Skip Intro</button>
+    <div id="intro-content">
+        <div class="intro-logo text-center" id="introLogo">
+            <img src="/assets/images/gayatri-full-logo.png" alt="The Gayatri Decors Logo" class="intro-full-logo">
+        </div>
+        <h1 class="intro-title" id="introTitle">Transform Your House Into a Dream Home</h1>
+        <div class="intro-line" id="introLine"></div>
+        <p class="intro-subtitle" id="introSubtitle">Premium Home Decor &bull; Modern Furniture &bull; Elegant Living</p>
+        <div class="launch-offer" id="launchOffer">
+            <span class="launch-offer-badge">LAUNCH OFFER</span>
+            <strong>30% OFF</strong>
+            <span class="launch-offer-text">ALL MDF WALL ART</span>
+            <small>Valid for the first 3 months</small>
+        </div>
+        <div class="intro-btn-group" id="introBtnGroup">
+            <button class="btn btn-luxury-gold" id="exploreBtn">Explore Collection</button>
+            <button class="btn btn-luxury" id="shopBtn">Shop Now</button>
+        </div>
+    </div>
+</div>
+
+<!-- Hero Slider / Banner -->
+<section class="hero-section">
+    <div class="hero-bg"></div>
+    <div class="container">
+        <div class="hero-content">
+            <h5 class="text-uppercase text-warning letter-spacing-3 mb-3">Premium Handcrafted Decors</h5>
+            <h1 class="hero-title">Elevate Your Living Space With <span>Art</span></h1>
+            <p class="lead mb-4">Discover our collection of exclusive 3D MDF clocks, designer metal installations, high-end nameplates, and bespoke decor mirrors.</p>
+            <a href="/shop/" class="btn btn-gold btn-lg me-3">Explore Collection</a>
+            <a href="/shop/category/wall-clock/" class="btn btn-outline-gold btn-lg">View Clocks</a>
+        </div>
+    </div>
+</section>
+
+<!-- Trust & Stats Bar -->
+<div class="home-stats-bar" style="background: #1F2715 !important; border-top: 1px solid rgba(212,175,55,0.3); border-bottom: 1px solid rgba(212,175,55,0.3); padding: 25px 0;">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-6 col-md-3 stat-item">
+                <div class="stat-num" style="color: #6B7A2F !important;">5,000+</div>
+                <div class="stat-label" style="color: #E3E7D9 !important;">Happy Homes</div>
+            </div>
+            <div class="col-6 col-md-3 stat-item">
+                <div class="stat-num" style="color: #6B7A2F !important;">100%</div>
+                <div class="stat-label" style="color: #E3E7D9 !important;">Handcrafted MDF</div>
+            </div>
+            <div class="col-6 col-md-3 stat-item">
+                <div class="stat-num" style="color: #6B7A2F !important;">4.9 ★</div>
+                <div class="stat-label" style="color: #E3E7D9 !important;">Customer Rating</div>
+            </div>
+            <div class="col-6 col-md-3 stat-item">
+                <div class="stat-num" style="color: #6B7A2F !important;">Pan-India</div>
+                <div class="stat-label" style="color: #E3E7D9 !important;">Express Delivery</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Why Choose Us Section (Luxury Dark Theme) -->
+<section class="py-5" style="background: #26301A !important; color: #FFFFFF !important;">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <span class="text-warning text-uppercase tracking-widest d-block mb-2">- The Gayatri Difference -</span>
+            <h2 class="display-6 font-serif text-white">Why Choose Our Masterpieces</h2>
+            <div style="width: 60px; height: 3px; background-color: #6B7A2F; margin: 15px auto;"></div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="feature-box text-center" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.3) !important; padding: 30px 20px; border-radius: 12px;">
+                    <i class="bi bi-gem fs-1 text-warning mb-3 d-block"></i>
+                    <h5 class="text-white font-serif mb-2">Laser-Cut Precision</h5>
+                    <p class="small mb-0" style="color: #D8DEC9 !important;">Multi-layered 3D depth carved with state-of-the-art German laser machinery.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-box text-center" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.3) !important; padding: 30px 20px; border-radius: 12px;">
+                    <i class="bi bi-palette fs-1 text-warning mb-3 d-block"></i>
+                    <h5 class="text-white font-serif mb-2">Bespoke Customization</h5>
+                    <p class="small mb-0" style="color: #D8DEC9 !important;">Custom family names, sizes, color palettes, and optional LED backlighting.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-box text-center" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.3) !important; padding: 30px 20px; border-radius: 12px;">
+                    <i class="bi bi-box-seam fs-1 text-warning mb-3 d-block"></i>
+                    <h5 class="text-white font-serif mb-2">Transit Protection</h5>
+                    <p class="small mb-0" style="color: #D8DEC9 !important;">5-layer foam & wooden crate packaging guaranteeing zero transit damage.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-box text-center" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.3) !important; padding: 30px 20px; border-radius: 12px;">
+                    <i class="bi bi-truck fs-1 text-warning mb-3 d-block"></i>
+                    <h5 class="text-white font-serif mb-2">Pan-India Express</h5>
+                    <p class="small mb-0" style="color: #D8DEC9 !important;">Fast track doorstep delivery across 25,000+ pin codes in India.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section (Curated Selections) -->
+<section class="py-5" style="background: #39452A !important; color: #FFFFFF !important;">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <span class="text-warning text-uppercase tracking-widest d-block mb-2">- Curated Selections -</span>
+            <h2 class="display-6 font-serif text-white">Browse Categories</h2>
+            <p class="mx-auto" style="max-width: 600px; color: #94A3B8 !important;">Explore handcrafted home decor collections tailored for modern apartments, luxury villas, and elegant workspaces.</p>
+            <div style="width: 60px; height: 3px; background-color: #6B7A2F; margin: 15px auto;"></div>
+        </div>
+        <div class="row g-4">
+                            <div class="col-lg-4 col-md-6">
+                    <div class="card category-card" style="height: 350px; background: #26301A !important; border: 1px solid rgba(212,175,55,0.3) !important; border-radius: 12px !important; overflow: hidden; position: relative;">
+                        <span class="category-tag" style="position: absolute; top: 15px; left: 15px; background: #6B7A2F !important; color: #26301A !important; font-weight: 700; font-size: 0.7rem; padding: 4px 10px; border-radius: 4px; z-index: 5; text-transform: uppercase;">Trending</span>
+                        <span class="category-badge-count" style="position: absolute; top: 15px; right: 15px; background: rgba(15,23,42,0.9) !important; color: #6B7A2F !important; border: 1px solid rgba(212,175,55,0.5) !important; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; z-index: 5; text-transform: uppercase;">8 Products</span>
+                        <img src="/assets/images/categories/wall_art.jpg" srcset="/assets/images/products/responsive/wall_art-400.webp 400w, /assets/images/products/responsive/wall_art-800.webp 800w, /assets/images/products/responsive/wall_art-1024.webp 1024w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 31vw" alt="Wall Art" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                        <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; top: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 25%, rgba(15, 23, 42, 0.2) 75%) !important; padding: 25px; display: flex; flex-direction: column; justify-content: flex-end;">
+                            <h3 class="category-title" style="color: #FFFFFF !important; font-size: 1.5rem; margin-bottom: 8px;">Wall Art</h3>
+                            <p class="category-desc" style="color: #D8DEC9 !important; font-size: 0.88rem; margin-bottom: 15px;">Exquisite metal, MDF and acrylic decorative wall hangings and murals.</p>
+                            <a href="/shop/category/wall-art/" class="btn btn-gold btn-sm align-self-start"><i class="bi bi-arrow-right"></i> Shop Category</a>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-lg-4 col-md-6">
+                    <div class="card category-card" style="height: 350px; background: #26301A !important; border: 1px solid rgba(212,175,55,0.3) !important; border-radius: 12px !important; overflow: hidden; position: relative;">
+                        <span class="category-tag" style="position: absolute; top: 15px; left: 15px; background: #6B7A2F !important; color: #26301A !important; font-weight: 700; font-size: 0.7rem; padding: 4px 10px; border-radius: 4px; z-index: 5; text-transform: uppercase;">Best Seller</span>
+                        <span class="category-badge-count" style="position: absolute; top: 15px; right: 15px; background: rgba(15,23,42,0.9) !important; color: #6B7A2F !important; border: 1px solid rgba(212,175,55,0.5) !important; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; z-index: 5; text-transform: uppercase;">8 Products</span>
+                        <img src="/assets/images/categories/wall_clock.jpg" srcset="/assets/images/products/responsive/wall_clock-400.webp 400w, /assets/images/products/responsive/wall_clock-800.webp 800w, /assets/images/products/responsive/wall_clock-1024.webp 1024w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 31vw" alt="Wall Clock" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                        <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; top: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 25%, rgba(15, 23, 42, 0.2) 75%) !important; padding: 25px; display: flex; flex-direction: column; justify-content: flex-end;">
+                            <h3 class="category-title" style="color: #FFFFFF !important; font-size: 1.5rem; margin-bottom: 8px;">Wall Clock</h3>
+                            <p class="category-desc" style="color: #D8DEC9 !important; font-size: 0.88rem; margin-bottom: 15px;">Unique designer wall clocks in wood, metal and acrylic finishes.</p>
+                            <a href="/shop/category/wall-clock/" class="btn btn-gold btn-sm align-self-start"><i class="bi bi-arrow-right"></i> Shop Category</a>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-lg-4 col-md-6">
+                    <div class="card category-card" style="height: 350px; background: #26301A !important; border: 1px solid rgba(212,175,55,0.3) !important; border-radius: 12px !important; overflow: hidden; position: relative;">
+                        <span class="category-tag" style="position: absolute; top: 15px; left: 15px; background: #6B7A2F !important; color: #26301A !important; font-weight: 700; font-size: 0.7rem; padding: 4px 10px; border-radius: 4px; z-index: 5; text-transform: uppercase;">Popular</span>
+                        <span class="category-badge-count" style="position: absolute; top: 15px; right: 15px; background: rgba(15,23,42,0.9) !important; color: #6B7A2F !important; border: 1px solid rgba(212,175,55,0.5) !important; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; z-index: 5; text-transform: uppercase;">1 Products</span>
+                        <img src="/assets/images/categories/wall_frames.jpg" srcset="/assets/images/products/responsive/wall_frames-400.webp 400w, /assets/images/products/responsive/wall_frames-481.webp 481w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 31vw" alt="Wall Frames" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                        <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; top: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 25%, rgba(15, 23, 42, 0.2) 75%) !important; padding: 25px; display: flex; flex-direction: column; justify-content: flex-end;">
+                            <h3 class="category-title" style="color: #FFFFFF !important; font-size: 1.5rem; margin-bottom: 8px;">Wall Frames</h3>
+                            <p class="category-desc" style="color: #D8DEC9 !important; font-size: 0.88rem; margin-bottom: 15px;">Beautifully framed canvas art and high-definition photo collections.</p>
+                            <a href="/shop/category/wall-frames/" class="btn btn-gold btn-sm align-self-start"><i class="bi bi-arrow-right"></i> Shop Category</a>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-lg-4 col-md-6">
+                    <div class="card category-card" style="height: 350px; background: #26301A !important; border: 1px solid rgba(212,175,55,0.3) !important; border-radius: 12px !important; overflow: hidden; position: relative;">
+                        <span class="category-tag" style="position: absolute; top: 15px; left: 15px; background: #6B7A2F !important; color: #26301A !important; font-weight: 700; font-size: 0.7rem; padding: 4px 10px; border-radius: 4px; z-index: 5; text-transform: uppercase;">Trending</span>
+                        <span class="category-badge-count" style="position: absolute; top: 15px; right: 15px; background: rgba(15,23,42,0.9) !important; color: #6B7A2F !important; border: 1px solid rgba(212,175,55,0.5) !important; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; z-index: 5; text-transform: uppercase;">15 Products</span>
+                        <img src="/assets/images/categories/nameplates.jpg" srcset="/assets/images/products/responsive/nameplates-400.webp 400w, /assets/images/products/responsive/nameplates-800.webp 800w, /assets/images/products/responsive/nameplates-1024.webp 1024w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 31vw" alt="Nameplates" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                        <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; top: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 25%, rgba(15, 23, 42, 0.2) 75%) !important; padding: 25px; display: flex; flex-direction: column; justify-content: flex-end;">
+                            <h3 class="category-title" style="color: #FFFFFF !important; font-size: 1.5rem; margin-bottom: 8px;">Nameplates</h3>
+                            <p class="category-desc" style="color: #D8DEC9 !important; font-size: 0.88rem; margin-bottom: 15px;">Custom-designed stainless steel and acrylic door nameplates.</p>
+                            <a href="/shop/category/nameplates/" class="btn btn-gold btn-sm align-self-start"><i class="bi bi-arrow-right"></i> Shop Category</a>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-lg-4 col-md-6">
+                    <div class="card category-card" style="height: 350px; background: #26301A !important; border: 1px solid rgba(212,175,55,0.3) !important; border-radius: 12px !important; overflow: hidden; position: relative;">
+                        <span class="category-tag" style="position: absolute; top: 15px; left: 15px; background: #6B7A2F !important; color: #26301A !important; font-weight: 700; font-size: 0.7rem; padding: 4px 10px; border-radius: 4px; z-index: 5; text-transform: uppercase;">Popular</span>
+                        <span class="category-badge-count" style="position: absolute; top: 15px; right: 15px; background: rgba(15,23,42,0.9) !important; color: #6B7A2F !important; border: 1px solid rgba(212,175,55,0.5) !important; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; z-index: 5; text-transform: uppercase;">6 Products</span>
+                        <img src="/assets/images/categories/tabletop.jpg" srcset="/assets/images/products/responsive/tabletop-400.webp 400w, /assets/images/products/responsive/tabletop-499.webp 499w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 31vw" alt="Tabletop" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                        <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; top: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 25%, rgba(15, 23, 42, 0.2) 75%) !important; padding: 25px; display: flex; flex-direction: column; justify-content: flex-end;">
+                            <h3 class="category-title" style="color: #FFFFFF !important; font-size: 1.5rem; margin-bottom: 8px;">Tabletop</h3>
+                            <p class="category-desc" style="color: #D8DEC9 !important; font-size: 0.88rem; margin-bottom: 15px;">Stunning tabletop items, miniature structures, and showpieces.</p>
+                            <a href="/shop/category/tabletop/" class="btn btn-gold btn-sm align-self-start"><i class="bi bi-arrow-right"></i> Shop Category</a>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-lg-4 col-md-6">
+                    <div class="card category-card" style="height: 350px; background: #26301A !important; border: 1px solid rgba(212,175,55,0.3) !important; border-radius: 12px !important; overflow: hidden; position: relative;">
+                        <span class="category-tag" style="position: absolute; top: 15px; left: 15px; background: #6B7A2F !important; color: #26301A !important; font-weight: 700; font-size: 0.7rem; padding: 4px 10px; border-radius: 4px; z-index: 5; text-transform: uppercase;">Best Seller</span>
+                        <span class="category-badge-count" style="position: absolute; top: 15px; right: 15px; background: rgba(15,23,42,0.9) !important; color: #6B7A2F !important; border: 1px solid rgba(212,175,55,0.5) !important; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; z-index: 5; text-transform: uppercase;">1 Products</span>
+                        <img src="/assets/images/categories/wall_mirrors.jpg" srcset="/assets/images/products/responsive/wall_mirrors-400.webp 400w, /assets/images/products/responsive/wall_mirrors-800.webp 800w, /assets/images/products/responsive/wall_mirrors-1024.webp 1024w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 31vw" alt="Wall Art Mirrors" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                        <div class="category-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; top: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 25%, rgba(15, 23, 42, 0.2) 75%) !important; padding: 25px; display: flex; flex-direction: column; justify-content: flex-end;">
+                            <h3 class="category-title" style="color: #FFFFFF !important; font-size: 1.5rem; margin-bottom: 8px;">Wall Art Mirrors</h3>
+                            <p class="category-desc" style="color: #D8DEC9 !important; font-size: 0.88rem; margin-bottom: 15px;">Stunning designer mirrors to amplify the depth and look of your space.</p>
+                            <a href="/shop/category/wall-art-mirrors/" class="btn btn-gold btn-sm align-self-start"><i class="bi bi-arrow-right"></i> Shop Category</a>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+    </div>
+</section>
+
+<!-- Promotional Banner (Ember & Nameplate Spotlight) -->
+<section class="py-5 text-white position-relative" style="background: linear-gradient(rgba(15,23,42,0.92), rgba(15,23,42,0.92)), url('/assets/images/products/ember_colour.jpg') no-repeat center center; background-size: cover; background-attachment: fixed;">
+    <div class="container py-5 text-center position-relative" style="z-index: 2;">
+        <span class="badge bg-warning text-dark px-3 py-2 text-uppercase letter-spacing-2 mb-3">Limited Collection</span>
+        <h2 class="display-5 font-serif mb-4 text-white">The 3D Ember & LED Nameplate Spotlight</h2>
+        <p class="mx-auto mb-4" style="max-width: 750px; font-size: 1.1rem; color: #D8DEC9 !important;">Experience depth in motion. Our signature 3D MDF clocks and LED backlit acrylic nameplates project mesmerizing warm golden halo lighting, turning any wall or doorway into an architectural focal point.</p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a href="/shop/category/nameplates/" class="btn btn-gold btn-lg"><i class="bi bi-door-open"></i> View Nameplates</a>
+            <a href="/shop/category/wall-clock/" class="btn btn-outline-gold btn-lg"><i class="bi bi-clock"></i> View 3D Clocks</a>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+<section class="py-5" style="background: #26301A !important; color: #FFFFFF !important;">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <span class="text-warning text-uppercase tracking-widest d-block mb-2">- Handpicked for You -</span>
+            <h2 class="display-6 font-serif text-white">Featured Masterpieces</h2>
+            <p style="color: #94A3B8 !important;">Our most loved hand-carved clocks, sacred yantras, and custom entrance nameplates.</p>
+            <div style="width: 60px; height: 3px; background-color: #6B7A2F; margin: 15px auto;"></div>
+        </div>
+        <div class="row g-4">
+                            <div class="col-lg-3 col-md-6">
+                    <div class="card product-card" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.25) !important; border-radius: 12px; overflow: hidden; margin-bottom: 0;">
+                        <div class="img-container" style="position: relative; height: 260px; overflow: hidden; background: #26301A;">
+                            <span class="product-badge" style="position: absolute; top: 12px; left: 12px; background: #6B7A2F; color: #26301A; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; z-index: 5;">Featured</span>
+                            <img src="/assets/images/products/verdelune-botanical-wall-art.jpg" srcset="/assets/images/products/responsive/verdelune-botanical-wall-art-400.webp 400w, /assets/images/products/responsive/verdelune-botanical-wall-art-800.webp 800w, /assets/images/products/responsive/verdelune-botanical-wall-art-1200.webp 1200w, /assets/images/products/responsive/verdelune-botanical-wall-art-1600.webp 1600w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Verdelune Botanical Wall Art" class="img-main" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                            <img src="/assets/images/products/verdelune-botanical-wall-art.jpg" srcset="/assets/images/products/responsive/verdelune-botanical-wall-art-400.webp 400w, /assets/images/products/responsive/verdelune-botanical-wall-art-800.webp 800w, /assets/images/products/responsive/verdelune-botanical-wall-art-1200.webp 1200w, /assets/images/products/responsive/verdelune-botanical-wall-art-1600.webp 1600w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Verdelune Botanical Wall Art" class="img-hover" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                        <div class="product-actions" style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; padding: 10px; background: rgba(15,23,42,0.85); z-index: 5;">
+                                <a href="/product/verdelune-botanical-wall-art/" class="btn btn-gold btn-sm"><i class="bi bi-eye"></i> View</a>
+                                                                    <form action="/cart/" method="POST" class="d-inline">
+                                        <input type="hidden" name="product_id" value="53">
+                                        <input type="hidden" name="action" value="add">
+                                        <input type="hidden" name="qty" value="1">
+                                        <button type="submit" class="btn btn-outline-gold btn-sm text-white border-white"><i class="bi bi-cart-plus"></i> Add</button>
+                                    </form>
+                                                            </div>
+                        </div>
+                        <div class="product-info" style="padding: 18px; text-align: center; background: #39452A !important;">
+                            <span class="product-cat" style="color: #6B7A2F !important; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Wall Art</span>
+                            <h4 class="product-title" style="margin: 6px 0;">
+                                <a href="/product/verdelune-botanical-wall-art/" style="color: #FFFFFF !important; font-size: 1.05rem; text-decoration: none;">Verdelune Botanical Wall Art</a>
+                            </h4>
+                            <div class="text-warning mb-2 small">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="ms-1" style="color: #94A3B8 !important;">(5.0)</span>
+                            </div>
+                            <div class="product-price">
+                                                                                                    <del style="color: #66705A !important; margin-right: 8px;">₹7,999.00</del>
+                                    <span style="color: #6B7A2F !important; font-weight: 700; font-size: 1.1rem;">₹6,499.00</span>
+                                                            </div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-lg-3 col-md-6">
+                    <div class="card product-card" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.25) !important; border-radius: 12px; overflow: hidden; margin-bottom: 0;">
+                        <div class="img-container" style="position: relative; height: 260px; overflow: hidden; background: #26301A;">
+                            <span class="product-badge" style="position: absolute; top: 12px; left: 12px; background: #6B7A2F; color: #26301A; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; z-index: 5;">Featured</span>
+                            <img src="/assets/images/products/lunara-celestial-wall-art.jpg" srcset="/assets/images/products/responsive/lunara-celestial-wall-art-400.webp 400w, /assets/images/products/responsive/lunara-celestial-wall-art-800.webp 800w, /assets/images/products/responsive/lunara-celestial-wall-art-1200.webp 1200w, /assets/images/products/responsive/lunara-celestial-wall-art-1600.webp 1600w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Lunara Celestial Wall Art" class="img-main" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                            <img src="/assets/images/products/lunara-celestial-wall-art.jpg" srcset="/assets/images/products/responsive/lunara-celestial-wall-art-400.webp 400w, /assets/images/products/responsive/lunara-celestial-wall-art-800.webp 800w, /assets/images/products/responsive/lunara-celestial-wall-art-1200.webp 1200w, /assets/images/products/responsive/lunara-celestial-wall-art-1600.webp 1600w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Lunara Celestial Wall Art" class="img-hover" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                        <div class="product-actions" style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; padding: 10px; background: rgba(15,23,42,0.85); z-index: 5;">
+                                <a href="/product/lunara-celestial-wall-art/" class="btn btn-gold btn-sm"><i class="bi bi-eye"></i> View</a>
+                                                                    <form action="/cart/" method="POST" class="d-inline">
+                                        <input type="hidden" name="product_id" value="52">
+                                        <input type="hidden" name="action" value="add">
+                                        <input type="hidden" name="qty" value="1">
+                                        <button type="submit" class="btn btn-outline-gold btn-sm text-white border-white"><i class="bi bi-cart-plus"></i> Add</button>
+                                    </form>
+                                                            </div>
+                        </div>
+                        <div class="product-info" style="padding: 18px; text-align: center; background: #39452A !important;">
+                            <span class="product-cat" style="color: #6B7A2F !important; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Wall Art</span>
+                            <h4 class="product-title" style="margin: 6px 0;">
+                                <a href="/product/lunara-celestial-wall-art/" style="color: #FFFFFF !important; font-size: 1.05rem; text-decoration: none;">Lunara Celestial Wall Art</a>
+                            </h4>
+                            <div class="text-warning mb-2 small">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="ms-1" style="color: #94A3B8 !important;">(5.0)</span>
+                            </div>
+                            <div class="product-price">
+                                                                                                    <del style="color: #66705A !important; margin-right: 8px;">₹8,499.00</del>
+                                    <span style="color: #6B7A2F !important; font-weight: 700; font-size: 1.1rem;">₹6,999.00</span>
+                                                            </div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-lg-3 col-md-6">
+                    <div class="card product-card" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.25) !important; border-radius: 12px; overflow: hidden; margin-bottom: 0;">
+                        <div class="img-container" style="position: relative; height: 260px; overflow: hidden; background: #26301A;">
+                            <span class="product-badge" style="position: absolute; top: 12px; left: 12px; background: #6B7A2F; color: #26301A; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; z-index: 5;">Featured</span>
+                            <img src="/assets/images/products/padmavalli-lotus-mandala-wall-art.jpg" srcset="/assets/images/products/responsive/padmavalli-lotus-mandala-wall-art-400.webp 400w, /assets/images/products/responsive/padmavalli-lotus-mandala-wall-art-800.webp 800w, /assets/images/products/responsive/padmavalli-lotus-mandala-wall-art-1200.webp 1200w, /assets/images/products/responsive/padmavalli-lotus-mandala-wall-art-1486.webp 1486w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Padmavalli Lotus Mandala Wall Art" class="img-main" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                            <img src="/assets/images/products/padmavalli-lotus-mandala-wall-art.jpg" srcset="/assets/images/products/responsive/padmavalli-lotus-mandala-wall-art-400.webp 400w, /assets/images/products/responsive/padmavalli-lotus-mandala-wall-art-800.webp 800w, /assets/images/products/responsive/padmavalli-lotus-mandala-wall-art-1200.webp 1200w, /assets/images/products/responsive/padmavalli-lotus-mandala-wall-art-1486.webp 1486w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Padmavalli Lotus Mandala Wall Art" class="img-hover" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                        <div class="product-actions" style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; padding: 10px; background: rgba(15,23,42,0.85); z-index: 5;">
+                                <a href="/product/padmavalli-lotus-mandala-wall-art/" class="btn btn-gold btn-sm"><i class="bi bi-eye"></i> View</a>
+                                                                    <a href="/product/padmavalli-lotus-mandala-wall-art/" class="btn btn-outline-gold btn-sm text-white border-white"><i class="bi bi-sliders"></i> Options</a>
+                                                            </div>
+                        </div>
+                        <div class="product-info" style="padding: 18px; text-align: center; background: #39452A !important;">
+                            <span class="product-cat" style="color: #6B7A2F !important; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Wall Art</span>
+                            <h4 class="product-title" style="margin: 6px 0;">
+                                <a href="/product/padmavalli-lotus-mandala-wall-art/" style="color: #FFFFFF !important; font-size: 1.05rem; text-decoration: none;">Padmavalli Lotus Mandala Wall Art</a>
+                            </h4>
+                            <div class="text-warning mb-2 small">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="ms-1" style="color: #94A3B8 !important;">(5.0)</span>
+                            </div>
+                            <div class="product-price">
+                                                                                                    <small style="color: #94A3B8 !important;">from</small>
+                                    <span style="color: #6B7A2F !important; font-weight: 700; font-size: 1.1rem;">₹4,999.00</span>
+                                                            </div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-lg-3 col-md-6">
+                    <div class="card product-card" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.25) !important; border-radius: 12px; overflow: hidden; margin-bottom: 0;">
+                        <div class="img-container" style="position: relative; height: 260px; overflow: hidden; background: #26301A;">
+                            <span class="product-badge" style="position: absolute; top: 12px; left: 12px; background: #6B7A2F; color: #26301A; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; z-index: 5;">Featured</span>
+                            <img src="/assets/images/products/divyashree-sacred-mandala-wall-art.jpg" srcset="/assets/images/products/responsive/divyashree-sacred-mandala-wall-art-400.webp 400w, /assets/images/products/responsive/divyashree-sacred-mandala-wall-art-800.webp 800w, /assets/images/products/responsive/divyashree-sacred-mandala-wall-art-1200.webp 1200w, /assets/images/products/responsive/divyashree-sacred-mandala-wall-art-1493.webp 1493w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Divyashree Sacred Mandala Wall Art" class="img-main" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                            <img src="/assets/images/products/divyashree-sacred-mandala-wall-art.jpg" srcset="/assets/images/products/responsive/divyashree-sacred-mandala-wall-art-400.webp 400w, /assets/images/products/responsive/divyashree-sacred-mandala-wall-art-800.webp 800w, /assets/images/products/responsive/divyashree-sacred-mandala-wall-art-1200.webp 1200w, /assets/images/products/responsive/divyashree-sacred-mandala-wall-art-1493.webp 1493w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Divyashree Sacred Mandala Wall Art" class="img-hover" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                        <div class="product-actions" style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; padding: 10px; background: rgba(15,23,42,0.85); z-index: 5;">
+                                <a href="/product/divyashree-sacred-mandala-wall-art/" class="btn btn-gold btn-sm"><i class="bi bi-eye"></i> View</a>
+                                                                    <a href="/product/divyashree-sacred-mandala-wall-art/" class="btn btn-outline-gold btn-sm text-white border-white"><i class="bi bi-sliders"></i> Options</a>
+                                                            </div>
+                        </div>
+                        <div class="product-info" style="padding: 18px; text-align: center; background: #39452A !important;">
+                            <span class="product-cat" style="color: #6B7A2F !important; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Wall Art</span>
+                            <h4 class="product-title" style="margin: 6px 0;">
+                                <a href="/product/divyashree-sacred-mandala-wall-art/" style="color: #FFFFFF !important; font-size: 1.05rem; text-decoration: none;">Divyashree Sacred Mandala Wall Art</a>
+                            </h4>
+                            <div class="text-warning mb-2 small">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="ms-1" style="color: #94A3B8 !important;">(5.0)</span>
+                            </div>
+                            <div class="product-price">
+                                                                                                    <small style="color: #94A3B8 !important;">from</small>
+                                    <span style="color: #6B7A2F !important; font-weight: 700; font-size: 1.1rem;">₹4,199.00</span>
+                                                            </div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-lg-3 col-md-6">
+                    <div class="card product-card" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.25) !important; border-radius: 12px; overflow: hidden; margin-bottom: 0;">
+                        <div class="img-container" style="position: relative; height: 260px; overflow: hidden; background: #26301A;">
+                            <span class="product-badge" style="position: absolute; top: 12px; left: 12px; background: #6B7A2F; color: #26301A; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; z-index: 5;">Featured</span>
+                            <img src="/assets/images/products/vistara-mandala-wall-art.jpg" srcset="/assets/images/products/responsive/vistara-mandala-wall-art-400.webp 400w, /assets/images/products/responsive/vistara-mandala-wall-art-800.webp 800w, /assets/images/products/responsive/vistara-mandala-wall-art-1200.webp 1200w, /assets/images/products/responsive/vistara-mandala-wall-art-1414.webp 1414w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Vistara Mandala Wall Art" class="img-main" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                            <img src="/assets/images/products/vistara-mandala-wall-art.jpg" srcset="/assets/images/products/responsive/vistara-mandala-wall-art-400.webp 400w, /assets/images/products/responsive/vistara-mandala-wall-art-800.webp 800w, /assets/images/products/responsive/vistara-mandala-wall-art-1200.webp 1200w, /assets/images/products/responsive/vistara-mandala-wall-art-1414.webp 1414w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Vistara Mandala Wall Art" class="img-hover" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                        <div class="product-actions" style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; padding: 10px; background: rgba(15,23,42,0.85); z-index: 5;">
+                                <a href="/product/vistara-mandala-wall-art/" class="btn btn-gold btn-sm"><i class="bi bi-eye"></i> View</a>
+                                                                    <a href="/product/vistara-mandala-wall-art/" class="btn btn-outline-gold btn-sm text-white border-white"><i class="bi bi-sliders"></i> Options</a>
+                                                            </div>
+                        </div>
+                        <div class="product-info" style="padding: 18px; text-align: center; background: #39452A !important;">
+                            <span class="product-cat" style="color: #6B7A2F !important; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Wall Art</span>
+                            <h4 class="product-title" style="margin: 6px 0;">
+                                <a href="/product/vistara-mandala-wall-art/" style="color: #FFFFFF !important; font-size: 1.05rem; text-decoration: none;">Vistara Mandala Wall Art</a>
+                            </h4>
+                            <div class="text-warning mb-2 small">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="ms-1" style="color: #94A3B8 !important;">(5.0)</span>
+                            </div>
+                            <div class="product-price">
+                                                                                                    <small style="color: #94A3B8 !important;">from</small>
+                                    <span style="color: #6B7A2F !important; font-weight: 700; font-size: 1.1rem;">₹4,999.00</span>
+                                                            </div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-lg-3 col-md-6">
+                    <div class="card product-card" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.25) !important; border-radius: 12px; overflow: hidden; margin-bottom: 0;">
+                        <div class="img-container" style="position: relative; height: 260px; overflow: hidden; background: #26301A;">
+                            <span class="product-badge" style="position: absolute; top: 12px; left: 12px; background: #6B7A2F; color: #26301A; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; z-index: 5;">Featured</span>
+                            <img src="/assets/images/products/jyotisya-mandala-wall-art.jpg" srcset="/assets/images/products/responsive/jyotisya-mandala-wall-art-400.webp 400w, /assets/images/products/responsive/jyotisya-mandala-wall-art-800.webp 800w, /assets/images/products/responsive/jyotisya-mandala-wall-art-1200.webp 1200w, /assets/images/products/responsive/jyotisya-mandala-wall-art-1415.webp 1415w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Jyotisya Mandala Wall Art" class="img-main" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                            <img src="/assets/images/products/jyotisya-mandala-wall-art.jpg" srcset="/assets/images/products/responsive/jyotisya-mandala-wall-art-400.webp 400w, /assets/images/products/responsive/jyotisya-mandala-wall-art-800.webp 800w, /assets/images/products/responsive/jyotisya-mandala-wall-art-1200.webp 1200w, /assets/images/products/responsive/jyotisya-mandala-wall-art-1415.webp 1415w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Jyotisya Mandala Wall Art" class="img-hover" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                        <div class="product-actions" style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; padding: 10px; background: rgba(15,23,42,0.85); z-index: 5;">
+                                <a href="/product/jyotisya-mandala-wall-art/" class="btn btn-gold btn-sm"><i class="bi bi-eye"></i> View</a>
+                                                                    <a href="/product/jyotisya-mandala-wall-art/" class="btn btn-outline-gold btn-sm text-white border-white"><i class="bi bi-sliders"></i> Options</a>
+                                                            </div>
+                        </div>
+                        <div class="product-info" style="padding: 18px; text-align: center; background: #39452A !important;">
+                            <span class="product-cat" style="color: #6B7A2F !important; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Wall Art</span>
+                            <h4 class="product-title" style="margin: 6px 0;">
+                                <a href="/product/jyotisya-mandala-wall-art/" style="color: #FFFFFF !important; font-size: 1.05rem; text-decoration: none;">Jyotisya Mandala Wall Art</a>
+                            </h4>
+                            <div class="text-warning mb-2 small">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="ms-1" style="color: #94A3B8 !important;">(5.0)</span>
+                            </div>
+                            <div class="product-price">
+                                                                                                    <small style="color: #94A3B8 !important;">from</small>
+                                    <span style="color: #6B7A2F !important; font-weight: 700; font-size: 1.1rem;">₹4,999.00</span>
+                                                            </div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-lg-3 col-md-6">
+                    <div class="card product-card" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.25) !important; border-radius: 12px; overflow: hidden; margin-bottom: 0;">
+                        <div class="img-container" style="position: relative; height: 260px; overflow: hidden; background: #26301A;">
+                            <span class="product-badge" style="position: absolute; top: 12px; left: 12px; background: #6B7A2F; color: #26301A; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; z-index: 5;">Featured</span>
+                            <img src="/assets/images/products/dragon_fire_frame.png" srcset="/assets/images/products/responsive/dragon_fire_frame-400.webp 400w, /assets/images/products/responsive/dragon_fire_frame-493.webp 493w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Dragon Fire Tabletop Art Frame" class="img-main" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                            <img src="/assets/images/products/dragon_fire_frame.png" srcset="/assets/images/products/responsive/dragon_fire_frame-400.webp 400w, /assets/images/products/responsive/dragon_fire_frame-493.webp 493w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Dragon Fire Tabletop Art Frame" class="img-hover" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                        <div class="product-actions" style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; padding: 10px; background: rgba(15,23,42,0.85); z-index: 5;">
+                                <a href="/product/dragon-fire-tabletop-art-frame/" class="btn btn-gold btn-sm"><i class="bi bi-eye"></i> View</a>
+                                                                    <form action="/cart/" method="POST" class="d-inline">
+                                        <input type="hidden" name="product_id" value="33">
+                                        <input type="hidden" name="action" value="add">
+                                        <input type="hidden" name="qty" value="1">
+                                        <button type="submit" class="btn btn-outline-gold btn-sm text-white border-white"><i class="bi bi-cart-plus"></i> Add</button>
+                                    </form>
+                                                            </div>
+                        </div>
+                        <div class="product-info" style="padding: 18px; text-align: center; background: #39452A !important;">
+                            <span class="product-cat" style="color: #6B7A2F !important; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Tabletop</span>
+                            <h4 class="product-title" style="margin: 6px 0;">
+                                <a href="/product/dragon-fire-tabletop-art-frame/" style="color: #FFFFFF !important; font-size: 1.05rem; text-decoration: none;">Dragon Fire Tabletop Art Frame</a>
+                            </h4>
+                            <div class="text-warning mb-2 small">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="ms-1" style="color: #94A3B8 !important;">(5.0)</span>
+                            </div>
+                            <div class="product-price">
+                                                                                                    <del style="color: #66705A !important; margin-right: 8px;">₹5,299.00</del>
+                                    <span style="color: #6B7A2F !important; font-weight: 700; font-size: 1.1rem;">₹4,299.00</span>
+                                                            </div>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-lg-3 col-md-6">
+                    <div class="card product-card" style="background: #39452A !important; border: 1px solid rgba(212,175,55,0.25) !important; border-radius: 12px; overflow: hidden; margin-bottom: 0;">
+                        <div class="img-container" style="position: relative; height: 260px; overflow: hidden; background: #26301A;">
+                            <span class="product-badge" style="position: absolute; top: 12px; left: 12px; background: #6B7A2F; color: #26301A; font-weight: 700; font-size: 0.75rem; padding: 4px 10px; z-index: 5;">Featured</span>
+                            <img src="/assets/images/products/buddha_mandala_frame.png" srcset="/assets/images/products/responsive/buddha_mandala_frame-400.webp 400w, /assets/images/products/responsive/buddha_mandala_frame-481.webp 481w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Buddha Mandala Tabletop Frame" class="img-main" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                            <img src="/assets/images/products/buddha_mandala_frame.png" srcset="/assets/images/products/responsive/buddha_mandala_frame-400.webp 400w, /assets/images/products/responsive/buddha_mandala_frame-481.webp 481w" sizes="(max-width: 576px) 92vw, (max-width: 992px) 46vw, 23vw" alt="Buddha Mandala Tabletop Frame" class="img-hover" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy" decoding="async">                                                        <div class="product-actions" style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; padding: 10px; background: rgba(15,23,42,0.85); z-index: 5;">
+                                <a href="/product/buddha-mandala-tabletop-frame/" class="btn btn-gold btn-sm"><i class="bi bi-eye"></i> View</a>
+                                                                    <form action="/cart/" method="POST" class="d-inline">
+                                        <input type="hidden" name="product_id" value="32">
+                                        <input type="hidden" name="action" value="add">
+                                        <input type="hidden" name="qty" value="1">
+                                        <button type="submit" class="btn btn-outline-gold btn-sm text-white border-white"><i class="bi bi-cart-plus"></i> Add</button>
+                                    </form>
+                                                            </div>
+                        </div>
+                        <div class="product-info" style="padding: 18px; text-align: center; background: #39452A !important;">
+                            <span class="product-cat" style="color: #6B7A2F !important; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Tabletop</span>
+                            <h4 class="product-title" style="margin: 6px 0;">
+                                <a href="/product/buddha-mandala-tabletop-frame/" style="color: #FFFFFF !important; font-size: 1.05rem; text-decoration: none;">Buddha Mandala Tabletop Frame</a>
+                            </h4>
+                            <div class="text-warning mb-2 small">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="ms-1" style="color: #94A3B8 !important;">(5.0)</span>
+                            </div>
+                            <div class="product-price">
+                                                                                                    <del style="color: #66705A !important; margin-right: 8px;">₹5,999.00</del>
+                                    <span style="color: #6B7A2F !important; font-weight: 700; font-size: 1.1rem;">₹4,799.00</span>
+                                                            </div>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+        <div class="text-center mt-5">
+            <a href="/shop/" class="btn btn-gold btn-lg"><i class="bi bi-grid-3x3-gap"></i> Explore All Products</a>
+        </div>
+    </div>
+</section>
+
+<!-- Craftsmanship Spotlight Section -->
+<section class="py-5" style="background: #39452A !important; color: #FFFFFF !important;">
+    <div class="container py-4">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <span class="text-warning text-uppercase tracking-widest d-block mb-2">- Behind The Scenes -</span>
+                <h2 class="display-6 font-serif text-white mb-4">The Art of Precision Craftsmanship</h2>
+                <p style="color: #D8DEC9 !important;" class="mb-4">Every piece at The Gayatri Decors begins with raw high-density moisture-resistant MDF and acrylic. Our master artisans combine digital CAD precision laser cutting with traditional hand-polishing and multi-coat lacquering.</p>
+                
+                <div class="craft-step-card" style="display: flex; align-items: flex-start; gap: 18px; margin-bottom: 22px;">
+                    <div class="craft-step-num" style="width: 45px; height: 45px; min-width: 45px; background: #6B7A2F; color: #26301A; font-family: 'Cinzel', serif; font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; border-radius: 50%;">1</div>
+                    <div class="craft-step-content">
+                        <h5 style="color: #FFFFFF !important; margin-bottom: 4px;">3D Layered Architecture</h5>
+                        <p style="color: #D8DEC9 !important; margin: 0; font-size: 0.88rem;">Stacking up to 7 distinct laser-carved layers to create dramatic shadow depths.</p>
+                    </div>
+                </div>
+                
+                <div class="craft-step-card" style="display: flex; align-items: flex-start; gap: 18px; margin-bottom: 22px;">
+                    <div class="craft-step-num" style="width: 45px; height: 45px; min-width: 45px; background: #6B7A2F; color: #26301A; font-family: 'Cinzel', serif; font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; border-radius: 50%;">2</div>
+                    <div class="craft-step-content">
+                        <h5 style="color: #FFFFFF !important; margin-bottom: 4px;">Hand-Polished & Sealed Finish</h5>
+                        <p style="color: #D8DEC9 !important; margin: 0; font-size: 0.88rem;">Smooth satin finish with moisture-proof protective coat for lifelong color retention.</p>
+                    </div>
+                </div>
+                
+                <div class="craft-step-card" style="display: flex; align-items: flex-start; gap: 18px; margin-bottom: 22px;">
+                    <div class="craft-step-num" style="width: 45px; height: 45px; min-width: 45px; background: #6B7A2F; color: #26301A; font-family: 'Cinzel', serif; font-weight: 800; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; border-radius: 50%;">3</div>
+                    <div class="craft-step-content">
+                        <h5 style="color: #FFFFFF !important; margin-bottom: 4px;">Warm Ambient LED Integration</h5>
+                        <p style="color: #D8DEC9 !important; margin: 0; font-size: 0.88rem;">Energy-efficient waterproof warm white LED modules casting an enchanting halo glow.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="position-relative p-2 rounded border border-warning border-opacity-25" style="background: rgba(255,255,255,0.03);">
+                    <img src="/assets/images/products/mukesh_nameplate_main.png" alt="Craftsmanship Showcase" class="img-fluid rounded" style="width: 100%; height: 420px; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WhatsApp Direct Inquiry & Custom Order Banner -->
+<section class="py-5 text-white position-relative" style="background: linear-gradient(135deg, #26301A 0%, #39452A 100%); border-top: 2px solid #6B7A2F; border-bottom: 2px solid #25D366; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <div class="container py-3">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-2 text-center">
+                <div style="background: #ffffff; padding: 6px; border-radius: 50%; width: 120px; height: 120px; margin: 0 auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 25px rgba(212,175,55,0.4); border: 3px solid #6B7A2F;">
+                    <img src="/assets/images/logo.png" alt="The Gayatri Decors Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+            </div>
+            <div class="col-lg-7 text-center text-lg-start">
+                <div class="d-inline-flex align-items-center gap-2 bg-success bg-opacity-20 text-success border border-success px-3 py-1 rounded-pill mb-2">
+                    <i class="bi bi-whatsapp fs-5"></i>
+                    <span style="font-weight: 700; font-size: 0.88rem; letter-spacing: 0.5px;">INSTANT WHATSAPP CHAT</span>
+                </div>
+                <h3 class="font-serif text-white mb-2" style="font-size: 1.75rem;">Need Custom Sizes or Personalized Decor?</h3>
+                <p class="text-white-50 mb-0" style="font-size: 1rem; line-height: 1.5;">Connect directly with <strong>The Gayatri Decors</strong> on WhatsApp. Get instant design consultation, custom size quotes, LED backlit previews, and order updates.</p>
+            </div>
+            <div class="col-lg-3 text-center text-lg-end">
+                <a href="https://wa.me/919227147646?text=Hello%20The%20Gayatri%20Decors%2C%20I%20want%20to%20inquire%20about%20your%20products." 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="btn btn-success btn-lg px-4 py-3 d-inline-flex align-items-center justify-content-center gap-2 shadow-lg" 
+                   style="border-radius: 50px; font-weight: 700; background-color: #25D366; border: none; font-size: 1.1rem; transition: transform 0.3s ease;">
+                    <i class="bi bi-whatsapp fs-3"></i>
+                    <span>Chat +91 9227147646</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Customer Reviews / Testimonials -->
+<section class="py-5" style="background: #F7F5E8 !important; color: #26301A !important;">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <span class="text-warning text-uppercase tracking-widest d-block mb-2">- Client Love -</span>
+            <h2 class="display-6 font-serif" style="color: #26301A !important;">What Our Customers Say</h2>
+            <div style="width: 60px; height: 3px; background-color: #6B7A2F; margin: 15px auto;"></div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="testimonial-card" style="background: #FFFFFF !important; border: 1px solid rgba(212,175,55,0.3) !important; padding: 30px; border-radius: 12px;">
+                    <div class="testimonial-stars" style="color: #F59E0B; margin-bottom: 12px;">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="testimonial-text" style="color: #39452A !important; font-style: italic; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">"The Ganesh LED Backlit Nameplate transformed our villa entrance! The gold mirror finish by day and glowing amber halo at night look truly regal. Highly recommended!"</p>
+                    <div class="testimonial-author" style="display: flex; align-items: center; gap: 12px;">
+                        <div class="testimonial-avatar" style="width: 42px; height: 42px; border-radius: 50%; background: #A3B18A; color: #26301A; font-weight: 700; display: flex; align-items: center; justify-content: center;">RP</div>
+                        <div class="testimonial-info">
+                            <h6 style="margin: 0; font-size: 0.95rem; color: #26301A !important;">Rajesh Patel</h6>
+                            <span style="font-size: 0.78rem; color: #66705A !important;">Ahmedabad, Gujarat &bull; Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="testimonial-card" style="background: #FFFFFF !important; border: 1px solid rgba(212,175,55,0.3) !important; padding: 30px; border-radius: 12px;">
+                    <div class="testimonial-stars" style="color: #F59E0B; margin-bottom: 12px;">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="testimonial-text" style="color: #39452A !important; font-style: italic; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">"Intricate Swirl 3D Wall Art looks like an expensive art gallery museum piece in our living room. The multi-layered depth and vibrant color tones are unbelievable!"</p>
+                    <div class="testimonial-author" style="display: flex; align-items: center; gap: 12px;">
+                        <div class="testimonial-avatar" style="width: 42px; height: 42px; border-radius: 50%; background: #A3B18A; color: #26301A; font-weight: 700; display: flex; align-items: center; justify-content: center;">MS</div>
+                        <div class="testimonial-info">
+                            <h6 style="margin: 0; font-size: 0.95rem; color: #26301A !important;">Meera Sharma</h6>
+                            <span style="font-size: 0.78rem; color: #66705A !important;">Mumbai, Maharashtra &bull; Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="testimonial-card" style="background: #FFFFFF !important; border: 1px solid rgba(212,175,55,0.3) !important; padding: 30px; border-radius: 12px;">
+                    <div class="testimonial-stars" style="color: #F59E0B; margin-bottom: 12px;">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="testimonial-text" style="color: #39452A !important; font-style: italic; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">"Super fast Pan-India delivery and 5-layer foam packaging ensured my Sri Yantra Gold Tabletop Frame arrived in flawless condition. Quality is 10/10."</p>
+                    <div class="testimonial-author" style="display: flex; align-items: center; gap: 12px;">
+                        <div class="testimonial-avatar" style="width: 42px; height: 42px; border-radius: 50%; background: #A3B18A; color: #26301A; font-weight: 700; display: flex; align-items: center; justify-content: center;">VD</div>
+                        <div class="testimonial-info">
+                            <h6 style="margin: 0; font-size: 0.95rem; color: #26301A !important;">Vikram Dave</h6>
+                            <span style="font-size: 0.78rem; color: #66705A !important;">Surat, Gujarat &bull; Verified Buyer</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Custom Orders Consultation CTA -->
+<section class="py-5" style="background: #FFFFFF !important;">
+    <div class="container">
+        <div class="custom-cta-banner text-center text-md-start" style="background: linear-gradient(135deg, #26301A 0%, #39452A 60%, #4D5A3A 100%) !important; border: 1px solid rgba(212, 175, 55, 0.4) !important; border-radius: 16px; padding: 45px 35px;">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-8">
+                    <span class="badge bg-warning text-dark px-3 py-2 text-uppercase mb-2">Bespoke Design Service</span>
+                    <h3 class="font-serif text-white display-6 mb-2">Need a Custom Nameplate or Special Size?</h3>
+                    <p class="mb-0" style="color: #D8DEC9 !important;">Our artisans can customize any design with your family name, specific dimension, custom color theme, or LED illumination.</p>
+                </div>
+                <div class="col-lg-4 text-center text-lg-end">
+                    <a href="https://wa.me/919876543210?text=Hi,%20I%20want%20to%20customize%20a%20decor%20piece" target="_blank" class="btn btn-gold btn-lg me-2 mb-2"><i class="bi bi-whatsapp"></i> Chat on WhatsApp</a>
+                    <a href="/shop/" class="btn btn-outline-gold btn-lg mb-2"><i class="bi bi-grid"></i> Browse Catalog</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Smooth Scroll & Parallax Animations Script -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Freeze page scrolling during intro playback (using global Lenis instance)
+    document.body.classList.add('intro-active');
+    if (window.lenis) window.lenis.stop();
+
+    // Canvas Golden Dust Particles
+    const canvas = document.getElementById("intro-canvas");
+    if (canvas) {
+        const ctx = canvas.getContext("2d");
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+        
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        window.addEventListener("resize", debounce(() => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }, 150), { passive: true });
+
+        const particles = [];
+        const maxParticles = 50;
+        
+        class Particle {
+            constructor(isSpark = false, x = null, y = null) {
+                this.isSpark = isSpark;
+                this.x = x !== null ? x : Math.random() * width;
+                this.y = y !== null ? y : (isSpark ? y : Math.random() * height);
+                this.size = Math.random() * (isSpark ? 1.5 : 2.5) + 0.8;
+                this.speedX = isSpark ? (Math.random() - 0.5) * 4 : (Math.random() - 0.5) * 0.3;
+                this.speedY = isSpark ? (Math.random() - 0.5) * 4 : -Math.random() * 0.6 - 0.2;
+                this.opacity = Math.random() * 0.4 + 0.2;
+                this.life = isSpark ? Math.random() * 20 + 8 : null;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.isSpark) {
+                    this.life--;
+                    this.opacity = this.life / 28;
+                } else {
+                    if (this.y < -10) {
+                        this.y = height + 10;
+                        this.x = Math.random() * width;
+                    }
+                }
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < maxParticles; i++) {
+            particles.push(new Particle());
+        }
+
+        const introBg = document.getElementById("intro-bg");
+        
+        let targetX = 0;
+        let targetY = 0;
+        let currentX = 0;
+        let currentY = 0;
+        const lerpFactor = 0.08;
+        let mouseMoved = false;
+        let lastMouseMove = 0;
+
+        function handleParallaxMouse(e) {
+            const now = performance.now();
+            if (now - lastMouseMove < 33) return;
+            lastMouseMove = now;
+
+            targetX = (e.clientX / window.innerWidth) - 0.5;
+            targetY = (e.clientY / window.innerHeight) - 0.5;
+            mouseMoved = true;
+            
+            if (Math.random() < 0.3) {
+                particles.push(new Particle(true, e.clientX, e.clientY));
+            }
+        }
+        window.addEventListener("mousemove", handleParallaxMouse, { passive: true });
+
+        let isTabVisible = true;
+        let animationFrameId = null;
+
+        function renderLoop() {
+            if (!isTabVisible) return;
+            
+            if (document.body.classList.contains('intro-active')) {
+                ctx.clearRect(0, 0, width, height);
+                
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    particles[i].update();
+                    particles[i].draw();
+                    if (particles[i].isSpark && particles[i].life <= 0) {
+                        particles.splice(i, 1);
+                    }
+                }
+                
+                if (mouseMoved && introBg) {
+                    currentX += (targetX - currentX) * lerpFactor;
+                    currentY += (targetY - currentY) * lerpFactor;
+                    introBg.style.transform = `scale(1.05) translate3d(${currentX * 25}px, ${currentY * 25}px, 0)`;
+                }
+            }
+            
+            animationFrameId = requestAnimationFrame(renderLoop);
+        }
+        renderLoop();
+
+        const tl = gsap.timeline();
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                isTabVisible = false;
+                if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                tl.pause();
+            } else {
+                isTabVisible = true;
+                tl.resume();
+                renderLoop();
+            }
+        });
+        
+        tl.to("#intro-bg", {
+            onStart: () => {
+                const bg = document.getElementById("intro-bg");
+                if (bg) bg.classList.add("animate-bg");
+            },
+            duration: 0.1
+        }, "+=1.0");
+        
+        tl.to("#introLogo", { opacity: 1, y: 0, duration: 1.4, ease: "power3.out" }, "+=1.2");
+        tl.to("#introTitle", { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" }, "-=1.0");
+        tl.to("#introLine", { scaleX: 1, opacity: 1, duration: 1.2, ease: "power2.inOut" }, "-=1.0");
+        tl.to("#introSubtitle", { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }, "-=0.8");
+        tl.to("#launchOffer", { opacity: 1, y: 0, duration: 1.1, ease: "power3.out" }, "-=0.6");
+        tl.to("#introBtnGroup", { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }, "-=0.5");
+
+        function dismissIntro() {
+            if (typeof tl !== 'undefined' && tl) tl.kill();
+            isTabVisible = false;
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            window.removeEventListener("mousemove", handleParallaxMouse);
+            
+            gsap.to("#luxury-intro", {
+                yPercent: -100,
+                opacity: 0,
+                duration: 1.5,
+                ease: "power4.inOut",
+                onComplete: () => {
+                    const intro = document.getElementById("luxury-intro");
+                    if (intro) intro.remove();
+                    document.body.classList.remove('intro-active');
+                    if (window.lenis) window.lenis.start();
+                    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+                }
+            });
+        }
+
+        const skipBtn = document.getElementById("skipIntroBtn");
+        const expBtn  = document.getElementById("exploreBtn");
+        const shpBtn  = document.getElementById("shopBtn");
+        if (skipBtn) skipBtn.addEventListener("click", dismissIntro);
+        if (expBtn)  expBtn.addEventListener("click", dismissIntro);
+        if (shpBtn)  shpBtn.addEventListener("click", dismissIntro);
+    }
+});
+</script>
+
+<!-- Footer -->
+<footer class="mt-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Brand Column -->
+            <div class="col-lg-3 col-md-6">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <img src="/assets/images/logo.png" alt="The Gayatri Decors Logo" style="width: 48px; height: 48px; border-radius: 50%; background: #ffffff; padding: 2px; border: 1px solid #6B7A2F; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                    <h5 class="text-uppercase mb-0 text-gold font-serif">The Gayatri Decors</h5>
+                </div>
+                <p class="small text-white-50">Enhance your space with our premium handcrafted 3D MDF clocks, designer metal art pieces, canvas frames, custom nameplates, and decorative wall mirrors.</p>
+                <div class="d-flex gap-3 fs-5 mt-3">
+                    <a href="#" class="text-white-50"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white-50"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white-50"><i class="bi bi-twitter-x"></i></a>
+                </div>
+            </div>
+            <!-- Quick Links -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-uppercase">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/shop/">Shop All Products</a></li>
+                    <li><a href="/cart/">Shopping Cart</a></li>
+                    <li><a href="/login/">Customer Login</a></li>
+                    <li><a href="/register/">Create Account</a></li>
+                </ul>
+            </div>
+            <!-- Contact Info -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-uppercase">Get In Touch</h5>
+                <ul class="list-unstyled text-white-50 small">
+                    <li class="mb-2 d-flex align-items-start"><i class="bi bi-geo-alt-fill text-gold me-2 mt-1"></i> <span>116, Gopinath Estate-1, N.H. No-8,<br>Nr. Soni Ni Chali, Odhav, Ahmedabad,<br>Gujarat - 382415</span></li>
+                    <li class="mb-2"><i class="bi bi-telephone-fill text-gold me-2"></i> +91 92271 47646</li>
+                    <li class="mb-2">
+                    </li>
+                    <li class="mb-2"><i class="bi bi-envelope-fill text-gold me-2"></i> support@tgd.com</li>
+                </ul>
+            </div>
+            <!-- Newsletter -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-uppercase">Newsletter</h5>
+                <p class="small text-white-50">Subscribe to receive updates, access to exclusive deals, and more.</p>
+                <form action="#" class="mt-3" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+                    <div class="input-group">
+                        <input type="email" class="form-control bg-dark border-secondary text-white" placeholder="Your email..." required style="border-radius:0;">
+                        <button class="btn btn-gold" type="submit">Join</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="row align-items-center text-center text-md-start py-3">
+            <div class="col-md-6">
+                <p class="small mb-0">&copy; 2026 The Gayatri Decors. All Rights Reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end mt-2 mt-md-0">
+                <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa" width="30" />
+                <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="Mastercard" width="30" />
+                <img src="https://img.icons8.com/color/48/000000/google-pay.png" alt="Google Pay" width="30" />
+                <img src="https://img.icons8.com/color/48/000000/bhim.png" alt="BHIM UPI" width="30" />
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/919227147646?text=Hello%20The%20Gayatri%20Decors%2C%20I%20have%20an%20inquiry%20regarding%20your%20products." 
+   class="whatsapp-float-btn" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   aria-label="Chat on WhatsApp">
+    <div class="whatsapp-pulse"></div>
+    <i class="bi bi-whatsapp"></i>
+    <span class="whatsapp-tooltip">Chat on WhatsApp (+91 9227147646)</span>
+</a>
+
+<!-- Bootstrap 5 JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script src="/assets/js/main.js"></script>
+
+<div id="demo-note" style="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+ z-index:9999;background:#26301A;color:#F7F5E8;border:1px solid #6B7A2F;border-radius:999px;
+ padding:9px 18px;font:600 13px/1.3 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.35);
+ display:none;max-width:92vw;text-align:center;">
+  <span id="demo-note-text"></span>
+</div>
+<script>
+(function(){
+  var note=document.getElementById('demo-note'),txt=document.getElementById('demo-note-text'),t;
+  function say(m){txt.textContent=m;note.style.display='block';clearTimeout(t);
+    t=setTimeout(function(){note.style.display='none';},3200);}
+  // Nothing can POST on a static host - intercept and explain instead.
+  document.addEventListener('submit',function(e){
+    var f=e.target;
+    if(f.method&&f.method.toLowerCase()==='get'&&f.action.indexOf('/shop')>-1)return;
+    e.preventDefault();
+    say('Visual demo - ordering is disabled on this preview.');
+  },true);
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a');
+    if(a&&a.getAttribute('href')==='#demo-disabled'){e.preventDefault();
+      say('Accounts and checkout are disabled on this preview.');}
+  },true);
+})();
+</script>
+</body>
+</html>

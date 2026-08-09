@@ -1,0 +1,35 @@
+# Netlify runs no PHP. It publishes the pre-rendered snapshot in
+# netlify-static/, which is regenerated from the live PHP site by
+# tools/build-static.py. There is no build step here on purpose.
+[build]
+  publish = "netlify-static"
+  command = ""
+
+# Clean URLs already exist as directories (/product/<slug>/index.html),
+# so only the unknown-route case needs handling.
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+# The PHP entry points do not exist on the static host; send them to their
+# rendered equivalents so old links keep working.
+[[redirects]]
+  from = "/index.php"
+  to = "/"
+  status = 301
+[[redirects]]
+  from = "/shop.php"
+  to = "/shop/"
+  status = 301
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

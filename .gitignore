@@ -1,0 +1,24 @@
+# Secrets - never commit. See .env.example for the shape.
+.env
+.env.local
+
+# Local tunnelling binaries (48MB / 12MB, not part of the app)
+cloudflared.exe
+ngrok.zip
+ngrok.exe
+
+# Build/deploy metadata
+.vercel
+.netlify
+
+# OS / editor noise
+Thumbs.db
+Desktop.ini
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Scratch
+scratch_crop.py
+*.log

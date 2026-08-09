@@ -1,0 +1,24 @@
+{
+  "builds": [
+    { "src": "*.php", "use": "vercel-php@0.7.3" },
+    { "src": "admin/*.php", "use": "vercel-php@0.7.3" },
+    { "src": "customer/*.php", "use": "vercel-php@0.7.3" },
+    { "src": "assets/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
+    { "src": "/admin/(.+\\.php)", "dest": "/admin/$1" },
+    { "src": "/customer/(.+\\.php)", "dest": "/customer/$1" },
+    { "src": "/index\\.php", "dest": "/index.php" },
+    { "src": "/shop\\.php(.*)", "dest": "/shop.php$1" },
+    { "src": "/product\\.php(.*)", "dest": "/product.php$1" },
+    { "src": "/cart\\.php", "dest": "/cart.php" },
+    { "src": "/checkout\\.php", "dest": "/checkout.php" },
+    { "src": "/place-order\\.php", "dest": "/place-order.php" },
+    { "src": "/order-success\\.php(.*)", "dest": "/order-success.php$1" },
+    { "src": "/login\\.php", "dest": "/login.php" },
+    { "src": "/register\\.php", "dest": "/register.php" },
+    { "src": "/logout\\.php", "dest": "/logout.php" },
+    { "src": "/", "dest": "/index.php" }
+  ]
+}

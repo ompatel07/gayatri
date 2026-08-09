@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gayatri Decors | Premium Home Décor & Clocks</title>
+    <meta name="description" content="Shop premium 3D MDF wall clocks, metal wall art, canvas frames, tabletop structures, and decorative mirrors from The Gayatri Decors.">
+        <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- GSAP & Lenis Smooth Scroll -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script>
+        // Initialize Lenis globally on window object for high-performance scroll syncing
+        window.lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential easing for premium inertia
+            smoothWheel: true,     // Smooth wheel scrolling for desktops
+            smoothTouch: false,    // Native touch inertia on mobile to prevent stutters
+            wheelMultiplier: 1.0,
+            touchMultiplier: 1.2
+        });
+
+        // Sync with GSAP ScrollTrigger if available (prevents layout thrashing on scroll trigger updates)
+        if (typeof ScrollTrigger !== 'undefined' && typeof gsap !== 'undefined') {
+            window.lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => {
+                window.lenis.raf(time * 1000);
+            });
+            gsap.ticker.lagSmoothing(0);
+        } else {
+            function raf(time) {
+                window.lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+        }
+    </script>
+    <!-- Custom Style -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="/assets/images/gayatri-full-logo.png" alt="The Gayatri Decors Logo" class="navbar-full-logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link " href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/shop/">Products</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categories
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li><a class="dropdown-menu-item dropdown-item" href="/shop/category/wall-art/">Wall Art</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/wall-clock/">Wall Clock</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/wall-frames/">Wall Frames</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/nameplates/">Nameplates</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/tabletop/">Tabletop</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/wall-art-mirrors/">Wall Art Mirrors</a></li>                    </ul>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+                <!-- Search -->
+                <form action="/shop/" method="GET" class="d-flex" role="search">
+                    <input type="search" name="search" class="form-control form-control-sm border-secondary"
+                           placeholder="Search products..." aria-label="Search products"
+                           value=""
+                           style="border-radius: 0; max-width: 170px;">
+                    <button class="btn btn-gold btn-sm" type="submit" aria-label="Search">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+
+                <!-- Cart -->
+                                <a href="/cart/"
+                   class="nav-link position-relative active"
+                   aria-label="Shopping cart">
+                    <i class="bi bi-bag fs-5"></i>
+                                    </a>
+
+                <!-- Account -->
+                                    <a href="/login/" class="btn btn-outline-gold btn-sm">Login</a>
+                    <a href="/register/" class="btn btn-gold btn-sm d-none d-xl-inline-block">Register</a>
+                            </div>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container -->
+</nav>
+
+<!-- Breadcrumbs -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <h1 class="font-serif fs-3">Shopping Cart</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/shop/">Shop</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cart</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="container py-5">
+    <!-- Success/Error alerts -->
+        
+            <div class="text-center py-5 shadow-sm" style="background-color: var(--white); border: 1px solid rgba(15, 23, 42, 0.08);">
+            <i class="bi bi-cart-x fs-1 text-muted mb-3 d-block"></i>
+            <h3 class="font-serif">Your Cart is Empty</h3>
+            <p class="text-muted">You haven't added any products to your shopping cart yet.</p>
+            <a href="/shop/" class="btn btn-gold mt-3">Start Shopping</a>
+        </div>
+    </div>
+
+<!-- Footer -->
+<footer class="mt-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Brand Column -->
+            <div class="col-lg-3 col-md-6">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <img src="/assets/images/logo.png" alt="The Gayatri Decors Logo" style="width: 48px; height: 48px; border-radius: 50%; background: #ffffff; padding: 2px; border: 1px solid #6B7A2F; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                    <h5 class="text-uppercase mb-0 text-gold font-serif">The Gayatri Decors</h5>
+                </div>
+                <p class="small text-white-50">Enhance your space with our premium handcrafted 3D MDF clocks, designer metal art pieces, canvas frames, custom nameplates, and decorative wall mirrors.</p>
+                <div class="d-flex gap-3 fs-5 mt-3">
+                    <a href="#" class="text-white-50"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white-50"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white-50"><i class="bi bi-twitter-x"></i></a>
+                </div>
+            </div>
+            <!-- Quick Links -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-uppercase">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/shop/">Shop All Products</a></li>
+                    <li><a href="/cart/">Shopping Cart</a></li>
+                    <li><a href="/login/">Customer Login</a></li>
+                    <li><a href="/register/">Create Account</a></li>
+                </ul>
+            </div>
+            <!-- Contact Info -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-uppercase">Get In Touch</h5>
+                <ul class="list-unstyled text-white-50 small">
+                    <li class="mb-2 d-flex align-items-start"><i class="bi bi-geo-alt-fill text-gold me-2 mt-1"></i> <span>116, Gopinath Estate-1, N.H. No-8,<br>Nr. Soni Ni Chali, Odhav, Ahmedabad,<br>Gujarat - 382415</span></li>
+                    <li class="mb-2"><i class="bi bi-telephone-fill text-gold me-2"></i> +91 92271 47646</li>
+                    <li class="mb-2">
+                    </li>
+                    <li class="mb-2"><i class="bi bi-envelope-fill text-gold me-2"></i> support@tgd.com</li>
+                </ul>
+            </div>
+            <!-- Newsletter -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-uppercase">Newsletter</h5>
+                <p class="small text-white-50">Subscribe to receive updates, access to exclusive deals, and more.</p>
+                <form action="#" class="mt-3" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+                    <div class="input-group">
+                        <input type="email" class="form-control bg-dark border-secondary text-white" placeholder="Your email..." required style="border-radius:0;">
+                        <button class="btn btn-gold" type="submit">Join</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="row align-items-center text-center text-md-start py-3">
+            <div class="col-md-6">
+                <p class="small mb-0">&copy; 2026 The Gayatri Decors. All Rights Reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end mt-2 mt-md-0">
+                <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa" width="30" />
+                <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="Mastercard" width="30" />
+                <img src="https://img.icons8.com/color/48/000000/google-pay.png" alt="Google Pay" width="30" />
+                <img src="https://img.icons8.com/color/48/000000/bhim.png" alt="BHIM UPI" width="30" />
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/919227147646?text=Hello%20The%20Gayatri%20Decors%2C%20I%20have%20an%20inquiry%20regarding%20your%20products." 
+   class="whatsapp-float-btn" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   aria-label="Chat on WhatsApp">
+    <div class="whatsapp-pulse"></div>
+    <i class="bi bi-whatsapp"></i>
+    <span class="whatsapp-tooltip">Chat on WhatsApp (+91 9227147646)</span>
+</a>
+
+<!-- Bootstrap 5 JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script src="/assets/js/main.js"></script>
+
+<div id="demo-note" style="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+ z-index:9999;background:#26301A;color:#F7F5E8;border:1px solid #6B7A2F;border-radius:999px;
+ padding:9px 18px;font:600 13px/1.3 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.35);
+ display:none;max-width:92vw;text-align:center;">
+  <span id="demo-note-text"></span>
+</div>
+<script>
+(function(){
+  var note=document.getElementById('demo-note'),txt=document.getElementById('demo-note-text'),t;
+  function say(m){txt.textContent=m;note.style.display='block';clearTimeout(t);
+    t=setTimeout(function(){note.style.display='none';},3200);}
+  // Nothing can POST on a static host - intercept and explain instead.
+  document.addEventListener('submit',function(e){
+    var f=e.target;
+    if(f.method&&f.method.toLowerCase()==='get'&&f.action.indexOf('/shop')>-1)return;
+    e.preventDefault();
+    say('Visual demo - ordering is disabled on this preview.');
+  },true);
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a');
+    if(a&&a.getAttribute('href')==='#demo-disabled'){e.preventDefault();
+      say('Accounts and checkout are disabled on this preview.');}
+  },true);
+})();
+</script>
+</body>
+</html>
