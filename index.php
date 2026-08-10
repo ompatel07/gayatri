@@ -49,18 +49,51 @@ $categories = $cat_stmt->fetchAll();
     </div>
 </div>
 
-<!-- Hero Slider / Banner -->
-<section class="hero-section">
-    <div class="hero-bg"></div>
+<!-- Hero with rotating product backgrounds -->
+<?php $slides = hero_slides(); ?>
+<section class="hero-section" id="heroSection" data-hero-interval="7000">
+    <div class="hero-slides" aria-hidden="true">
+        <?php foreach ($slides as $i => $s): ?>
+            <div class="hero-slide<?= $i === 0 ? ' is-active' : '' ?>" data-index="<?= $i ?>">
+                <?= responsive_img($s['img'], '', '100vw', ['lazy' => $i !== 0]) ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
     <div class="container">
         <div class="hero-content">
             <h5 class="text-uppercase text-warning letter-spacing-3 mb-3">Premium Handcrafted Decors</h5>
             <h1 class="hero-title">Elevate Your Living Space With <span>Art</span></h1>
             <p class="lead mb-4">Discover our collection of exclusive 3D MDF clocks, designer metal installations, high-end nameplates, and bespoke decor mirrors.</p>
-            <a href="<?= BASE_URL ?>/shop.php" class="btn btn-gold btn-lg me-3">Explore Collection</a>
-            <a href="<?= BASE_URL ?>/shop.php?category=wall-clock" class="btn btn-outline-gold btn-lg">View Clocks</a>
+            <div class="hero-actions">
+                <a href="<?= BASE_URL ?>/shop.php" class="btn btn-gold btn-lg me-3">Explore Collection</a>
+                <a href="<?= BASE_URL ?>/shop.php?category=wall-clock" class="btn btn-outline-gold btn-lg">View Clocks</a>
+            </div>
+
+            <!-- Which collection the current background is from -->
+            <div class="hero-slider-ui">
+                <a class="hero-chip" id="heroChip" href="<?= BASE_URL ?>/<?= $slides[0]['href'] ?>">
+                    <span class="hero-chip-pulse" aria-hidden="true"></span>
+                    <span id="heroChipLabel"><?= sanitize($slides[0]['label']) ?></span>
+                    <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+                <div class="hero-progress" id="heroProgress" role="tablist" aria-label="Hero slides">
+                    <?php foreach ($slides as $i => $s): ?>
+                        <button type="button" role="tab"
+                                class="<?= $i === 0 ? 'is-active' : '' ?>"
+                                data-index="<?= $i ?>"
+                                aria-label="<?= sanitize($s['label']) ?>"
+                                aria-selected="<?= $i === 0 ? 'true' : 'false' ?>"><span></span></button>
+                    <?php endforeach; ?>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script type="application/json" id="heroSlideData"><?= json_encode(array_map(
+        fn($s) => ['label' => $s['label'], 'href' => BASE_URL . '/' . $s['href']],
+        $slides), JSON_UNESCAPED_UNICODE) ?></script>
 </section>
 
 <!-- Trust & Stats Bar -->

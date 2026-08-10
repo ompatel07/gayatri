@@ -194,6 +194,34 @@ function get_variant($pdo, $variant_id) {
 
 // "13x13 in - With LED" where an option applies, plain "12x12 in" where the
 // product varies by size only (wall clocks, tabletop).
+/**
+ * Home page hero background rotation.
+ *
+ * Deliberately lifestyle photography rather than product cut-outs: a plate
+ * shot on white looks wrong stretched full-bleed. These are dark/atmospheric
+ * so the headline stays legible over them, and they span four categories.
+ * Defined here rather than in index.php so header.php can preload slide 1.
+ */
+function hero_slides() {
+    return [
+        ['img'   => 'assets/images/products/krishna-led-acrylic-nameplate-2.jpg',
+         'label' => 'LED Backlit Nameplates',
+         'href'  => 'shop.php?category=nameplates'],
+        ['img'   => 'assets/images/products/metal_leaf_art.jpg',
+         'label' => 'Designer Metal Wall Art',
+         'href'  => 'shop.php?category=wall-art'],
+        ['img'   => 'assets/images/products/ember_colour.jpg',
+         'label' => '3D MDF Wall Clocks',
+         'href'  => 'shop.php?category=wall-clock'],
+        ['img'   => 'assets/images/products/skywings-corporate-nameplate-5.jpg',
+         'label' => 'Corporate Signage',
+         'href'  => 'shop.php?category=nameplates'],
+        ['img'   => 'assets/images/products/sunburst_mirror.jpg',
+         'label' => 'Decorative Wall Mirrors',
+         'href'  => 'shop.php?category=wall-art-mirrors'],
+    ];
+}
+
 // Every photo for a product, in insertion order. Empty for products that were
 // never given a gallery, in which case the caller falls back to main + hover.
 function get_gallery($pdo, $product_id) {

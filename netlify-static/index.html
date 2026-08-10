@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>The Gayatri Decors | Premium Home Décor &amp; Clocks</title>
     <meta name="description" content="Shop premium 3D MDF wall clocks, metal wall art, canvas frames, tabletop structures, and decorative mirrors from The Gayatri Decors.">
-        <!-- Preload the hero background (the LCP element) only on the page that has a hero -->
-    <link rel="preload" as="image" type="image/webp"
-          href="/assets/images/products/responsive/metal_leaf_art-1024.webp">
+        <link rel="preload" as="image" type="image/webp"
+          imagesrcset="/assets/images/products/responsive/krishna-led-acrylic-nameplate-2-400.webp 400w, /assets/images/products/responsive/krishna-led-acrylic-nameplate-2-800.webp 800w, /assets/images/products/responsive/krishna-led-acrylic-nameplate-2-1200.webp 1200w, /assets/images/products/responsive/krishna-led-acrylic-nameplate-2-1402.webp 1402w"
+          imagesizes="100vw">
         <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -128,18 +128,71 @@
     </div>
 </div>
 
-<!-- Hero Slider / Banner -->
-<section class="hero-section">
-    <div class="hero-bg"></div>
+<!-- Hero with rotating product backgrounds -->
+<section class="hero-section" id="heroSection" data-hero-interval="7000">
+    <div class="hero-slides" aria-hidden="true">
+                    <div class="hero-slide is-active" data-index="0">
+                <img src="/assets/images/products/krishna-led-acrylic-nameplate-2.jpg" srcset="/assets/images/products/responsive/krishna-led-acrylic-nameplate-2-400.webp 400w, /assets/images/products/responsive/krishna-led-acrylic-nameplate-2-800.webp 800w, /assets/images/products/responsive/krishna-led-acrylic-nameplate-2-1200.webp 1200w, /assets/images/products/responsive/krishna-led-acrylic-nameplate-2-1402.webp 1402w" sizes="100vw" alt="" fetchpriority="high" decoding="async">            </div>
+                    <div class="hero-slide" data-index="1">
+                <img src="/assets/images/products/metal_leaf_art.jpg" srcset="/assets/images/products/responsive/metal_leaf_art-400.webp 400w, /assets/images/products/responsive/metal_leaf_art-800.webp 800w, /assets/images/products/responsive/metal_leaf_art-1024.webp 1024w" sizes="100vw" alt="" loading="lazy" decoding="async">            </div>
+                    <div class="hero-slide" data-index="2">
+                <img src="/assets/images/products/ember_colour.jpg" srcset="/assets/images/products/responsive/ember_colour-400.webp 400w, /assets/images/products/responsive/ember_colour-800.webp 800w, /assets/images/products/responsive/ember_colour-1024.webp 1024w" sizes="100vw" alt="" loading="lazy" decoding="async">            </div>
+                    <div class="hero-slide" data-index="3">
+                <img src="/assets/images/products/skywings-corporate-nameplate-5.jpg" srcset="/assets/images/products/responsive/skywings-corporate-nameplate-5-400.webp 400w, /assets/images/products/responsive/skywings-corporate-nameplate-5-800.webp 800w, /assets/images/products/responsive/skywings-corporate-nameplate-5-1200.webp 1200w, /assets/images/products/responsive/skywings-corporate-nameplate-5-1402.webp 1402w" sizes="100vw" alt="" loading="lazy" decoding="async">            </div>
+                    <div class="hero-slide" data-index="4">
+                <img src="/assets/images/products/sunburst_mirror.jpg" srcset="/assets/images/products/responsive/sunburst_mirror-400.webp 400w, /assets/images/products/responsive/sunburst_mirror-800.webp 800w, /assets/images/products/responsive/sunburst_mirror-1024.webp 1024w" sizes="100vw" alt="" loading="lazy" decoding="async">            </div>
+            </div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
     <div class="container">
         <div class="hero-content">
             <h5 class="text-uppercase text-warning letter-spacing-3 mb-3">Premium Handcrafted Decors</h5>
             <h1 class="hero-title">Elevate Your Living Space With <span>Art</span></h1>
             <p class="lead mb-4">Discover our collection of exclusive 3D MDF clocks, designer metal installations, high-end nameplates, and bespoke decor mirrors.</p>
-            <a href="/shop/" class="btn btn-gold btn-lg me-3">Explore Collection</a>
-            <a href="/shop/category/wall-clock/" class="btn btn-outline-gold btn-lg">View Clocks</a>
+            <div class="hero-actions">
+                <a href="/shop/" class="btn btn-gold btn-lg me-3">Explore Collection</a>
+                <a href="/shop/category/wall-clock/" class="btn btn-outline-gold btn-lg">View Clocks</a>
+            </div>
+
+            <!-- Which collection the current background is from -->
+            <div class="hero-slider-ui">
+                <a class="hero-chip" id="heroChip" href="/shop/category/nameplates/">
+                    <span class="hero-chip-pulse" aria-hidden="true"></span>
+                    <span id="heroChipLabel">LED Backlit Nameplates</span>
+                    <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+                <div class="hero-progress" id="heroProgress" role="tablist" aria-label="Hero slides">
+                                            <button type="button" role="tab"
+                                class="is-active"
+                                data-index="0"
+                                aria-label="LED Backlit Nameplates"
+                                aria-selected="true"><span></span></button>
+                                            <button type="button" role="tab"
+                                class=""
+                                data-index="1"
+                                aria-label="Designer Metal Wall Art"
+                                aria-selected="false"><span></span></button>
+                                            <button type="button" role="tab"
+                                class=""
+                                data-index="2"
+                                aria-label="3D MDF Wall Clocks"
+                                aria-selected="false"><span></span></button>
+                                            <button type="button" role="tab"
+                                class=""
+                                data-index="3"
+                                aria-label="Corporate Signage"
+                                aria-selected="false"><span></span></button>
+                                            <button type="button" role="tab"
+                                class=""
+                                data-index="4"
+                                aria-label="Decorative Wall Mirrors"
+                                aria-selected="false"><span></span></button>
+                                    </div>
+            </div>
         </div>
     </div>
+
+    <script type="application/json" id="heroSlideData">[{"label":"LED Backlit Nameplates","href":"http:\/\/127.0.0.1:8000\/shop.php?category=nameplates"},{"label":"Designer Metal Wall Art","href":"http:\/\/127.0.0.1:8000\/shop.php?category=wall-art"},{"label":"3D MDF Wall Clocks","href":"http:\/\/127.0.0.1:8000\/shop.php?category=wall-clock"},{"label":"Corporate Signage","href":"http:\/\/127.0.0.1:8000\/shop.php?category=nameplates"},{"label":"Decorative Wall Mirrors","href":"http:\/\/127.0.0.1:8000\/shop.php?category=wall-art-mirrors"}]</script>
 </section>
 
 <!-- Trust & Stats Bar -->

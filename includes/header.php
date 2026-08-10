@@ -17,10 +17,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <meta name="description" content="<?= isset($page_description)
         ? sanitize($page_description)
         : 'Shop premium 3D MDF wall clocks, metal wall art, canvas frames, tabletop structures, and decorative mirrors from The Gayatri Decors.' ?>">
-    <?php if ($current_page === 'index.php'): ?>
-    <!-- Preload the hero background (the LCP element) only on the page that has a hero -->
+    <?php if ($current_page === 'index.php'):
+        // Preload the first hero slide (the LCP element). imagesrcset/imagesizes
+        // are used so the browser preloads exactly the variant it will render.
+        $first_slide = hero_slides()[0]['img']; ?>
     <link rel="preload" as="image" type="image/webp"
-          href="<?= BASE_URL ?>/assets/images/products/responsive/metal_leaf_art-1024.webp">
+          imagesrcset="<?= htmlspecialchars(img_srcset($first_slide), ENT_QUOTES, 'UTF-8') ?>"
+          imagesizes="100vw">
     <?php endif; ?>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">

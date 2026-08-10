@@ -23,6 +23,100 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 4000);
     });
 
+    // Hero background rotation. Slide 1 is already active in the HTML, so this
+    // only adds movement - the hero is never blank if the script fails.
+    const hero = document.getElementById('heroSection');
+    if (hero) {
+        const slides = Array.prototype.slice.call(hero.querySelectorAll('.hero-slide'));
+        const bars = Array.prototype.slice.call(hero.querySelectorAll('.hero-progress button'));
+        const chip = document.getElementById('heroChip');
+        const chipLabel = document.getElementById('heroChipLabel');
+        const dataEl = document.getElementById('heroSlideData');
+        let meta = [];
+        try {
+            meta = dataEl ? JSON.parse(dataEl.textContent) : [];
+        } catch (e) {
+            meta = [];
+        }
+
+        const interval = parseInt(hero.getAttribute('data-hero-interval'), 10) || 7000;
+        const reduced = window.matchMedia
+            && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (slides.length > 1) {
+            let current = 0;
+            let timer = null;
+            let visible = true;
+            let onScreen = true;
+
+            function paint(next) {
+                slides[current].classList.remove('is-active');
+                slides[next].classList.add('is-active');
+
+                if (bars[current]) {
+                    bars[current].classList.remove('is-active');
+                    bars[current].setAttribute('aria-selected', 'false');
+                }
+                if (bars[next]) {
+                    // Re-trigger the CSS bar animation from zero
+                    const fill = bars[next].querySelector('span');
+                    if (fill) {
+                        fill.style.animation = 'none';
+                        void fill.offsetWidth;
+                        fill.style.animation = '';
+                    }
+                    bars[next].classList.add('is-active');
+                    bars[next].setAttribute('aria-selected', 'true');
+                }
+
+                if (meta[next]) {
+                    if (chipLabel) chipLabel.textContent = meta[next].label;
+                    if (chip) chip.setAttribute('href', meta[next].href);
+                }
+                current = next;
+            }
+
+            function advance() {
+                paint((current + 1) % slides.length);
+            }
+
+            function start() {
+                if (reduced || timer || !visible || !onScreen) return;
+                timer = setInterval(advance, interval);
+            }
+
+            function stop() {
+                clearInterval(timer);
+                timer = null;
+            }
+
+            bars.forEach(function (bar) {
+                bar.addEventListener('click', function () {
+                    const idx = parseInt(this.getAttribute('data-index'), 10);
+                    if (idx === current) return;
+                    stop();
+                    paint(idx);
+                    start();
+                });
+            });
+
+            // Do not burn frames while the tab is hidden or the hero is scrolled away
+            document.addEventListener('visibilitychange', function () {
+                visible = !document.hidden;
+                visible ? start() : stop();
+            });
+
+            if ('IntersectionObserver' in window) {
+                new IntersectionObserver(function (entries) {
+                    onScreen = entries[0].isIntersecting;
+                    onScreen ? start() : stop();
+                }, { threshold: 0.15 }).observe(hero);
+            }
+
+            start();
+        }
+    }
+
     // Size / LED selector on the product page. Keeps the displayed price, the
     // stock line, the quantity cap and the submitted variant_id in sync, and
     // blocks submission for a size/LED combination that is not sold.

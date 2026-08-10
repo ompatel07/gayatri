@@ -1899,3 +1899,200 @@ body.intro-active {
         min-height: 260px;
     }
 }
+
+/* ============================================================
+   Hero background slider
+   Slide 1 carries .is-active from PHP, so the hero still renders
+   correctly if JavaScript never runs.
+   ============================================================ */
+.hero-slides {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    overflow: hidden;
+    background: var(--navy-dark);
+}
+
+.hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.4s ease-in-out;
+    will-change: opacity;
+}
+
+.hero-slide.is-active {
+    opacity: 1;
+}
+
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.04);
+}
+
+/* Slow drift so a static photo still feels alive */
+.hero-slide.is-active img {
+    animation: heroKenBurns 9s ease-out forwards;
+}
+
+@keyframes heroKenBurns {
+    from { transform: scale(1.04) translate3d(0, 0, 0); }
+    to   { transform: scale(1.14) translate3d(-1.2%, -1%, 0); }
+}
+
+/* Darkens toward the text side so the headline stays readable
+   whichever photo is showing */
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(90deg,
+            rgba(20, 26, 14, 0.93) 0%,
+            rgba(20, 26, 14, 0.80) 42%,
+            rgba(20, 26, 14, 0.38) 78%,
+            rgba(20, 26, 14, 0.30) 100%),
+        linear-gradient(180deg, rgba(20, 26, 14, 0.55) 0%, rgba(20, 26, 14, 0) 35%);
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+/* Chip + progress bars */
+.hero-slider-ui {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 34px;
+}
+
+.hero-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: max-content;
+    max-width: 100%;
+    padding: 7px 16px;
+    border: 1px solid rgba(163, 177, 138, 0.55);
+    border-radius: 999px;
+    background: rgba(20, 26, 14, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: #F7F5E8;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.hero-chip:hover {
+    color: var(--navy-dark);
+    background: var(--primary-gold-light);
+    border-color: var(--primary-gold-light);
+}
+
+.hero-chip-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--primary-gold-light);
+    flex-shrink: 0;
+    animation: heroPulse 2s ease-in-out infinite;
+}
+
+@keyframes heroPulse {
+    0%, 100% { opacity: 1;   transform: scale(1); }
+    50%      { opacity: 0.45; transform: scale(0.75); }
+}
+
+.hero-progress {
+    display: flex;
+    gap: 8px;
+}
+
+.hero-progress button {
+    width: 46px;
+    height: 3px;
+    padding: 0;
+    border: 0;
+    background: rgba(247, 245, 232, 0.28);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.hero-progress button:hover {
+    background: rgba(247, 245, 232, 0.5);
+}
+
+.hero-progress button span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    background: var(--primary-gold-light);
+}
+
+.hero-progress button.is-active span {
+    animation: heroBar 7s linear forwards;
+}
+
+@keyframes heroBar {
+    from { width: 0; }
+    to   { width: 100%; }
+}
+
+@media (max-width: 992px) {
+    /* Text sits over the middle of the photo on a phone, so darken evenly */
+    .hero-overlay {
+        background:
+            linear-gradient(180deg,
+                rgba(20, 26, 14, 0.86) 0%,
+                rgba(20, 26, 14, 0.70) 45%,
+                rgba(20, 26, 14, 0.88) 100%);
+    }
+
+    .hero-slider-ui {
+        margin-top: 26px;
+    }
+
+    .hero-progress button {
+        flex: 1 1 0;
+        width: auto;
+        min-width: 28px;
+        height: 4px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-chip {
+        font-size: 0.7rem;
+        letter-spacing: 0.8px;
+        padding: 6px 13px;
+    }
+}
+
+/* Motion-sensitive users get the photos without the movement */
+@media (prefers-reduced-motion: reduce) {
+    .hero-slide,
+    .hero-slide img,
+    .hero-slide.is-active img,
+    .hero-chip-pulse,
+    .hero-progress button.is-active span {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .hero-slide img { transform: none; }
+    .hero-progress button.is-active span { width: 100%; }
+}
