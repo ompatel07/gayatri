@@ -204,21 +204,26 @@ function get_variant($pdo, $variant_id) {
  */
 function hero_slides() {
     return [
-        ['img'   => 'assets/images/products/krishna-led-acrylic-nameplate-2.jpg',
+        // Dark stone wall, warm uplight on a gold logo - the most cinematic
+        // frame in the shoot, so it leads.
+        ['img'   => 'assets/images/products/skywings-corporate-nameplate-3.jpg',
+         'label' => 'Corporate Signage',
+         'href'  => 'shop.php?category=nameplates'],
+        ['img'   => 'assets/images/products/round-wooden-nameplate-planter-2.jpg',
+         'label' => 'Custom Nameplates',
+         'href'  => 'shop.php?category=nameplates'],
+        ['img'   => 'assets/images/products/black-floral-led-nameplate-round-2.jpg',
          'label' => 'LED Backlit Nameplates',
+         'href'  => 'shop.php?category=nameplates'],
+        ['img'   => 'assets/images/luxury_living_room.jpg',
+         'label' => 'Home Décor Collections',
+         'href'  => 'shop.php'],
+        ['img'   => 'assets/images/products/radhe-krishna-blue-circle-nameplate-2.jpg',
+         'label' => 'Acrylic Nameplates',
          'href'  => 'shop.php?category=nameplates'],
         ['img'   => 'assets/images/products/metal_leaf_art.jpg',
          'label' => 'Designer Metal Wall Art',
          'href'  => 'shop.php?category=wall-art'],
-        ['img'   => 'assets/images/products/ember_colour.jpg',
-         'label' => '3D MDF Wall Clocks',
-         'href'  => 'shop.php?category=wall-clock'],
-        ['img'   => 'assets/images/products/skywings-corporate-nameplate-5.jpg',
-         'label' => 'Corporate Signage',
-         'href'  => 'shop.php?category=nameplates'],
-        ['img'   => 'assets/images/products/sunburst_mirror.jpg',
-         'label' => 'Decorative Wall Mirrors',
-         'href'  => 'shop.php?category=wall-art-mirrors'],
     ];
 }
 

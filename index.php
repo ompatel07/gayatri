@@ -51,15 +51,17 @@ $categories = $cat_stmt->fetchAll();
 
 <!-- Hero with rotating product backgrounds -->
 <?php $slides = hero_slides(); ?>
-<section class="hero-section" id="heroSection" data-hero-interval="7000">
+<section class="hero-section" id="heroSection" data-hero-interval="5000">
     <div class="hero-slides" aria-hidden="true">
         <?php foreach ($slides as $i => $s): ?>
-            <div class="hero-slide<?= $i === 0 ? ' is-active' : '' ?>" data-index="<?= $i ?>">
+            <?php // Four camera moves cycle so consecutive slides never drift the same way ?>
+            <div class="hero-slide kb-<?= ($i % 4) + 1 ?><?= $i === 0 ? ' is-active' : '' ?>" data-index="<?= $i ?>">
                 <?= responsive_img($s['img'], '', '100vw', ['lazy' => $i !== 0]) ?>
             </div>
         <?php endforeach; ?>
     </div>
     <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-vignette" aria-hidden="true"></div>
 
     <div class="container">
         <div class="hero-content">

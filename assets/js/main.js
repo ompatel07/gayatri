@@ -71,7 +71,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (meta[next]) {
                     if (chipLabel) chipLabel.textContent = meta[next].label;
-                    if (chip) chip.setAttribute('href', meta[next].href);
+                    if (chip) {
+                        chip.setAttribute('href', meta[next].href);
+                        // Restart the label animation so the change registers
+                        chip.classList.remove('is-swapping');
+                        void chip.offsetWidth;
+                        chip.classList.add('is-swapping');
+                    }
                 }
                 current = next;
             }

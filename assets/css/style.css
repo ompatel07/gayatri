@@ -1917,12 +1917,14 @@ body.intro-active {
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 1.4s ease-in-out;
-    will-change: opacity;
+    transform: scale(1.03);
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+    will-change: opacity, transform;
 }
 
 .hero-slide.is-active {
     opacity: 1;
+    transform: scale(1);
 }
 
 .hero-slide img {
@@ -1930,17 +1932,47 @@ body.intro-active {
     height: 100%;
     object-fit: cover;
     display: block;
-    transform: scale(1.04);
+    transform: scale(1.06);
 }
 
-/* Slow drift so a static photo still feels alive */
-.hero-slide.is-active img {
-    animation: heroKenBurns 9s ease-out forwards;
+/* Four camera moves, cycled across slides so the motion never repeats
+   back-to-back. Each runs a little longer than the slide interval so the
+   image is still travelling when the cross-fade begins. */
+.hero-slide.is-active.kb-1 img { animation: heroKb1 8s ease-out forwards; }
+.hero-slide.is-active.kb-2 img { animation: heroKb2 8s ease-out forwards; }
+.hero-slide.is-active.kb-3 img { animation: heroKb3 8s ease-out forwards; }
+.hero-slide.is-active.kb-4 img { animation: heroKb4 8s ease-out forwards; }
+
+@keyframes heroKb1 {   /* push in, drift left */
+    from { transform: scale(1.06) translate3d(0, 0, 0); }
+    to   { transform: scale(1.18) translate3d(-2.2%, -1%, 0); }
 }
 
-@keyframes heroKenBurns {
-    from { transform: scale(1.04) translate3d(0, 0, 0); }
-    to   { transform: scale(1.14) translate3d(-1.2%, -1%, 0); }
+@keyframes heroKb2 {   /* pull back, drift right */
+    from { transform: scale(1.20) translate3d(1.8%, 1%, 0); }
+    to   { transform: scale(1.06) translate3d(0, 0, 0); }
+}
+
+@keyframes heroKb3 {   /* slow rise */
+    from { transform: scale(1.10) translate3d(0, 2.2%, 0); }
+    to   { transform: scale(1.18) translate3d(0, -2.2%, 0); }
+}
+
+@keyframes heroKb4 {   /* push in from the right */
+    from { transform: scale(1.06) translate3d(2%, -1%, 0); }
+    to   { transform: scale(1.18) translate3d(-1%, 1%, 0); }
+}
+
+/* Cinematic edge falloff, sits above the photo but below the copy */
+.hero-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(120% 100% at 60% 45%,
+                rgba(0, 0, 0, 0) 35%,
+                rgba(0, 0, 0, 0.28) 78%,
+                rgba(0, 0, 0, 0.55) 100%);
 }
 
 /* Darkens toward the text side so the headline stays readable
@@ -2044,7 +2076,7 @@ body.intro-active {
 }
 
 .hero-progress button.is-active span {
-    animation: heroBar 7s linear forwards;
+    animation: heroBar 5s linear forwards;
 }
 
 @keyframes heroBar {
@@ -2095,4 +2127,27 @@ body.intro-active {
 
     .hero-slide img { transform: none; }
     .hero-progress button.is-active span { width: 100%; }
+}
+
+/* Chip re-animates on every slide change so the label change is noticed */
+.hero-chip.is-swapping #heroChipLabel,
+.hero-chip.is-swapping span:not(.hero-chip-pulse) {
+    animation: heroChipIn 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes heroChipIn {
+    from { opacity: 0; transform: translateY(7px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Reduced motion: no camera moves, no fade, no vignette pulse */
+@media (prefers-reduced-motion: reduce) {
+    .hero-slide.is-active.kb-1 img,
+    .hero-slide.is-active.kb-2 img,
+    .hero-slide.is-active.kb-3 img,
+    .hero-slide.is-active.kb-4 img,
+    .hero-chip.is-swapping #heroChipLabel {
+        animation: none !important;
+    }
+    .hero-slide { transition: none !important; transform: none !important; }
 }
