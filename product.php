@@ -143,21 +143,23 @@ $related_products = $related_stmt->fetchAll();
             
             <!-- Gallery Thumbnails -->
             <?php
-            // Show the hover shot only when it is genuinely a second photo; several
-            // products store the same file in both columns.
-            $gallery = [$product['image_url']];
-            if (!empty($product['hover_image_url']) && $product['hover_image_url'] !== $product['image_url']) {
-                $gallery[] = $product['hover_image_url'];
+            // Prefer the full photo set; fall back to main + hover for products
+            // that were never given a gallery.
+            $gallery = get_gallery($pdo, $product_id);
+            if (!$gallery) {
+                $gallery = [$product['image_url']];
+                if (!empty($product['hover_image_url']) && $product['hover_image_url'] !== $product['image_url']) {
+                    $gallery[] = $product['hover_image_url'];
+                }
             }
             ?>
             <?php if (count($gallery) > 1): ?>
-                <div class="row g-2">
-                    <?php foreach ($gallery as $shot): ?>
+                <div class="row g-2 product-gallery">
+                    <?php foreach ($gallery as $gi => $shot): ?>
                         <div class="col-3">
-                            <?= responsive_img($shot, $product['name'] . ' thumbnail', SIZES_GALLERY, [
-                                    'class' => 'img-thumbnail img-gallery-thumb',
+                            <?= responsive_img($shot, $product['name'] . ' photo ' . ($gi + 1), SIZES_GALLERY, [
+                                    'class' => 'img-thumbnail img-gallery-thumb' . ($gi === 0 ? ' is-active' : ''),
                                     'width' => 120, 'height' => 120,
-                                    'style' => 'cursor: pointer;',
                                 ]) ?>
                         </div>
                     <?php endforeach; ?>

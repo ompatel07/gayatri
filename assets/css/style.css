@@ -1849,3 +1849,53 @@ body.intro-active {
         width: 100%;
     }
 }
+
+/* ============================================================
+   Product gallery thumbnails
+   Photos vary in aspect ratio, so the thumbs are squared with
+   object-fit rather than letting the row go ragged.
+   ============================================================ */
+.product-gallery .img-gallery-thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 0;
+    border: 1px solid rgba(38, 48, 26, 0.18);
+    padding: 3px;
+    background: var(--white);
+    transition: var(--transition);
+}
+
+.product-gallery .img-gallery-thumb:hover {
+    border-color: var(--primary-gold);
+}
+
+.product-gallery .img-gallery-thumb.is-active {
+    border-color: var(--primary-gold);
+    box-shadow: 0 0 0 2px rgba(107, 122, 47, 0.35);
+}
+
+/* The hero keeps a stable box so switching photos does not jump the layout */
+.product-detail-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+}
+
+@media (min-width: 992px) {
+    .product-detail-img {
+        min-height: 460px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .product-gallery .col-3 {
+        width: 25%;
+    }
+
+    .product-detail-img {
+        min-height: 260px;
+    }
+}

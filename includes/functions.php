@@ -194,6 +194,19 @@ function get_variant($pdo, $variant_id) {
 
 // "13x13 in - With LED" where an option applies, plain "12x12 in" where the
 // product varies by size only (wall clocks, tabletop).
+// Every photo for a product, in insertion order. Empty for products that were
+// never given a gallery, in which case the caller falls back to main + hover.
+function get_gallery($pdo, $product_id) {
+    try {
+        $stmt = $pdo->prepare("SELECT image_url FROM product_gallery
+                               WHERE product_id = ? ORDER BY id");
+        $stmt->execute([(int)$product_id]);
+        return array_map(fn($r) => $r['image_url'], $stmt->fetchAll());
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
 function variant_label($v) {
     if (!$v) {
         return '';
