@@ -472,9 +472,23 @@ $categories = $cat_stmt->fetchAll();
 <!-- Smooth Scroll & Parallax Animations Script -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Freeze page scrolling during intro playback (using global Lenis instance)
+    const introEl = document.getElementById("luxury-intro");
+
+    // Play the cinematic intro once per session rather than on every visit,
+    // and bail out entirely if GSAP did not load - otherwise the overlay
+    // would sit over the page forever with no way to dismiss it.
+    var alreadySeen = false;
+    try { alreadySeen = sessionStorage.getItem("tgdIntroSeen") === "1"; } catch (e) {}
+
+    if (!introEl || alreadySeen || typeof gsap === "undefined") {
+        if (introEl) introEl.remove();
+        document.body.classList.remove('intro-active');
+        return;
+    }
+    try { sessionStorage.setItem("tgdIntroSeen", "1"); } catch (e) {}
+
+    // Freeze page scrolling during intro playback (body.intro-active)
     document.body.classList.add('intro-active');
-    if (window.lenis) window.lenis.stop();
 
     // Canvas Golden Dust Particles
     const canvas = document.getElementById("intro-canvas");
@@ -635,8 +649,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     const intro = document.getElementById("luxury-intro");
                     if (intro) intro.remove();
                     document.body.classList.remove('intro-active');
-                    if (window.lenis) window.lenis.start();
-                    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
                 }
             });
         }

@@ -5,40 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>The Gayatri Decors | Premium Home Décor &amp; Clocks</title>
     <meta name="description" content="Shop premium 3D MDF wall clocks, metal wall art, canvas frames, tabletop structures, and decorative mirrors from The Gayatri Decors.">
-        <!-- Bootstrap 5 CSS -->
+            <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap">
+
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- GSAP & Lenis Smooth Scroll -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
-    <script>
-        // Initialize Lenis globally on window object for high-performance scroll syncing
-        window.lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential easing for premium inertia
-            smoothWheel: true,     // Smooth wheel scrolling for desktops
-            smoothTouch: false,    // Native touch inertia on mobile to prevent stutters
-            wheelMultiplier: 1.0,
-            touchMultiplier: 1.2
-        });
 
-        // Sync with GSAP ScrollTrigger if available (prevents layout thrashing on scroll trigger updates)
-        if (typeof ScrollTrigger !== 'undefined' && typeof gsap !== 'undefined') {
-            window.lenis.on('scroll', ScrollTrigger.update);
-            gsap.ticker.add((time) => {
-                window.lenis.raf(time * 1000);
-            });
-            gsap.ticker.lagSmoothing(0);
-        } else {
-            function raf(time) {
-                window.lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
-        }
-    </script>
+    
     <!-- Custom Style -->
     <link href="/assets/css/style.css" rel="stylesheet">
 </head>
@@ -425,9 +404,9 @@
 </a>
 
 <!-- Bootstrap 5 JS Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Custom JS -->
-<script src="/assets/js/main.js"></script>
+<script defer src="/assets/js/main.js"></script>
 
 <div id="demo-note" style="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
  z-index:9999;background:#26301A;color:#F7F5E8;border:1px solid #6B7A2F;border-radius:999px;

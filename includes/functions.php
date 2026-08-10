@@ -49,6 +49,21 @@ function get_user_name() {
     return $_SESSION['user_name'] ?? 'Guest';
 }
 
+/**
+ * Versioned asset URL.
+ *
+ * These were previously stamped with time(), which changed on every single
+ * request and therefore defeated the one-year Expires headers in .htaccess
+ * entirely - the stylesheet was re-downloaded on every page view. Keying on
+ * the file's mtime busts the cache only when the file actually changes.
+ */
+function asset_url($path) {
+    $path = ltrim($path, '/');
+    $abs  = __DIR__ . '/../' . $path;
+    $ver  = is_file($abs) ? filemtime($abs) : 1;
+    return BASE_URL . '/' . $path . '?v=' . $ver;
+}
+
 // Format Price
 function format_price($price) {
     return '₹' . number_format($price, 2);
@@ -81,15 +96,21 @@ function img_variants($url) {
     if (isset($cache[$stem])) {
         return $cache[$stem];
     }
-    // Discovered by glob rather than assumed: the generator also emits a variant
-    // at the source's native width, which is not one of the ladder values.
-    $dir = __DIR__ . '/../assets/images/products/responsive/';
-    $widths = [];
-    foreach (glob($dir . $stem . '-*.webp') ?: [] as $file) {
-        if (preg_match('/-(\d+)\.webp$/', $file, $m)) {
-            $widths[] = (int)$m[1];
+    // The directory is indexed once per request instead of running a glob per
+    // image: a listing page renders ~80 images, and 80 globs over a 300-file
+    // directory is pure waste when one scandir answers all of them.
+    static $index = null;
+    if ($index === null) {
+        $index = [];
+        $dir = __DIR__ . '/../assets/images/products/responsive/';
+        foreach (@scandir($dir) ?: [] as $file) {
+            if (preg_match('/^(.+)-(\d+)\.webp$/', $file, $m)) {
+                $index[$m[1]][] = (int)$m[2];
+            }
         }
     }
+
+    $widths = $index[$stem] ?? [];
     sort($widths);
     return $cache[$stem] = ['stem' => $stem, 'widths' => $widths];
 }

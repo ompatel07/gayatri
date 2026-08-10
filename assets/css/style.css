@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-
 :root {
     --primary-gold: #6B7A2F;
     --primary-gold-dark: #4F5B23;
@@ -107,7 +105,6 @@ h6,
     transition: var(--transition);
     padding: 12px 0;
     transform: translate3d(0, 0, 0);
-    will-change: transform;
     backface-visibility: hidden;
 }
 
@@ -132,7 +129,7 @@ h6,
 }
 
 .navbar-brand span {
-    color: var(--white);
+    color: var(--navy-dark);
     font-size: 1rem;
     display: block;
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -255,25 +252,6 @@ h6,
     position: relative;
     overflow: hidden;
     z-index: 1;
-}
-
-.hero-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 130%;
-    /* JPEG first as the fallback declaration; browsers that understand
-       image-set() take the WebP below (115KB vs 809KB). */
-    background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), url('../images/products/metal_leaf_art.jpg') no-repeat center center;
-    background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)),
-                image-set(url('../images/products/responsive/metal_leaf_art-1024.webp') type('image/webp'),
-                          url('../images/products/metal_leaf_art.jpg') type('image/jpeg')) no-repeat center center;
-    background-size: cover;
-    z-index: -1;
-    transform: translate3d(0, 0, 0);
-    will-change: transform;
-    backface-visibility: hidden;
 }
 
 .hero-content {
@@ -599,7 +577,6 @@ footer a {
 
 footer a:hover {
     color: var(--primary-gold);
-    padding-left: 5px;
 }
 
 footer hr {
@@ -1913,18 +1890,21 @@ body.intro-active {
     background: var(--navy-dark);
 }
 
+/* Only opacity animates on the wrapper. Previously the wrapper scaled while
+   the image ran its own transform, so two nested transforms fought each other
+   mid-fade - that was the jerk. One transform layer, one opacity layer. */
 .hero-slide {
     position: absolute;
     inset: 0;
     opacity: 0;
-    transform: scale(1.03);
-    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
-    will-change: opacity, transform;
+    transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity;
+    transform: translateZ(0);          /* own compositor layer */
+    backface-visibility: hidden;
 }
 
 .hero-slide.is-active {
     opacity: 1;
-    transform: scale(1);
 }
 
 .hero-slide img {
@@ -1932,35 +1912,41 @@ body.intro-active {
     height: 100%;
     object-fit: cover;
     display: block;
-    transform: scale(1.06);
+    transform: scale(1.06) translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
 }
 
 /* Four camera moves, cycled across slides so the motion never repeats
    back-to-back. Each runs a little longer than the slide interval so the
    image is still travelling when the cross-fade begins. */
-.hero-slide.is-active.kb-1 img { animation: heroKb1 8s ease-out forwards; }
-.hero-slide.is-active.kb-2 img { animation: heroKb2 8s ease-out forwards; }
-.hero-slide.is-active.kb-3 img { animation: heroKb3 8s ease-out forwards; }
-.hero-slide.is-active.kb-4 img { animation: heroKb4 8s ease-out forwards; }
+/* linear, not ease-out: an eased drift decelerates to a stop part-way through
+   the slide, which reads as the image "sticking". Linear keeps it gliding at a
+   constant rate right through the cross-fade. 11s against a 5s slide means the
+   move is never more than half spent when the next slide takes over. */
+.hero-slide.is-active.kb-1 img { animation: heroKb1 11s linear forwards; }
+.hero-slide.is-active.kb-2 img { animation: heroKb2 11s linear forwards; }
+.hero-slide.is-active.kb-3 img { animation: heroKb3 11s linear forwards; }
+.hero-slide.is-active.kb-4 img { animation: heroKb4 11s linear forwards; }
 
 @keyframes heroKb1 {   /* push in, drift left */
     from { transform: scale(1.06) translate3d(0, 0, 0); }
-    to   { transform: scale(1.18) translate3d(-2.2%, -1%, 0); }
+    to   { transform: scale(1.22) translate3d(-3%, -1.5%, 0); }
 }
 
 @keyframes heroKb2 {   /* pull back, drift right */
-    from { transform: scale(1.20) translate3d(1.8%, 1%, 0); }
+    from { transform: scale(1.24) translate3d(2.5%, 1.5%, 0); }
     to   { transform: scale(1.06) translate3d(0, 0, 0); }
 }
 
 @keyframes heroKb3 {   /* slow rise */
-    from { transform: scale(1.10) translate3d(0, 2.2%, 0); }
-    to   { transform: scale(1.18) translate3d(0, -2.2%, 0); }
+    from { transform: scale(1.10) translate3d(0, 3%, 0); }
+    to   { transform: scale(1.22) translate3d(0, -3%, 0); }
 }
 
 @keyframes heroKb4 {   /* push in from the right */
-    from { transform: scale(1.06) translate3d(2%, -1%, 0); }
-    to   { transform: scale(1.18) translate3d(-1%, 1%, 0); }
+    from { transform: scale(1.06) translate3d(2.5%, -1.5%, 0); }
+    to   { transform: scale(1.22) translate3d(-1.5%, 1.5%, 0); }
 }
 
 /* Cinematic edge falloff, sits above the photo but below the copy */

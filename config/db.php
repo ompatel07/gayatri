@@ -40,17 +40,60 @@ if (!defined('BASE_URL')) {
 
 $pdo = null;
 
-// 1. Try MySQL Connection
-try {
-    $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
-    $options = [
-        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        PDO::ATTR_EMULATE_PREPARES   => false,
-    ];
-    $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
-} catch (Exception $e) {
-    // 2. Try SQLite fallback (for Vercel / environment without active local MySQL)
+/**
+ * Is a MySQL server actually listening?
+ *
+ * Without this, every page issued a blind PDO connect to localhost:3306. When
+ * MySQL is not running that call blocks on a TCP timeout before the SQLite
+ * fallback is reached - roughly four seconds, on every single request. A short
+ * socket probe makes the "no MySQL here" case cost about a millisecond, and
+ * costs nothing when MySQL *is* running.
+ *
+ * Set DB_DRIVER=sqlite in the environment to skip MySQL outright.
+ */
+function tgd_mysql_reachable($host, $port = 3306, $timeout = 0.15) {
+    $driver = strtolower((string)getenv('DB_DRIVER'));
+    if ($driver === 'sqlite') return false;
+    if ($driver === 'mysql')  return true;   // trust the operator, skip the probe
+
+    // Windows does not report "connection refused" immediately - fsockopen
+    // burns the whole timeout on a closed port. Cache the answer for a minute
+    // so only one request in sixty pays for it, and it still self-heals if
+    // MySQL is started or stopped later.
+    $cacheFile = sys_get_temp_dir() . '/tgd_dbprobe_' . md5($host . ':' . $port);
+    if (is_file($cacheFile) && (time() - filemtime($cacheFile)) < 60) {
+        return trim((string)@file_get_contents($cacheFile)) === '1';
+    }
+
+    // "localhost" can resolve to ::1 first and stall; probe IPv4 directly.
+    $probeHost = ($host === 'localhost') ? '127.0.0.1' : $host;
+    $sock = @fsockopen($probeHost, $port, $errno, $errstr, $timeout);
+    $ok = false;
+    if ($sock) {
+        fclose($sock);
+        $ok = true;
+    }
+    @file_put_contents($cacheFile, $ok ? '1' : '0');
+    return $ok;
+}
+
+// 1. Try MySQL, but only if something is listening on the port
+if (tgd_mysql_reachable(DB_HOST)) {
+    try {
+        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+        $pdo = new PDO($dsn, DB_USER, DB_PASS, [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+            PDO::ATTR_TIMEOUT            => 3,
+        ]);
+    } catch (Exception $e) {
+        $pdo = null;
+    }
+}
+
+if (!$pdo) {
+    // 2. SQLite fallback (Vercel, or any box without a local MySQL)
     try {
         $sqliteFile = __DIR__ . '/../database.sqlite';
         if (file_exists($sqliteFile)) {

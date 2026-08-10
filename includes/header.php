@@ -25,42 +25,32 @@ $current_page = basename($_SERVER['PHP_SELF']);
           imagesrcset="<?= htmlspecialchars(img_srcset($first_slide), ENT_QUOTES, 'UTF-8') ?>"
           imagesizes="100vw">
     <?php endif; ?>
+    <?php // Open the CDN/font connections while the HTML is still parsing ?>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <?php // Fonts were imported from inside style.css, which forced the browser to
+          // download and parse the CSS before it could even request them. ?>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap">
+
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- GSAP & Lenis Smooth Scroll -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
-    <script>
-        // Initialize Lenis globally on window object for high-performance scroll syncing
-        window.lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential easing for premium inertia
-            smoothWheel: true,     // Smooth wheel scrolling for desktops
-            smoothTouch: false,    // Native touch inertia on mobile to prevent stutters
-            wheelMultiplier: 1.0,
-            touchMultiplier: 1.2
-        });
 
-        // Sync with GSAP ScrollTrigger if available (prevents layout thrashing on scroll trigger updates)
-        if (typeof ScrollTrigger !== 'undefined' && typeof gsap !== 'undefined') {
-            window.lenis.on('scroll', ScrollTrigger.update);
-            gsap.ticker.add((time) => {
-                window.lenis.raf(time * 1000);
-            });
-            gsap.ticker.lagSmoothing(0);
-        } else {
-            function raf(time) {
-                window.lenis.raf(time);
-                requestAnimationFrame(raf);
-            }
-            requestAnimationFrame(raf);
-        }
-    </script>
+    <?php if ($current_page === 'index.php'): ?>
+    <?php // GSAP drives the intro overlay and nothing else, so it only loads on
+          // the home page, and deferred rather than blocking the parser.
+          // ScrollTrigger was removed: it was never used for any animation, only
+          // as Lenis glue. Lenis went too - it hijacked the wheel for no gain,
+          // and body.intro-active already handles the scroll lock. ?>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <?php endif; ?>
+
     <!-- Custom Style -->
-    <link href="<?= BASE_URL ?>/assets/css/style.css?v=<?= time() ?>" rel="stylesheet">
+    <link href="<?= asset_url('assets/css/style.css') ?>" rel="stylesheet">
 </head>
 <body>
 
