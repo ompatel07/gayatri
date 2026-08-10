@@ -10,8 +10,13 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Gayatri Decors | Premium Home Décor & Clocks</title>
-    <meta name="description" content="Shop premium 3D MDF wall clocks, metal wall art, canvas frames, tabletop structures, and decorative mirrors from The Gayatri Decors.">
+    <?php // A page may set $page_title / $page_description before including this file. ?>
+    <title><?= isset($page_title)
+        ? sanitize($page_title) . ' | The Gayatri Decors'
+        : 'The Gayatri Decors | Premium Home Décor &amp; Clocks' ?></title>
+    <meta name="description" content="<?= isset($page_description)
+        ? sanitize($page_description)
+        : 'Shop premium 3D MDF wall clocks, metal wall art, canvas frames, tabletop structures, and decorative mirrors from The Gayatri Decors.' ?>">
     <?php if ($current_page === 'index.php'): ?>
     <!-- Preload the hero background (the LCP element) only on the page that has a hero -->
     <link rel="preload" as="image" type="image/webp"
@@ -72,6 +77,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= ($current_page == 'shop.php') ? 'active' : '' ?>" href="<?= BASE_URL ?>/shop.php">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?= ($current_page == 'about.php') ? 'active' : '' ?>" href="<?= BASE_URL ?>/about.php">About</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

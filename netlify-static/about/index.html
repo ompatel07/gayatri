@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Us | The Gayatri Decors</title>
+    <meta name="description" content="The Gayatri Decors has manufactured premium home decor in India since 2012 - wall art, frames, mirrors, custom nameplates and metal decor, with bespoke customisation.">
+        <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- GSAP & Lenis Smooth Scroll -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+    <script>
+        // Initialize Lenis globally on window object for high-performance scroll syncing
+        window.lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential easing for premium inertia
+            smoothWheel: true,     // Smooth wheel scrolling for desktops
+            smoothTouch: false,    // Native touch inertia on mobile to prevent stutters
+            wheelMultiplier: 1.0,
+            touchMultiplier: 1.2
+        });
+
+        // Sync with GSAP ScrollTrigger if available (prevents layout thrashing on scroll trigger updates)
+        if (typeof ScrollTrigger !== 'undefined' && typeof gsap !== 'undefined') {
+            window.lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => {
+                window.lenis.raf(time * 1000);
+            });
+            gsap.ticker.lagSmoothing(0);
+        } else {
+            function raf(time) {
+                window.lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+        }
+    </script>
+    <!-- Custom Style -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="/assets/images/gayatri-full-logo.png" alt="The Gayatri Decors Logo" class="navbar-full-logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link " href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/shop/">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/about/">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categories
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-menu-item dropdown-item" href="/shop/category/wall-art/">Wall Art</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/wall-clock/">Wall Clock</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/wall-frames/">Wall Frames</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/nameplates/">Nameplates</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/tabletop/">Tabletop</a></li><li><a class="dropdown-menu-item dropdown-item" href="/shop/category/wall-art-mirrors/">Wall Art Mirrors</a></li>                    </ul>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+                <!-- Search -->
+                <form action="/shop/" method="GET" class="d-flex" role="search">
+                    <input type="search" name="search" class="form-control form-control-sm border-secondary"
+                           placeholder="Search products..." aria-label="Search products"
+                           value=""
+                           style="border-radius: 0; max-width: 170px;">
+                    <button class="btn btn-gold btn-sm" type="submit" aria-label="Search">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+
+                <!-- Cart -->
+                                <a href="/cart/"
+                   class="nav-link position-relative "
+                   aria-label="Shopping cart">
+                    <i class="bi bi-bag fs-5"></i>
+                                    </a>
+
+                <!-- Account -->
+                                    <a href="/login/" class="btn btn-outline-gold btn-sm">Login</a>
+                    <a href="/register/" class="btn btn-gold btn-sm d-none d-xl-inline-block">Register</a>
+                            </div>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container -->
+</nav>
+
+<!-- Breadcrumbs -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <h1 class="font-serif fs-3">About Us</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">About Us</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<!-- Intro -->
+<section class="about-intro py-5">
+    <div class="container py-4">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7">
+                <span class="about-eyebrow">Established 2012</span>
+                <h2 class="font-serif about-heading mb-3">Crafting Spaces,<br>Creating Impressions</h2>
+                <div class="about-rule"></div>
+                <p class="about-lead">
+                    <strong>The Gayatri Decors</strong> is an Indian manufacturer and supplier of premium
+                    home décor and decorative products, dedicated to transforming everyday spaces into
+                    beautiful, inspiring environments.
+                </p>
+                <p>
+                    With years of experience in the décor industry, we combine creative design, quality
+                    craftsmanship, modern manufacturing techniques and attention to detail to create
+                    products that complement a wide range of interior styles. From contemporary homes and
+                    offices to commercial spaces and hospitality interiors, our products are designed to
+                    add character, elegance and a distinctive finishing touch.
+                </p>
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <a href="/shop/" class="btn btn-gold">Explore Our Collection</a>
+                    <a href="https://wa.me/919227147646?text=Hello%20The%20Gayatri%20Decors%2C%20I%20would%20like%20to%20know%20more%20about%20your%20products."
+                       target="_blank" rel="noopener noreferrer" class="btn btn-outline-gold">
+                        <i class="bi bi-whatsapp me-1"></i> Talk to Us
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="about-figure">
+                    <img src="/assets/images/products/mukesh_nameplate_main.png" srcset="/assets/images/products/responsive/mukesh_nameplate_main-400.webp 400w, /assets/images/products/responsive/mukesh_nameplate_main-800.webp 800w, /assets/images/products/responsive/mukesh_nameplate_main-1024.webp 1024w" sizes="(max-width: 992px) 92vw, 40vw" alt="Handcrafted decor by The Gayatri Decors" loading="lazy" decoding="async">                </div>
+                <div class="about-since">
+                    <span class="about-since-num">12+</span>
+                    <span class="about-since-txt">Years of<br>Craftsmanship</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Product range -->
+<section class="about-dark py-5">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <span class="about-eyebrow-light">- What We Make -</span>
+            <h2 class="display-6 font-serif text-white">Our Product Range</h2>
+            <p class="about-sub mx-auto">Our range evolves continuously with changing interior trends,
+               customer preferences and innovative design concepts.</p>
+            <div class="about-rule mx-auto"></div>
+        </div>
+        <div class="row g-3 g-md-4">
+                            <div class="col-6 col-md-4 col-lg-3">
+                    <div class="about-range-card h-100">
+                        <i class="bi bi-image"></i>
+                        <span>Wall Frames</span>
+                    </div>
+                </div>
+                            <div class="col-6 col-md-4 col-lg-3">
+                    <div class="about-range-card h-100">
+                        <i class="bi bi-palette"></i>
+                        <span>Wall Art</span>
+                    </div>
+                </div>
+                            <div class="col-6 col-md-4 col-lg-3">
+                    <div class="about-range-card h-100">
+                        <i class="bi bi-aspect-ratio"></i>
+                        <span>Wall Mirrors</span>
+                    </div>
+                </div>
+                            <div class="col-6 col-md-4 col-lg-3">
+                    <div class="about-range-card h-100">
+                        <i class="bi bi-house-door"></i>
+                        <span>Custom Name Plates</span>
+                    </div>
+                </div>
+                            <div class="col-6 col-md-4 col-lg-3">
+                    <div class="about-range-card h-100">
+                        <i class="bi bi-stars"></i>
+                        <span>Decorative Wall Décor</span>
+                    </div>
+                </div>
+                            <div class="col-6 col-md-4 col-lg-3">
+                    <div class="about-range-card h-100">
+                        <i class="bi bi-hexagon"></i>
+                        <span>Metal Décor Products</span>
+                    </div>
+                </div>
+                            <div class="col-6 col-md-4 col-lg-3">
+                    <div class="about-range-card h-100">
+                        <i class="bi bi-lamp"></i>
+                        <span>Home Accessories</span>
+                    </div>
+                </div>
+                            <div class="col-6 col-md-4 col-lg-3">
+                    <div class="about-range-card h-100">
+                        <i class="bi bi-sliders"></i>
+                        <span>Customized Solutions</span>
+                    </div>
+                </div>
+                    </div>
+    </div>
+</section>
+
+<!-- Quality + modern spaces -->
+<section class="py-5" style="background: var(--white);">
+    <div class="container py-4">
+        <div class="row g-4 g-lg-5">
+            <div class="col-lg-6">
+                <div class="about-panel h-100">
+                    <i class="bi bi-patch-check-fill about-panel-icon"></i>
+                    <h3 class="font-serif">Our Commitment to Quality</h3>
+                    <p>Quality is at the heart of everything we create. From selecting materials to
+                       manufacturing, finishing and final inspection, we hold high standards at every stage.</p>
+                    <p class="mb-0">A décor product should not only look attractive — it should offer
+                       <strong>durability, functionality and lasting visual appeal</strong>. Our experienced
+                       team works carefully so every piece reflects that commitment.</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-panel h-100">
+                    <i class="bi bi-house-heart-fill about-panel-icon"></i>
+                    <h3 class="font-serif">Designed for Modern Spaces</h3>
+                    <p>Every space is unique. Our collections are designed to suit different tastes and
+                       interiors — from minimal and modern to elegant, artistic, traditional and contemporary.</p>
+                    <p class="mb-0">Whether you are decorating a living room, bedroom, office, entrance area,
+                       hotel, restaurant or commercial space, we offer décor solutions that make your
+                       surroundings more expressive and beautiful.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Customization -->
+<section class="about-accent py-5">
+    <div class="container py-4">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+                <span class="about-eyebrow-light">- Made For You -</span>
+                <h2 class="display-6 font-serif text-white mb-3">Customization</h2>
+                <p class="about-sub mb-0">
+                    Alongside our regular range we specialise in customised décor and name plate solutions.
+                    We work closely with customers to create designs based on preferred
+                    <strong class="text-white">size, style, material, finish and requirements</strong> —
+                    turning your ideas into décor pieces that are uniquely yours.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="https://wa.me/919227147646?text=Hello%20The%20Gayatri%20Decors%2C%20I%20would%20like%20a%20custom%20design%20quote."
+                   target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-lg w-100 w-lg-auto">
+                    <i class="bi bi-whatsapp me-1"></i> Start a Custom Order
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Vision & mission -->
+<section class="py-5" style="background: var(--cream-bg);">
+    <div class="container py-4">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="about-vm h-100">
+                    <i class="bi bi-eye-fill"></i>
+                    <h3 class="font-serif">Our Vision</h3>
+                    <p class="mb-0">To become a trusted and recognised name in the home décor industry by
+                       delivering innovative designs, superior quality and beautifully crafted products
+                       that enhance spaces across India and global markets.</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="about-vm h-100">
+                    <i class="bi bi-compass-fill"></i>
+                    <h3 class="font-serif">Our Mission</h3>
+                    <p class="mb-0">To create high-quality home décor products that combine design,
+                       craftsmanship, affordability and durability, while continuously innovating to meet
+                       the evolving needs of our customers.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why choose us -->
+<section class="about-dark py-5">
+    <div class="container py-4">
+        <div class="text-center mb-5">
+            <span class="about-eyebrow-light">- The Gayatri Difference -</span>
+            <h2 class="display-6 font-serif text-white">Why Choose The Gayatri Decors?</h2>
+            <div class="about-rule mx-auto"></div>
+        </div>
+        <div class="row g-4">
+                            <div class="col-md-6 col-lg-4">
+                    <div class="about-why h-100">
+                        <i class="bi bi-award"></i>
+                        <div>
+                            <h5 class="font-serif mb-1">Established Since 2012</h5>
+                            <p class="mb-0">Years of experience in home décor manufacturing.</p>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-6 col-lg-4">
+                    <div class="about-why h-100">
+                        <i class="bi bi-building"></i>
+                        <div>
+                            <h5 class="font-serif mb-1">Manufacturer</h5>
+                            <p class="mb-0">Strong focus on product quality and manufacturing expertise.</p>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-6 col-lg-4">
+                    <div class="about-why h-100">
+                        <i class="bi bi-brush"></i>
+                        <div>
+                            <h5 class="font-serif mb-1">Creative Designs</h5>
+                            <p class="mb-0">Contemporary, attractive designs for modern interiors.</p>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-6 col-lg-4">
+                    <div class="about-why h-100">
+                        <i class="bi bi-rulers"></i>
+                        <div>
+                            <h5 class="font-serif mb-1">Custom Solutions</h5>
+                            <p class="mb-0">Products customised to your exact requirements.</p>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-6 col-lg-4">
+                    <div class="about-why h-100">
+                        <i class="bi bi-gem"></i>
+                        <div>
+                            <h5 class="font-serif mb-1">Quality Craftsmanship</h5>
+                            <p class="mb-0">Careful attention to materials, finishing and detailing.</p>
+                        </div>
+                    </div>
+                </div>
+                            <div class="col-md-6 col-lg-4">
+                    <div class="about-why h-100">
+                        <i class="bi bi-grid-3x3-gap"></i>
+                        <div>
+                            <h5 class="font-serif mb-1">Wide Product Range</h5>
+                            <p class="mb-0">Wall art, frames, mirrors, name plates and more.</p>
+                        </div>
+                    </div>
+                </div>
+                    </div>
+    </div>
+</section>
+
+<!-- Promise -->
+<section class="py-5" style="background: var(--white);">
+    <div class="container py-4">
+        <div class="about-promise text-center mx-auto">
+            <i class="bi bi-quote about-quote"></i>
+            <h2 class="font-serif mb-3">Our Promise</h2>
+            <p class="about-lead mb-4">
+                We don't simply manufacture décor products — we create pieces that help people
+                <strong>express their style, enhance their spaces and create lasting impressions</strong>.
+            </p>
+            <p class="text-muted">
+                With a passion for design and a commitment to quality, we continue to grow as a trusted
+                home décor manufacturer, bringing creativity and craftsmanship into homes everywhere.
+            </p>
+            <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+                <a href="/shop/" class="btn btn-gold btn-lg">Browse Products</a>
+                <a href="/" class="btn btn-outline-gold btn-lg">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="mt-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Brand Column -->
+            <div class="col-lg-3 col-md-6">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <img src="/assets/images/logo.png" alt="The Gayatri Decors Logo" style="width: 48px; height: 48px; border-radius: 50%; background: #ffffff; padding: 2px; border: 1px solid #6B7A2F; box-shadow: 0 2px 8px rgba(38,48,26,0.15);">
+                    <h5 class="text-uppercase mb-0 text-gold font-serif">The Gayatri Decors</h5>
+                </div>
+                <p class="small text-white-50">Enhance your space with our premium handcrafted 3D MDF clocks, designer metal art pieces, canvas frames, custom nameplates, and decorative wall mirrors.</p>
+                <div class="d-flex gap-3 fs-5 mt-3">
+                    <a href="https://www.facebook.com/profile.php?id=61592516032887"
+                       target="_blank" rel="noopener noreferrer" aria-label="The Gayatri Decors on Facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/the.gayatri.decors/"
+                       target="_blank" rel="noopener noreferrer" aria-label="The Gayatri Decors on Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="https://wa.me/919227147646"
+                       target="_blank" rel="noopener noreferrer" aria-label="The Gayatri Decors on WhatsApp">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+                </div>
+            </div>
+            <!-- Quick Links -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-uppercase">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/about/">About Us</a></li>
+                    <li><a href="/shop/">Shop All Products</a></li>
+                    <li><a href="/cart/">Shopping Cart</a></li>
+                    <li><a href="/login/">Customer Login</a></li>
+                    <li><a href="/register/">Create Account</a></li>
+                </ul>
+            </div>
+            <!-- Contact Info -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-uppercase">Get In Touch</h5>
+                <ul class="list-unstyled text-white-50 small">
+                    <li class="mb-2 d-flex align-items-start"><i class="bi bi-geo-alt-fill text-gold me-2 mt-1"></i> <span>116, Gopinath Estate-1, N.H. No-8,<br>Nr. Soni Ni Chali, Odhav, Ahmedabad,<br>Gujarat - 382415</span></li>
+                    <li class="mb-2">
+                        <i class="bi bi-telephone-fill text-gold me-2"></i>
+                        <a href="tel:+919227147646" class="text-white-50 text-decoration-none">+91 92271 47646</a>
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-envelope-fill text-gold me-2"></i>
+                        <a href="mailto:Thegayatrid@gmail.com" class="text-decoration-none">Thegayatrid@gmail.com</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Newsletter -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-uppercase">Newsletter</h5>
+                <p class="small text-white-50">Subscribe to receive updates, access to exclusive deals, and more.</p>
+                <form action="#" class="mt-3" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Your email..." required style="border-radius:0;">
+                        <button class="btn btn-gold" type="submit">Join</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="row align-items-center text-center text-md-start py-3">
+            <div class="col-md-6">
+                <p class="small mb-0">&copy; 2026 The Gayatri Decors. All Rights Reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end mt-2 mt-md-0">
+                <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa" width="30" />
+                <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="Mastercard" width="30" />
+                <img src="https://img.icons8.com/color/48/000000/google-pay.png" alt="Google Pay" width="30" />
+                <img src="https://img.icons8.com/color/48/000000/bhim.png" alt="BHIM UPI" width="30" />
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/919227147646?text=Hello%20The%20Gayatri%20Decors%2C%20I%20have%20an%20inquiry%20regarding%20your%20products." 
+   class="whatsapp-float-btn" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   aria-label="Chat with us on WhatsApp">
+    <div class="whatsapp-pulse"></div>
+    <i class="bi bi-whatsapp"></i>
+    <span class="whatsapp-tooltip">Chat with us on WhatsApp</span>
+</a>
+
+<!-- Bootstrap 5 JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script src="/assets/js/main.js"></script>
+
+<div id="demo-note" style="position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
+ z-index:9999;background:#26301A;color:#F7F5E8;border:1px solid #6B7A2F;border-radius:999px;
+ padding:9px 18px;font:600 13px/1.3 system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.35);
+ display:none;max-width:92vw;text-align:center;">
+  <span id="demo-note-text"></span>
+</div>
+<script>
+(function(){
+  var note=document.getElementById('demo-note'),txt=document.getElementById('demo-note-text'),t;
+  function say(m){txt.textContent=m;note.style.display='block';clearTimeout(t);
+    t=setTimeout(function(){note.style.display='none';},3200);}
+  // Nothing can POST on a static host - intercept and explain instead.
+  document.addEventListener('submit',function(e){
+    var f=e.target;
+    if(f.method&&f.method.toLowerCase()==='get'&&f.action.indexOf('/shop')>-1)return;
+    e.preventDefault();
+    say('Visual demo - ordering is disabled on this preview.');
+  },true);
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a');
+    if(a&&a.getAttribute('href')==='#demo-disabled'){e.preventDefault();
+      say('Accounts and checkout are disabled on this preview.');}
+  },true);
+})();
+</script>
+</body>
+</html>

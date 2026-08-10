@@ -10,9 +10,18 @@
                 </div>
                 <p class="small text-white-50">Enhance your space with our premium handcrafted 3D MDF clocks, designer metal art pieces, canvas frames, custom nameplates, and decorative wall mirrors.</p>
                 <div class="d-flex gap-3 fs-5 mt-3">
-                    <a href="#" class="text-white-50"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="text-white-50"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="text-white-50"><i class="bi bi-twitter-x"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61592516032887"
+                       target="_blank" rel="noopener noreferrer" aria-label="The Gayatri Decors on Facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/the.gayatri.decors/"
+                       target="_blank" rel="noopener noreferrer" aria-label="The Gayatri Decors on Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="https://wa.me/919227147646"
+                       target="_blank" rel="noopener noreferrer" aria-label="The Gayatri Decors on WhatsApp">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
                 </div>
             </div>
             <!-- Quick Links -->
@@ -20,6 +29,7 @@
                 <h5 class="text-uppercase">Quick Links</h5>
                 <ul class="list-unstyled">
                     <li><a href="<?= BASE_URL ?>/index.php">Home</a></li>
+                    <li><a href="<?= BASE_URL ?>/about.php">About Us</a></li>
                     <li><a href="<?= BASE_URL ?>/shop.php">Shop All Products</a></li>
                     <li><a href="<?= BASE_URL ?>/cart.php">Shopping Cart</a></li>
                     <li><a href="<?= BASE_URL ?>/login.php">Customer Login</a></li>

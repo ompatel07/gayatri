@@ -23,6 +23,7 @@ cats  = [r["slug"] for r in db.execute("SELECT slug FROM categories ORDER BY id"
 
 # source url -> output path (directory-style for clean URLs)
 pages = {"/index.php": "index.html",
+         "/about.php": "about/index.html",
          "/shop.php": "shop/index.html",
          "/cart.php": "cart/index.html",
          "/login.php": "login/index.html",
@@ -52,6 +53,8 @@ def static_path(php_url):
         return "/login/"
     if p == "/register.php":
         return "/register/"
+    if p == "/about.php":
+        return "/about/"
     if p.startswith("/assets/"):
         return p
     # customer/, admin/, logout, checkout, place-order: no backend on Netlify
