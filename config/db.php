@@ -1,9 +1,12 @@
 <?php
+// .env is read here so DB_* and RAZORPAY_* are available everywhere.
+require_once __DIR__ . '/env.php';
+
 // Database configuration
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') ?: '');
-define('DB_NAME', getenv('DB_NAME') ?: 'gayatri_db');
+define('DB_HOST', tgd_env('DB_HOST') ?: 'localhost');
+define('DB_USER', tgd_env('DB_USER') ?: 'root');
+define('DB_PASS', tgd_env('DB_PASS') ?: '');
+define('DB_NAME', tgd_env('DB_NAME') ?: 'gayatri_db');
 
 // Dynamically determine BASE_URL as a full absolute URL so assets/images
 // work correctly on localhost, ngrok, serveo, or any tunnel/production domain.
@@ -52,7 +55,7 @@ $pdo = null;
  * Set DB_DRIVER=sqlite in the environment to skip MySQL outright.
  */
 function tgd_mysql_reachable($host, $port = 3306, $timeout = 0.15) {
-    $driver = strtolower((string)getenv('DB_DRIVER'));
+    $driver = strtolower((string)tgd_env('DB_DRIVER'));
     if ($driver === 'sqlite') return false;
     if ($driver === 'mysql')  return true;   // trust the operator, skip the probe
 

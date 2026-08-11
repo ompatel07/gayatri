@@ -14,8 +14,14 @@ wall art, LED nameplates, tabletop frames and decorative mirrors.
 ## Running it locally
 
 ```bash
-php -S 127.0.0.1:8000 -t .
+php -S 127.0.0.1:8000 -t . router.php
 ```
+
+**Always pass `router.php`.** PHP's built-in server ignores `.htaccess`, so
+without it the server will serve `/.env`, `/database.sqlite` and `/config/*.php`
+as plain text — which leaks the Razorpay secret to anyone who asks, especially
+if you tunnel the site to the public. `router.php` reproduces the `.htaccess`
+deny rules for the dev server.
 
 `config/db.php` tries MySQL (`gayatri_db`) first, then falls back to the bundled
 `database.sqlite`. For a fresh MySQL setup, import `database.sql`.
@@ -96,9 +102,63 @@ cloudflared tunnel --url http://127.0.0.1:8000
 That serves the real PHP app on a public `*.trycloudflare.com` URL. The URL
 changes on every restart and dies when the machine sleeps.
 
+## Payments (Razorpay Standard Checkout)
+
+No Composer in this project, so there is no `razorpay/razorpay` SDK — the REST
+API is called directly with cURL, and signatures are verified with
+`hash_hmac`, which is exactly what the SDK does internally.
+
+| File | Role |
+|---|---|
+| `config/env.php` | reads `.env`, exposes `razorpay_key_id()` / `razorpay_key_secret()` / `razorpay_api()` |
+| `api/create-order.php` | `POST` → creates a Razorpay order for the current cart |
+| `api/verify-payment.php` | `POST` → verifies the signature, then writes the order |
+| `checkout.php` | renders the Razorpay button and drives the modal |
+
+Flow: checkout posts the shipping block to `create-order.php`, which computes
+the amount **from the cart on the server** and returns an `order_id`. The
+Razorpay modal opens, and on success the three returned fields are posted to
+`verify-payment.php`.
+
+Verification is deliberately strict — it refuses unless **all** hold:
+
+1. the signature `HMAC-SHA256(order_id|payment_id, KEY_SECRET)` matches;
+2. the `order_id` is the one this session started (blocks replaying a valid
+   signature from a cheaper order);
+3. Razorpay itself confirms the payment exists, is captured/authorized,
+   belongs to that order, and is for the exact expected amount.
+
+If Razorpay is unreachable at step 3 the order is written as **pending**, not
+paid — an unconfirmed payment is never assumed good. If the payment succeeded
+but the order write failed, the payment ID is written to the error log with a
+`PAID BUT ORDER FAILED` marker and shown to the customer.
+
+COD and Razorpay both go through `place_cart_order()` so the two paths cannot
+drift apart. `place-order.php` refuses any method other than COD, so the
+gateway cannot be bypassed by posting a different `payment_method`.
+
+Test cards: <https://razorpay.com/docs/payments/payments/test-card-details/>
+(e.g. `4111 1111 1111 1111`, any future expiry, any CVV).
+
+Orders carry `payment_id` and `payment_order_id` for reconciliation; both are
+NULL for COD.
+
 ## Configuration
 
 Copy `.env.example` to `.env`. **`.env` is gitignored — never commit real keys.**
+
+```
+RAZORPAY_KEY_ID=rzp_test_xxxxxxxxxxxx
+RAZORPAY_KEY_SECRET=xxxxxxxxxxxxxxxx
+```
+
+`RAZORPAY_KEY_SECRET` is server-side only and never reaches the browser — only
+`key_id` is sent to the client. Real environment variables take precedence over
+the file, so a host that sets them properly needs no `.env` on disk. Online
+payment hides itself automatically when either key is missing.
+
+`.htaccess` denies `.env`, `*.sqlite` and `*.sql` over HTTP. **If you deploy on
+nginx you must replicate those rules** — they are Apache-only.
 
 ---
 

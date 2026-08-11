@@ -85,6 +85,9 @@ CREATE TABLE IF NOT EXISTS orders (
     payment_method VARCHAR(50) DEFAULT 'COD',
     payment_status ENUM('pending', 'paid', 'failed') DEFAULT 'pending',
     order_status ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
+    -- Razorpay references, NULL for cash-on-delivery orders
+    payment_id VARCHAR(64) NULL,
+    payment_order_id VARCHAR(64) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

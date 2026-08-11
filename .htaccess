@@ -41,3 +41,11 @@
 
 # Disable directory browsing
 Options -Indexes
+
+# Never serve secrets or the database over HTTP.
+<FilesMatch "^\.env|\.sqlite$|\.sql$">
+    Require all denied
+</FilesMatch>
+
+# config/ holds the .env reader and DB credentials; nothing there is a web page.
+RedirectMatch 404 ^/config/

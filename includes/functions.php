@@ -439,6 +439,109 @@ function get_cart_total($pdo) {
     return $total;
 }
 
+// ---------------------------------------------------------------------------
+// Order placement
+// ---------------------------------------------------------------------------
+
+/** Shipping is free from Rs 1,999. Single source of truth for the order total. */
+function cart_totals($pdo) {
+    $goods    = get_cart_total($pdo);
+    $shipping = ($goods > 0 && $goods < 1999) ? 150.00 : 0.00;
+    return ['goods' => $goods, 'shipping' => $shipping, 'grand' => $goods + $shipping];
+}
+
+/**
+ * Turn the session cart into a real order.
+ *
+ * Shared by the COD flow (place-order.php) and the Razorpay flow
+ * (api/verify-payment.php) so the two can never drift apart. Throws on any
+ * problem; the caller decides how to surface it.
+ *
+ * @return string the generated order number
+ */
+function place_cart_order($pdo, array $ship, $payment_method,
+                          $payment_status = 'pending', array $payment_ref = []) {
+    $cart_items = get_cart_details($pdo);
+    if (empty($cart_items)) {
+        throw new Exception("Your cart is empty.");
+    }
+
+    $totals       = cart_totals($pdo);
+    $order_number = "TGD-" . date('Ymd') . "-" . random_int(1000, 9999);
+    $user_id      = get_user_id();
+
+    $pdo->beginTransaction();
+    try {
+        $order_stmt = $pdo->prepare(
+            "INSERT INTO orders (user_id, order_number, total_amount, shipping_name,
+                                 shipping_phone, shipping_address, shipping_city,
+                                 shipping_state, shipping_zip, payment_method,
+                                 payment_status, order_status, payment_id, payment_order_id)
+             VALUES (?,?,?,?,?,?,?,?,?,?,?,'pending',?,?)");
+        $order_stmt->execute([
+            $user_id, $order_number, $totals['grand'],
+            $ship['name'], $ship['phone'], $ship['address'],
+            $ship['city'], $ship['state'], $ship['zip'],
+            $payment_method, $payment_status,
+            $payment_ref['payment_id'] ?? null,
+            $payment_ref['order_id'] ?? null,
+        ]);
+        $order_id = $pdo->lastInsertId();
+
+        $item_stmt = $pdo->prepare(
+            "INSERT INTO order_items (order_id, product_id, quantity, price, variant_id, variant_label)
+             VALUES (?,?,?,?,?,?)");
+        // Variant lines draw down the variant's stock; everything else products.stock.
+        $stock_stmt   = $pdo->prepare("UPDATE products SET stock = stock - ? WHERE id = ? AND stock >= ?");
+        $variant_stmt = $pdo->prepare("UPDATE product_variants SET stock = stock - ? WHERE id = ? AND stock >= ?");
+
+        foreach ($cart_items as $item) {
+            if ($item['stock'] < $item['quantity']) {
+                throw new Exception($item['name'] . " does not have enough stock available.");
+            }
+            $item_stmt->execute([
+                $order_id, $item['id'], $item['quantity'], $item['cart_price'],
+                $item['variant_id'] ?? null, $item['variant_label'] ?? null,
+            ]);
+
+            if (!empty($item['variant_id'])) {
+                $variant_stmt->execute([$item['quantity'], $item['variant_id'], $item['quantity']]);
+                $affected = $variant_stmt->rowCount();
+            } else {
+                $stock_stmt->execute([$item['quantity'], $item['id'], $item['quantity']]);
+                $affected = $stock_stmt->rowCount();
+            }
+            // The guarded UPDATE matches nothing if someone else took the stock
+            // between the check above and here.
+            if ($affected < 1) {
+                throw new Exception("Stock for " . $item['name'] . " ran out while placing your order.");
+            }
+        }
+
+        $pdo->commit();
+    } catch (Exception $e) {
+        if ($pdo->inTransaction()) {
+            $pdo->rollBack();
+        }
+        throw $e;
+    }
+
+    clear_cart();
+    return $order_number;
+}
+
+/** Pull and validate the shipping block from a POST body. Throws if incomplete. */
+function collect_shipping(array $src) {
+    $ship = [];
+    foreach (['name', 'phone', 'address', 'city', 'state', 'zip'] as $f) {
+        $ship[$f] = isset($src['shipping_' . $f]) ? sanitize($src['shipping_' . $f]) : '';
+        if ($ship[$f] === '') {
+            throw new Exception("Please fill in all shipping fields.");
+        }
+    }
+    return $ship;
+}
+
 // Cheapest variant per product in one query, for "from Rs X" on listing pages.
 function variant_min_prices($pdo) {
     static $map = null;
