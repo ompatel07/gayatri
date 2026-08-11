@@ -1,23 +1,32 @@
 <?php
 /**
- * Router for PHP's built-in dev server:
+ * Front controller for `php -S` (local dev and tunnelled demos).
  *
- *     php -S 127.0.0.1:8000 -t . router.php
+ * The built-in server ignores .htaccess entirely, so the deny rules that
+ * protect secrets under Apache do nothing here. Without this, .env - which
+ * holds RAZORPAY_KEY_SECRET - and database.sqlite are downloadable by anyone
+ * who has the URL.
  *
- * The built-in server ignores .htaccess completely, so without this it will
- * happily serve /.env, /database.sqlite and /config/*.php as plain text. The
- * deny rules in .htaccess only protect an Apache deployment; this reproduces
- * them for local development and for anything tunnelled to the public.
+ * Usage:  php -S 127.0.0.1:8000 -t . router.php
  */
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
 
-$blocked = '#(^/\.env|^/\.git|\.sqlite$|\.sql$|^/config/|^/tools/|\.log$|\.md$|^/composer\.|\.ini$)#i';
+$blocked = '#^/\.env
+           | ^/\.git
+           | ^/config/
+           | ^/tools/
+           | \.sqlite(-journal|-wal|-shm)?$
+           | \.sql$
+           | \.ini$
+           | \.log$
+           | \.bak$
+           #ix';
 
 if (preg_match($blocked, $path)) {
     http_response_code(404);
     header('Content-Type: text/plain');
-    echo "Not found";
-    return true;
+    echo "Not Found";
+    return true;   // handled here; do not fall through to the file
 }
 
-return false;   // anything else: let the server handle it normally
+return false;      // let the built-in server serve it normally
