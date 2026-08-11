@@ -15,6 +15,20 @@ $product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $success_msg = '';
 $error_msg = '';
 
+// Destructive actions must be POSTed with a valid token.
+//
+// These used to fire on a plain GET, so /admin/products.php?action=delete_all
+// wiped the entire catalogue - reachable from an <img src> on any page a
+// signed-in admin happened to open, and from any link or prefetcher.
+csrf_guard();
+
+$destructive = in_array($action, ['delete', 'delete_all'], true);
+if ($destructive && $_SERVER['REQUEST_METHOD'] !== 'POST') {
+    $_SESSION['admin_error'] = "That action must be confirmed from the products page.";
+    header("Location: products.php");
+    exit;
+}
+
 // Handle Delete Action
 if ($action === 'delete' && $product_id > 0) {
     // Delete product details
@@ -52,6 +66,7 @@ if ($action === 'delete_all') {
 }
 
 // Handle Form Submission (Add or Edit)
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($action === 'add' || $action === 'edit')) {
     $name = sanitize($_POST['name']);
     $slug = sanitize(strtolower(str_replace(' ', '-', $name)));
@@ -144,7 +159,11 @@ $materials = $pdo->query("SELECT * FROM materials")->fetchAll();
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h2 class="font-serif">Products Catalog Manager</h2>
         <div class="d-flex gap-2">
-            <a href="products.php?action=delete_all" class="btn btn-outline-danger btn-sm" onclick="return confirm('WARNING: This will delete ALL products, reviews, and order items. Are you sure you want to proceed?');"><i class="bi bi-trash-fill me-1"></i> Delete All Products</a>
+            <form action="products.php?action=delete_all" method="POST" class="d-inline"
+                  onsubmit="return confirm('WARNING: This will delete ALL products, reviews, and order items. Are you sure you want to proceed?');">
+                <?= csrf_field() ?>
+                <button type="submit" class="btn btn-outline-danger btn-sm"><i class="bi bi-trash-fill me-1"></i> Delete All Products</button>
+            </form>
             <a href="products.php?action=add" class="btn btn-gold btn-sm"><i class="bi bi-plus-lg me-1"></i> Add New Product</a>
         </div>
     </div>
@@ -210,7 +229,11 @@ $materials = $pdo->query("SELECT * FROM materials")->fetchAll();
                             <td>
                                 <div class="btn-group">
                                     <a href="products.php?action=edit&id=<?= $prod['id'] ?>" class="btn btn-sm btn-outline-dark" style="border-radius:0;"><i class="bi bi-pencil-square"></i></a>
-                                    <a href="products.php?action=delete&id=<?= $prod['id'] ?>" class="btn btn-sm btn-outline-danger" style="border-radius:0;" onclick="return confirm('Are you sure you want to delete this product?');"><i class="bi bi-trash"></i></a>
+                                    <form action="products.php?action=delete&id=<?= $prod['id'] ?>" method="POST" class="d-inline"
+                                          onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                        <?= csrf_field() ?>
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" style="border-radius:0;"><i class="bi bi-trash"></i></button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
@@ -244,6 +267,7 @@ $materials = $pdo->query("SELECT * FROM materials")->fetchAll();
 
     <div class="card p-4 shadow-sm border bg-white">
         <form action="" method="POST" enctype="multipart/form-data">
+        <?= csrf_field() ?>
             <div class="row g-3">
                 <div class="col-md-6">
                     <label for="name" class="form-label fw-semibold">Product Name *</label>

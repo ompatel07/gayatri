@@ -222,6 +222,7 @@ $related_products = $related_stmt->fetchAll();
                 <!-- Cart Form -->
                 <?php if ($in_stock): ?>
                     <form action="cart.php" method="POST" class="mb-3" id="addToCartForm">
+        <?= csrf_field() ?>
                         <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
                         <input type="hidden" name="action" value="add">
 
@@ -364,6 +365,7 @@ $related_products = $related_stmt->fetchAll();
                 
                 <?php if (is_logged_in()): ?>
                     <form action="" method="POST">
+        <?= csrf_field() ?>
                         <div class="mb-3">
                             <label class="form-label d-block fw-semibold">Your Rating</label>
                             <div class="rating-select fs-4 d-flex gap-2">

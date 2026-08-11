@@ -230,6 +230,7 @@ $categories = $cat_stmt->fetchAll();
                                     <a href="<?= BASE_URL ?>/product.php?slug=<?= sanitize($product['slug']) ?>" class="btn btn-outline-gold btn-sm text-white border-white"><i class="bi bi-sliders"></i> Options</a>
                                 <?php else: ?>
                                     <form action="<?= BASE_URL ?>/cart.php" method="POST" class="d-inline">
+                                        <?= csrf_field() ?>
                                         <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
                                         <input type="hidden" name="action" value="add">
                                         <input type="hidden" name="qty" value="1">

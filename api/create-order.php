@@ -24,6 +24,8 @@ function reply($status, array $body) {
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     reply(405, ['error' => 'Method not allowed']);
 }
+csrf_guard(true);
+
 if (!is_logged_in()) {
     reply(401, ['error' => 'Please sign in to continue.']);
 }

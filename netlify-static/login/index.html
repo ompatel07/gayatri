@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="9e28e2faa14f0b11646dee267bd567da2fae7ae26e34941d77230128dfab4916">
         <title>The Gayatri Decors | Premium Home Décor &amp; Clocks</title>
     <meta name="description" content="Shop premium 3D MDF wall clocks, metal wall art, canvas frames, tabletop structures, and decorative mirrors from The Gayatri Decors.">
             <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -77,46 +78,46 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container -->
 </nav>
-
-<!-- Breadcrumbs -->
-<div class="breadcrumb-section">
-    <div class="container">
-        <h1 class="font-serif fs-3">Account Login</h1>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Login</li>
-            </ol>
-        </nav>
-    </div>
-</div>
-
-<div class="container py-5" style="max-width: 480px;">
-    <div class="card p-4 border shadow-sm bg-white" style="border-radius: 0;">
-        <h3 class="font-serif text-center mb-4">Login to Your Account</h3>
-        
-                        
-        <form action="" method="POST">
-            <div class="mb-3">
-                <label for="email" class="form-label fw-semibold">Email Address</label>
-                <input type="email" class="form-control border-secondary" id="email" name="email" required style="border-radius:0;">
-            </div>
-            
-            <div class="mb-4">
-                <label for="password" class="form-label fw-semibold">Password</label>
-                <input type="password" class="form-control border-secondary" id="password" name="password" required style="border-radius:0;">
-            </div>
-            
-            <button type="submit" class="btn btn-gold w-100 py-2 mb-3">Sign In</button>
-        </form>
-        
-        <div class="text-center">
-            <p class="small text-muted mb-0">Don't have an account yet? <a href="/register/" class="text-gold text-decoration-none fw-bold">Register here</a></p>
-                        <p class="small text-muted mt-2 mb-0">Demo login: <span class="fw-bold">customer@tgd.com / customer123</span></p>
-        </div>
-    </div>
-</div>
-
+
+<!-- Breadcrumbs -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <h1 class="font-serif fs-3">Account Login</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Login</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="container py-5" style="max-width: 480px;">
+    <div class="card p-4 border shadow-sm bg-white" style="border-radius: 0;">
+        <h3 class="font-serif text-center mb-4">Login to Your Account</h3>
+        
+                        
+        <form action="" method="POST">
+        <input type="hidden" name="csrf_token" value="9e28e2faa14f0b11646dee267bd567da2fae7ae26e34941d77230128dfab4916">            <div class="mb-3">
+                <label for="email" class="form-label fw-semibold">Email Address</label>
+                <input type="email" class="form-control border-secondary" id="email" name="email" required style="border-radius:0;">
+            </div>
+            
+            <div class="mb-4">
+                <label for="password" class="form-label fw-semibold">Password</label>
+                <input type="password" class="form-control border-secondary" id="password" name="password" required style="border-radius:0;">
+            </div>
+            
+            <button type="submit" class="btn btn-gold w-100 py-2 mb-3">Sign In</button>
+        </form>
+        
+        <div class="text-center">
+            <p class="small text-muted mb-0">Don't have an account yet? <a href="/register/" class="text-gold text-decoration-none fw-bold">Register here</a></p>
+                        <p class="small text-muted mt-2 mb-0">Demo login: <span class="fw-bold">customer@tgd.com / customer123</span></p>
+        </div>
+    </div>
+</div>
+
 <!-- Footer -->
 <footer class="mt-5">
     <div class="container">

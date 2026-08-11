@@ -2,6 +2,8 @@
 require_once __DIR__ . '/config/db.php';
 require_once __DIR__ . '/includes/functions.php';
 
+csrf_guard();   // every cart action is state-changing
+
 // Handle cart updates
 $action     = isset($_POST['action']) ? trim($_POST['action']) : '';
 $product_id = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
@@ -178,6 +180,7 @@ $grand_total = $cart_total + $shipping;
                                     <td><?= format_price($item['cart_price']) ?></td>
                                     <td>
                                         <form action="cart.php" method="POST" class="d-flex align-items-center">
+        <?= csrf_field() ?>
                                             <input type="hidden" name="cart_key" value="<?= sanitize($item['cart_key']) ?>">
                                             <input type="hidden" name="action" value="update">
                                             <input type="number" name="qty" class="form-control text-center border-secondary form-control-sm" value="<?= $item['quantity'] ?>" min="1" max="<?= $item['stock'] ?>" style="width: 60px; border-radius:0;" onchange="this.form.submit()">
@@ -186,6 +189,7 @@ $grand_total = $cart_total + $shipping;
                                     <td><?= format_price($item['subtotal']) ?></td>
                                     <td>
                                         <form action="cart.php" method="POST" onsubmit="return confirm('Are you sure you want to remove this item?');">
+        <?= csrf_field() ?>
                                             <input type="hidden" name="cart_key" value="<?= sanitize($item['cart_key']) ?>">
                                             <input type="hidden" name="action" value="remove">
                                             <button type="submit" class="btn btn-outline-danger btn-sm" style="border-radius:0;"><i class="bi bi-trash"></i></button>
@@ -199,6 +203,7 @@ $grand_total = $cart_total + $shipping;
                     <div class="d-flex justify-content-between align-items-center mt-4">
                         <a href="shop.php" class="btn btn-outline-gold"><i class="bi bi-arrow-left me-2"></i> Continue Shopping</a>
                         <form action="cart.php" method="POST" onsubmit="return confirm('Are you sure you want to clear your cart?');">
+        <?= csrf_field() ?>
                             <input type="hidden" name="action" value="clear">
                             <button type="submit" class="btn btn-outline-danger" style="border-radius: 0;">Clear Cart</button>
                         </form>

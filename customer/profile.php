@@ -9,6 +9,8 @@ $success = '';
 $error = '';
 
 // Handle Profile Update
+csrf_guard();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     $name = sanitize($_POST['name']);
     $phone = sanitize($_POST['phone']);
@@ -115,6 +117,7 @@ $user = $user_stmt->fetch();
                         <h4 class="font-serif mb-4 pb-2 border-bottom">Profile Information</h4>
                         
                         <form action="" method="POST">
+        <?= csrf_field() ?>
                             <div class="mb-3">
                                 <label for="name" class="form-label fw-semibold">Full Name *</label>
                                 <input type="text" class="form-control border-secondary" id="name" name="name" value="<?= sanitize($user['name']) ?>" required style="border-radius:0;">
@@ -162,6 +165,7 @@ $user = $user_stmt->fetch();
                         <h4 class="font-serif mb-4 pb-2 border-bottom">Security</h4>
                         
                         <form action="" method="POST">
+        <?= csrf_field() ?>
                             <div class="mb-3">
                                 <label for="current_password" class="form-label fw-semibold">Current Password</label>
                                 <input type="password" class="form-control border-secondary" id="current_password" name="current_password" required style="border-radius:0;">

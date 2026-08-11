@@ -6,6 +6,8 @@ $success_msg = '';
 $error_msg = '';
 
 // Handle Order Status Update
+csrf_guard();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_order'])) {
     $order_id = (int)$_POST['order_id'];
     $order_status = sanitize($_POST['order_status']);
@@ -146,6 +148,7 @@ if (!$viewing_single) {
                 <h4 class="font-serif mb-4 pb-2 border-bottom">Fulfillment Settings</h4>
                 
                 <form action="" method="POST">
+        <?= csrf_field() ?>
                     <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
                     
                     <div class="mb-3">

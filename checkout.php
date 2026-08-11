@@ -46,6 +46,7 @@ require_once __DIR__ . '/includes/header.php';
 
 <div class="container py-5">
     <form action="<?= BASE_URL ?>/place-order.php" method="POST" id="checkoutForm">
+        <?= csrf_field() ?>
         <div class="row g-4">
             <!-- Shipping Form -->
             <div class="col-lg-7">

@@ -5,6 +5,8 @@ $success_msg = '';
 $error_msg = '';
 
 // Handle category form submission
+csrf_guard();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_category'])) {
     $cat_name = sanitize($_POST['cat_name']);
     $cat_slug = sanitize(strtolower(str_replace(' ', '-', $cat_name)));
@@ -99,6 +101,7 @@ $materials = $pdo->query("SELECT * FROM materials ORDER BY id ASC")->fetchAll();
 
             <h5 class="font-serif border-top pt-3 mb-3">Add New Category</h5>
             <form action="" method="POST" enctype="multipart/form-data">
+        <?= csrf_field() ?>
                 <div class="mb-3">
                     <label for="cat_name" class="form-label fw-semibold">Category Name *</label>
                     <input type="text" class="form-control border-secondary" id="cat_name" name="cat_name" required style="border-radius:0;">
@@ -142,6 +145,7 @@ $materials = $pdo->query("SELECT * FROM materials ORDER BY id ASC")->fetchAll();
 
             <h5 class="font-serif border-top pt-3 mb-3">Add New Material</h5>
             <form action="" method="POST">
+        <?= csrf_field() ?>
                 <div class="mb-3">
                     <label for="mat_name" class="form-label fw-semibold">Material Name *</label>
                     <input type="text" class="form-control border-secondary" id="mat_name" name="mat_name" required style="border-radius:0;">

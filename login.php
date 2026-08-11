@@ -15,7 +15,9 @@ if (is_logged_in()) {
 $error = '';
 $redirect = isset($_GET['redirect']) ? sanitize($_GET['redirect']) : '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !csrf_valid()) {
+    $error = "Your session expired. Please try again.";
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = sanitize($_POST['email']);
     $password = $_POST['password']; // Do not sanitize password as it can contain special characters
     
@@ -34,9 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_role'] = $user['role'];
             
-            // Redirect logic
+            // Redirect logic. ?redirect= used to go straight into the header,
+            // so /login.php?redirect=https://evil.example could be mailed out
+            // as a legitimate-looking link that dumped the user on an
+            // attacker's page the moment they signed in.
             if (!empty($redirect)) {
-                header("Location: " . $redirect);
+                header("Location: " . safe_redirect_target($redirect, BASE_URL . "/index.php"));
             } elseif ($user['role'] === 'admin') {
                 header("Location: admin/dashboard.php");
             } else {
@@ -85,6 +90,7 @@ require_once __DIR__ . '/includes/header.php';
         <?php endif; ?>
 
         <form action="" method="POST">
+        <?= csrf_field() ?>
             <div class="mb-3">
                 <label for="email" class="form-label fw-semibold">Email Address</label>
                 <input type="email" class="form-control border-secondary" id="email" name="email" required style="border-radius:0;">

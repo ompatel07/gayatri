@@ -14,6 +14,8 @@ if (!is_logged_in()) {
     exit;
 }
 
+csrf_guard();
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: " . BASE_URL . "/index.php");
     exit;

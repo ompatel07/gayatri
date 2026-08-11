@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="af4c12b248db836b4fbad6d0dd4ae7d7ac200c33260690b97ef73a71aff57c7f">
         <title>The Gayatri Decors | Premium Home Décor &amp; Clocks</title>
     <meta name="description" content="Shop premium 3D MDF wall clocks, metal wall art, canvas frames, tabletop structures, and decorative mirrors from The Gayatri Decors.">
             <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -77,79 +78,79 @@
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container -->
 </nav>
-
-<!-- Breadcrumbs -->
-<div class="breadcrumb-section">
-    <div class="container">
-        <h1 class="font-serif fs-3">Register Account</h1>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Register</li>
-            </ol>
-        </nav>
-    </div>
-</div>
-
-<div class="container py-5" style="max-width: 650px;">
-    <div class="card p-4 border shadow-sm bg-white" style="border-radius: 0;">
-        <h3 class="font-serif text-center mb-4">Create An Account</h3>
-        
-        
-        <form action="" method="POST">
-            <h5 class="font-serif mb-3 border-bottom pb-2">Personal Credentials</h5>
-            <div class="row g-3 mb-4">
-                <div class="col-md-6">
-                    <label for="name" class="form-label fw-semibold">Full Name *</label>
-                    <input type="text" class="form-control border-secondary" id="name" name="name" required style="border-radius:0;">
-                </div>
-                <div class="col-md-6">
-                    <label for="email" class="form-label fw-semibold">Email Address *</label>
-                    <input type="email" class="form-control border-secondary" id="email" name="email" required style="border-radius:0;">
-                </div>
-                <div class="col-md-6">
-                    <label for="password" class="form-label fw-semibold">Password *</label>
-                    <input type="password" class="form-control border-secondary" id="password" name="password" required style="border-radius:0;">
-                </div>
-                <div class="col-md-6">
-                    <label for="confirm_password" class="form-label fw-semibold">Confirm Password *</label>
-                    <input type="password" class="form-control border-secondary" id="confirm_password" name="confirm_password" required style="border-radius:0;">
-                </div>
-            </div>
-
-            <h5 class="font-serif mb-3 border-bottom pb-2">Default Shipping Information</h5>
-            <div class="row g-3 mb-4">
-                <div class="col-md-6">
-                    <label for="phone" class="form-label fw-semibold">Phone Number</label>
-                    <input type="tel" class="form-control border-secondary" id="phone" name="phone" style="border-radius:0;">
-                </div>
-                <div class="col-md-6">
-                    <label for="address" class="form-label fw-semibold">Street Address</label>
-                    <input type="text" class="form-control border-secondary" id="address" name="address" style="border-radius:0;">
-                </div>
-                <div class="col-md-4">
-                    <label for="city" class="form-label fw-semibold">City</label>
-                    <input type="text" class="form-control border-secondary" id="city" name="city" style="border-radius:0;">
-                </div>
-                <div class="col-md-4">
-                    <label for="state" class="form-label fw-semibold">State</label>
-                    <input type="text" class="form-control border-secondary" id="state" name="state" style="border-radius:0;">
-                </div>
-                <div class="col-md-4">
-                    <label for="zip" class="form-label fw-semibold">ZIP Code</label>
-                    <input type="text" class="form-control border-secondary" id="zip" name="zip" style="border-radius:0;">
-                </div>
-            </div>
-            
-            <button type="submit" class="btn btn-gold w-100 py-2 mb-3">Sign Up</button>
-        </form>
-        
-        <div class="text-center">
-            <p class="small text-muted mb-0">Already have an account? <a href="/login/" class="text-gold text-decoration-none fw-bold">Login here</a></p>
-        </div>
-    </div>
-</div>
-
+
+<!-- Breadcrumbs -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <h1 class="font-serif fs-3">Register Account</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Register</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="container py-5" style="max-width: 650px;">
+    <div class="card p-4 border shadow-sm bg-white" style="border-radius: 0;">
+        <h3 class="font-serif text-center mb-4">Create An Account</h3>
+        
+        
+        <form action="" method="POST">
+        <input type="hidden" name="csrf_token" value="af4c12b248db836b4fbad6d0dd4ae7d7ac200c33260690b97ef73a71aff57c7f">            <h5 class="font-serif mb-3 border-bottom pb-2">Personal Credentials</h5>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label for="name" class="form-label fw-semibold">Full Name *</label>
+                    <input type="text" class="form-control border-secondary" id="name" name="name" required style="border-radius:0;">
+                </div>
+                <div class="col-md-6">
+                    <label for="email" class="form-label fw-semibold">Email Address *</label>
+                    <input type="email" class="form-control border-secondary" id="email" name="email" required style="border-radius:0;">
+                </div>
+                <div class="col-md-6">
+                    <label for="password" class="form-label fw-semibold">Password *</label>
+                    <input type="password" class="form-control border-secondary" id="password" name="password" required style="border-radius:0;">
+                </div>
+                <div class="col-md-6">
+                    <label for="confirm_password" class="form-label fw-semibold">Confirm Password *</label>
+                    <input type="password" class="form-control border-secondary" id="confirm_password" name="confirm_password" required style="border-radius:0;">
+                </div>
+            </div>
+
+            <h5 class="font-serif mb-3 border-bottom pb-2">Default Shipping Information</h5>
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <label for="phone" class="form-label fw-semibold">Phone Number</label>
+                    <input type="tel" class="form-control border-secondary" id="phone" name="phone" style="border-radius:0;">
+                </div>
+                <div class="col-md-6">
+                    <label for="address" class="form-label fw-semibold">Street Address</label>
+                    <input type="text" class="form-control border-secondary" id="address" name="address" style="border-radius:0;">
+                </div>
+                <div class="col-md-4">
+                    <label for="city" class="form-label fw-semibold">City</label>
+                    <input type="text" class="form-control border-secondary" id="city" name="city" style="border-radius:0;">
+                </div>
+                <div class="col-md-4">
+                    <label for="state" class="form-label fw-semibold">State</label>
+                    <input type="text" class="form-control border-secondary" id="state" name="state" style="border-radius:0;">
+                </div>
+                <div class="col-md-4">
+                    <label for="zip" class="form-label fw-semibold">ZIP Code</label>
+                    <input type="text" class="form-control border-secondary" id="zip" name="zip" style="border-radius:0;">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-gold w-100 py-2 mb-3">Sign Up</button>
+        </form>
+        
+        <div class="text-center">
+            <p class="small text-muted mb-0">Already have an account? <a href="/login/" class="text-gold text-decoration-none fw-bold">Login here</a></p>
+        </div>
+    </div>
+</div>
+
 <!-- Footer -->
 <footer class="mt-5">
     <div class="container">

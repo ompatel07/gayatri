@@ -11,7 +11,9 @@ if (is_logged_in()) {
 $error = '';
 $redirect = isset($_GET['redirect']) ? sanitize($_GET['redirect']) : '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !csrf_valid()) {
+    $error = "Your session expired. Please try again.";
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = sanitize($_POST['name']);
     $email = sanitize($_POST['email']);
     $password = $_POST['password'];
@@ -49,7 +51,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ]);
                 
                 $_SESSION['success_msg'] = "Registration successful! You can now log in.";
-                header("Location: login.php" . (!empty($redirect) ? "?redirect=" . $redirect : ""));
+                header("Location: " . BASE_URL . "/login.php"
+                       . (!empty($redirect) ? "?redirect=" . urlencode($redirect) : ""));
                 exit;
             } catch (Exception $e) {
                 $error = "Registration failed: " . $e->getMessage();
@@ -84,6 +87,7 @@ require_once __DIR__ . '/includes/header.php';
         <?php endif; ?>
 
         <form action="" method="POST">
+        <?= csrf_field() ?>
             <h5 class="font-serif mb-3 border-bottom pb-2">Personal Credentials</h5>
             <div class="row g-3 mb-4">
                 <div class="col-md-6">

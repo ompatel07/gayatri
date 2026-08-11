@@ -195,13 +195,26 @@ Things deliberately left undone, with the reason:
    launch discounts (30% MDF wall art, 10–15% clocks/frames for 3 months) are
    in the client's list but were explicitly out of scope.
 
-### Known issues worth fixing
+### Security
 
-- No CSRF tokens on any POST (cart, checkout, register, reviews, admin CRUD).
-- Open redirect: `login.php?redirect=` goes straight into `header("Location:")`.
-- `database.sqlite` is web-servable — block it at the web server in production.
-- `?v=<?= time() ?>` on CSS/JS busts cache on every request, defeating the
-  1-year `Expires` headers in `.htaccess`.
-- `sanitize()` runs on **input** in register/place-order, storing HTML entities
-  in the DB, then again on output — `O'Brien` renders as `O&#039;Brien`.
-- No pagination on `shop.php`.
+- **CSRF**: every state-changing POST carries a per-session token
+  (`csrf_field()` in forms, `csrf_guard()` in handlers, plus a
+  `<meta name="csrf-token">` for scripts). Verified by test: forged and
+  cross-session tokens are refused.
+- **Admin deletes** used to fire on a plain GET, so
+  `/admin/products.php?action=delete_all` truncated products, reviews and
+  order_items — reachable from an `<img src>` on any page a signed-in admin
+  opened. They now require POST **and** a valid token.
+- **Open redirect** in `login.php?redirect=` is closed via
+  `safe_redirect_target()`; absolute, protocol-relative and `javascript:`
+  targets all fall back to the home page.
+- Secrets are denied over HTTP by `.htaccess` (Apache) and `router.php`
+  (dev server). **nginx deployments must replicate these rules.**
+
+### Still open
+
+- No pagination on `shop.php` — 39 products render on one page. Fine at this
+  catalogue size (images lazy-load); worth adding past ~150 products.
+- No admin UI for product variants; they are DB-only.
+- `DummyPDO` silently swallows a total DB failure, so an outage renders as an
+  empty shop rather than an error.
