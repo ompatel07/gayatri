@@ -66,7 +66,7 @@
         <hr class="my-4">
         <div class="row align-items-center text-center text-md-start py-3">
             <div class="col-md-6">
-                <p class="small mb-0">&copy; <?= date('Y') ?> The Gayatri Decors. All Rights Reserved.</p>
+                <p class="small mb-0">&copy; <?= date('Y') ?> The Gayatri Decors. All Rights Reserved by Sky Wings Media.</p>
             </div>
             <div class="col-md-6 text-md-end mt-2 mt-md-0">
                 <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa" width="30" />
