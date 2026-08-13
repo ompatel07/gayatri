@@ -81,13 +81,24 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         Categories
                     </a>
                     <ul class="dropdown-menu">
-                        <?php
-                        // No LIMIT: the name plate split took this past six categories.
-                        $cat_stmt = $pdo->query("SELECT * FROM categories ORDER BY name");
-                        while($cat = $cat_stmt->fetch()) {
-                            echo '<li><a class="dropdown-menu-item dropdown-item" href="'.BASE_URL.'/shop.php?category='.$cat['slug'].'">'.$cat['name'].'</a></li>';
-                        }
-                        ?>
+                        <?php foreach (category_tree($pdo) as $cat): ?>
+                            <li>
+                                <a class="dropdown-item<?= $cat['children'] ? ' fw-semibold' : '' ?>"
+                                   href="<?= BASE_URL ?>/shop.php?category=<?= sanitize($cat['slug']) ?>">
+                                    <?= sanitize($cat['name']) ?>
+                                    <span class="text-muted small">(<?= (int)$cat['item_count'] ?>)</span>
+                                </a>
+                            </li>
+                            <?php foreach ($cat['children'] as $sub): ?>
+                                <li>
+                                    <a class="dropdown-item dropdown-subitem"
+                                       href="<?= BASE_URL ?>/shop.php?category=<?= sanitize($sub['slug']) ?>">
+                                        <?= sanitize($sub['name']) ?>
+                                        <span class="text-muted small">(<?= (int)$sub['item_count'] ?>)</span>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        <?php endforeach; ?>
                     </ul>
                 </li>
             </ul>

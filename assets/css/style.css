@@ -2137,3 +2137,28 @@ body.intro-active {
     }
     .hero-slide { transition: none !important; transform: none !important; }
 }
+
+/* Sub-category rows in the Categories dropdown */
+.navbar .dropdown-subitem {
+    padding-left: 2rem;
+    font-size: 0.86rem;
+    position: relative;
+}
+
+.navbar .dropdown-subitem::before {
+    content: "";
+    position: absolute;
+    left: 1.15rem;
+    top: 50%;
+    width: 8px;
+    height: 1px;
+    background: rgba(38, 48, 26, 0.35);
+}
+
+@media (max-width: 992px) {
+    /* The collapsed menu can get tall once sub-categories are listed */
+    .navbar-collapse .dropdown-menu {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+}

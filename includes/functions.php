@@ -612,6 +612,77 @@ function collect_shipping(array $src) {
     return $ship;
 }
 
+// ---------------------------------------------------------------------------
+// Category tree
+//
+// Categories are one level deep: the name plate groups hang off a "Name Plates"
+// parent so five entries do not crowd the nav and the home page.
+// ---------------------------------------------------------------------------
+
+/** Top-level categories, each with a 'children' array and a total product count. */
+function category_tree($pdo) {
+    static $tree = null;
+    if ($tree !== null) {
+        return $tree;
+    }
+    try {
+        $rows = $pdo->query("SELECT * FROM categories ORDER BY name")->fetchAll();
+    } catch (Exception $e) {
+        return $tree = [];
+    }
+
+    $counts = [];
+    foreach ($pdo->query("SELECT category_id, COUNT(*) n FROM products GROUP BY category_id") as $r) {
+        $counts[(int)$r['category_id']] = (int)$r['n'];
+    }
+
+    $tree = [];
+    $byId = [];
+    foreach ($rows as $r) {
+        $r['children'] = [];
+        $r['item_count'] = $counts[(int)$r['id']] ?? 0;
+        $byId[(int)$r['id']] = $r;
+    }
+    foreach ($byId as $id => $r) {
+        $pid = isset($r['parent_id']) ? (int)$r['parent_id'] : 0;
+        if ($pid && isset($byId[$pid])) {
+            $byId[$pid]['children'][] = &$byId[$id];
+            // a parent's count includes everything filed under its children
+            $byId[$pid]['item_count'] += $r['item_count'];
+        }
+    }
+    foreach ($byId as $id => $r) {
+        if (empty($r['parent_id'])) {
+            $tree[] = $byId[$id];
+        }
+    }
+    return $tree;
+}
+
+/**
+ * Category ids matched by a slug: the category itself plus its children, so
+ * /shop.php?category=name-plates lists every plate rather than nothing.
+ */
+function category_ids_for_slug($pdo, $slug) {
+    try {
+        $stmt = $pdo->prepare("SELECT id FROM categories WHERE slug = ?");
+        $stmt->execute([$slug]);
+        $row = $stmt->fetch();
+        if (!$row) {
+            return [];
+        }
+        $ids = [(int)$row['id']];
+        $kids = $pdo->prepare("SELECT id FROM categories WHERE parent_id = ?");
+        $kids->execute([(int)$row['id']]);
+        foreach ($kids->fetchAll() as $k) {
+            $ids[] = (int)$k['id'];
+        }
+        return $ids;
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
 // Cheapest variant per product in one query, for "from Rs X" on listing pages.
 function variant_min_prices($pdo) {
     static $map = null;

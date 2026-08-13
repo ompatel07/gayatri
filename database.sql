@@ -24,7 +24,11 @@ CREATE TABLE IF NOT EXISTS categories (
     slug VARCHAR(120) NOT NULL UNIQUE,
     description TEXT NULL,
     image_url VARCHAR(255) NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    -- One level of nesting: the name plate groups hang off a "Name Plates"
+    -- parent. NULL means the category is top level.
+    parent_id INT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (parent_id) REFERENCES categories(id) ON DELETE SET NULL
 );
 
 -- 3. Materials / Subcategories

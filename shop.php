@@ -23,8 +23,15 @@ if ($search !== '') {
 }
 
 if ($category_slug !== '') {
-    $query .= " AND c.slug = ?";
-    $params[] = $category_slug;
+    // Include child categories, so a parent such as "name-plates" lists every
+    // plate filed under Acrylic Round, SS Brushed Gold and so on.
+    $cat_ids = category_ids_for_slug($pdo, $category_slug);
+    if ($cat_ids) {
+        $query .= " AND p.category_id IN (" . implode(',', array_fill(0, count($cat_ids), '?')) . ")";
+        $params = array_merge($params, $cat_ids);
+    } else {
+        $query .= " AND 1=0";   // unknown slug -> no results, not everything
+    }
 }
 
 if ($material_slug !== '') {
@@ -103,10 +110,17 @@ $all_materials = $pdo->query("SELECT * FROM materials")->fetchAll();
                         <label class="form-label fw-bold text-uppercase small letter-spacing-1">Category</label>
                         <select name="category" class="form-select border-secondary" onchange="this.form.submit()" style="border-radius:0;">
                             <option value="">All Categories</option>
-                            <?php foreach ($all_categories as $cat): ?>
-                                <option value="<?= $cat['slug'] ?>" <?= ($category_slug == $cat['slug']) ? 'selected' : '' ?>>
-                                    <?= sanitize($cat['name']) ?>
+                            <?php foreach (category_tree($pdo) as $cat): ?>
+                                <option value="<?= sanitize($cat['slug']) ?>" <?= ($category_slug == $cat['slug']) ? 'selected' : '' ?>>
+                                    <?= sanitize($cat['name']) ?> (<?= (int)$cat['item_count'] ?>)
                                 </option>
+                                <?php if ($cat['children']): ?>
+                                    <?php foreach ($cat['children'] as $sub): ?>
+                                        <option value="<?= sanitize($sub['slug']) ?>" <?= ($category_slug == $sub['slug']) ? 'selected' : '' ?>>
+                                            &nbsp;&nbsp;&mdash; <?= sanitize($sub['name']) ?> (<?= (int)$sub['item_count'] ?>)
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         </select>
                     </div>

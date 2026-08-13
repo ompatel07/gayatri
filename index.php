@@ -14,13 +14,9 @@ $featured_products = $featured_stmt->fetchAll();
 // split into 3 slides of 4 (2-up on tablet, 1-up on phones).
 $featured_slides = array_chunk($featured_products, 4);
 
-// Fetch categories with product count
-$cat_stmt = $pdo->query("SELECT c.*, COUNT(p.id) as item_count 
-                         FROM categories c 
-                         LEFT JOIN products p ON c.id = p.category_id 
-                         GROUP BY c.id 
-                         ORDER BY c.id ASC");
-$categories = $cat_stmt->fetchAll();
+// Top-level categories only; each count already includes its sub-categories,
+// so "Name Plates" shows one card rather than five.
+$categories = category_tree($pdo);
 ?>
 
 <!-- Luxury Cinematic Intro overlay -->
