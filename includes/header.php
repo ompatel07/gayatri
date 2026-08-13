@@ -82,7 +82,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </a>
                     <ul class="dropdown-menu">
                         <?php
-                        $cat_stmt = $pdo->query("SELECT * FROM categories LIMIT 6");
+                        // No LIMIT: the name plate split took this past six categories.
+                        $cat_stmt = $pdo->query("SELECT * FROM categories ORDER BY name");
                         while($cat = $cat_stmt->fetch()) {
                             echo '<li><a class="dropdown-menu-item dropdown-item" href="'.BASE_URL.'/shop.php?category='.$cat['slug'].'">'.$cat['name'].'</a></li>';
                         }
