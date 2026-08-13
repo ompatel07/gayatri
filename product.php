@@ -240,6 +240,11 @@ $related_products = $related_stmt->fetchAll();
                                 </div>
                             </div>
 
+                            <?php
+                            // Icon follows the option group, so "With Frame" does not
+                            // get a light bulb.
+                            $opt_icon = ($option_group === 'Framing') ? 'bi-easel' : 'bi-lightbulb';
+                            ?>
                             <?php if ($has_option_choice): ?>
                                 <div class="mb-3 variant-picker">
                                     <label class="form-label fw-bold text-uppercase small letter-spacing-1"><?= sanitize($option_group) ?></label>
@@ -248,7 +253,7 @@ $related_products = $related_stmt->fetchAll();
                                             <input type="radio" class="btn-check" name="led" id="opt<?= (int)$val ?>"
                                                    value="<?= (int)$val ?>" <?= (int)$val === (int)$default_variant['has_led'] ? 'checked' : '' ?>>
                                             <label class="btn btn-outline-gold btn-sm" for="opt<?= (int)$val ?>">
-                                                <i class="bi bi-lightbulb<?= $val ? '-fill' : '' ?> me-1"></i><?= sanitize($label) ?>
+                                                <i class="bi <?= $opt_icon ?><?= ($val && $option_group !== 'Framing') ? '-fill' : '' ?> me-1"></i><?= sanitize($label) ?>
                                             </label>
                                         <?php endforeach; ?>
                                     </div>
@@ -257,7 +262,7 @@ $related_products = $related_stmt->fetchAll();
                                 <input type="hidden" name="led" value="<?= (int)$default_variant['has_led'] ?>">
                                 <?php if (!empty($default_variant['option_label'])): ?>
                                     <p class="small text-muted mb-3">
-                                        <i class="bi bi-lightbulb-fill text-warning me-1"></i>
+                                        <i class="bi <?= $opt_icon ?>-fill text-warning me-1"></i>
                                         <?= sanitize($option_group) ?>:
                                         <strong><?= sanitize($default_variant['option_label']) ?></strong>
                                         &mdash; standard on this design.

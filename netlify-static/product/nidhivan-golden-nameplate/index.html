@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="csrf-token" content="d19fb2809548900e5d3c7fdd02636e569033ea0830e3769bc9dd59d8a1d23fc4">
+        <meta name="csrf-token" content="2955566e073bc0292bc869ecae18ad1525ef9bfe9d8f4ffd30b569a8623ff420">
         <title>The Gayatri Decors | Premium Home Décor &amp; Clocks</title>
     <meta name="description" content="Shop premium 3D MDF wall clocks, metal wall art, canvas frames, tabletop structures, and decorative mirrors from The Gayatri Decors.">
             <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -125,8 +125,7 @@
                 </div>
                 
                 <div class="detail-price mb-3">
-                                            <del>₹3,499.00</del>
-                        <span>₹2,799.00</span>
+                                            <span id="variantPrice">₹3,599.00</span>
                                     </div>
                 
                 <p class="text-muted mb-4">Nidhivan is a premium hand-crafted golden brass nameplate that radiates warmth, elegance, and royalty. Featuring ornate cursive lettering with a stunning peacock feather motif etched on the left, this nameplate is a timeless statement piece for your home entrance. The brushed gold finish with corner mount bolts ensures durability and a luxurious look that lasts for years. Personalize your home with this exquisite piece that seamlessly blends traditional craftsmanship with modern aesthetics.</p>
@@ -134,15 +133,35 @@
                 <!-- Stock Status -->
                 <div class="mb-4">
                     <span class="fw-bold">Availability: </span>
-                                            <span class="text-success"><i class="bi bi-check-circle-fill"></i> In Stock (20 units left)</span>
+                                            <span class="text-success" id="variantStock">
+                            <i class="bi bi-check-circle-fill"></i> In Stock (20 units left)
+                        </span>
                                     </div>
 
                 <!-- Cart Form -->
                                     <form action="/cart/" method="POST" class="mb-3" id="addToCartForm">
-        <input type="hidden" name="csrf_token" value="d19fb2809548900e5d3c7fdd02636e569033ea0830e3769bc9dd59d8a1d23fc4">                        <input type="hidden" name="product_id" value="15">
+        <input type="hidden" name="csrf_token" value="2955566e073bc0292bc869ecae18ad1525ef9bfe9d8f4ffd30b569a8623ff420">                        <input type="hidden" name="product_id" value="15">
                         <input type="hidden" name="action" value="add">
 
-                        
+                                                    <input type="hidden" name="variant_id" id="variantId" value="98">
+
+                            <div class="mb-3 variant-picker">
+                                <label class="form-label fw-bold text-uppercase small letter-spacing-1">Size (inches)</label>
+                                <div class="d-flex flex-wrap gap-2" id="sizeOptions">
+                                                                            <input type="radio" class="btn-check" name="size" id="size0"
+                                               value="7x18" checked>
+                                        <label class="btn btn-outline-gold btn-sm" for="size0">7x18</label>
+                                                                            <input type="radio" class="btn-check" name="size" id="size1"
+                                               value="8x20" >
+                                        <label class="btn btn-outline-gold btn-sm" for="size1">8x20</label>
+                                                                            <input type="radio" class="btn-check" name="size" id="size2"
+                                               value="10x24" >
+                                        <label class="btn btn-outline-gold btn-sm" for="size2">10x24</label>
+                                                                    </div>
+                            </div>
+
+                                                                                        <input type="hidden" name="led" value="0">
+                                                                                    
                         <div class="row g-2 align-items-center">
                             <div class="col-auto">
                                 <label for="quantity" class="visually-hidden">Quantity</label>
@@ -159,6 +178,7 @@
                         </div>
                     </form>
 
+                                            <script>window.TGD_VARIANTS = {"7x18|0":{"id":98,"price":3599,"label":"₹3,599.00","stock":20},"8x20|0":{"id":99,"price":4499,"label":"₹4,499.00","stock":20},"10x24|0":{"id":100,"price":6799,"label":"₹6,799.00","stock":20}};</script>
                                     
                 <!-- WhatsApp Customization / Inquiry Button -->
                 <div class="mb-4">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="csrf-token" content="403dfd99bc1929d04ee2fa4247b580c4e1a704934c592186732227443e6e9ae6">
+        <meta name="csrf-token" content="03855b4090406eeffc4329276b5256a7722fcb0b5e26b8c5d098e1c18a668f13">
         <title>The Gayatri Decors | Premium Home Décor &amp; Clocks</title>
     <meta name="description" content="Shop premium 3D MDF wall clocks, metal wall art, canvas frames, tabletop structures, and decorative mirrors from The Gayatri Decors.">
             <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -127,8 +127,7 @@
                 </div>
                 
                 <div class="detail-price mb-3">
-                                            <del>₹2,999.00</del>
-                        <span>₹2,499.00</span>
+                                            <span id="variantPrice">₹2,399.00</span>
                                     </div>
                 
                 <p class="text-muted mb-4">Premium grade-304 stainless steel house nameplate with laser-cut lettering and high-quality weatherproof acrylic backing.</p>
@@ -136,15 +135,35 @@
                 <!-- Stock Status -->
                 <div class="mb-4">
                     <span class="fw-bold">Availability: </span>
-                                            <span class="text-success"><i class="bi bi-check-circle-fill"></i> In Stock (25 units left)</span>
+                                            <span class="text-success" id="variantStock">
+                            <i class="bi bi-check-circle-fill"></i> In Stock (25 units left)
+                        </span>
                                     </div>
 
                 <!-- Cart Form -->
                                     <form action="/cart/" method="POST" class="mb-3" id="addToCartForm">
-        <input type="hidden" name="csrf_token" value="403dfd99bc1929d04ee2fa4247b580c4e1a704934c592186732227443e6e9ae6">                        <input type="hidden" name="product_id" value="8">
+        <input type="hidden" name="csrf_token" value="03855b4090406eeffc4329276b5256a7722fcb0b5e26b8c5d098e1c18a668f13">                        <input type="hidden" name="product_id" value="8">
                         <input type="hidden" name="action" value="add">
 
-                        
+                                                    <input type="hidden" name="variant_id" id="variantId" value="95">
+
+                            <div class="mb-3 variant-picker">
+                                <label class="form-label fw-bold text-uppercase small letter-spacing-1">Size (inches)</label>
+                                <div class="d-flex flex-wrap gap-2" id="sizeOptions">
+                                                                            <input type="radio" class="btn-check" name="size" id="size0"
+                                               value="18x7" checked>
+                                        <label class="btn btn-outline-gold btn-sm" for="size0">18x7</label>
+                                                                            <input type="radio" class="btn-check" name="size" id="size1"
+                                               value="20x8" >
+                                        <label class="btn btn-outline-gold btn-sm" for="size1">20x8</label>
+                                                                            <input type="radio" class="btn-check" name="size" id="size2"
+                                               value="24x10" >
+                                        <label class="btn btn-outline-gold btn-sm" for="size2">24x10</label>
+                                                                    </div>
+                            </div>
+
+                                                                                        <input type="hidden" name="led" value="0">
+                                                                                    
                         <div class="row g-2 align-items-center">
                             <div class="col-auto">
                                 <label for="quantity" class="visually-hidden">Quantity</label>
@@ -161,6 +180,7 @@
                         </div>
                     </form>
 
+                                            <script>window.TGD_VARIANTS = {"18x7|0":{"id":95,"price":2399,"label":"₹2,399.00","stock":25},"20x8|0":{"id":96,"price":3199,"label":"₹3,199.00","stock":25},"24x10|0":{"id":97,"price":4599,"label":"₹4,599.00","stock":25}};</script>
                                     
                 <!-- WhatsApp Customization / Inquiry Button -->
                 <div class="mb-4">

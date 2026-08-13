@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="csrf-token" content="952a9718865e05a49137ac948f54ed57a7ca9e23bdf272fb530684a2239a5ab1">
+        <meta name="csrf-token" content="bd270dc4bef58abed309b655228efd78bfd97cbe113000571115cfa91df67566">
         <title>The Gayatri Decors | Premium Home Décor &amp; Clocks</title>
     <meta name="description" content="Shop premium 3D MDF wall clocks, metal wall art, canvas frames, tabletop structures, and decorative mirrors from The Gayatri Decors.">
             <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -125,8 +125,7 @@
                 </div>
                 
                 <div class="detail-price mb-3">
-                                            <del>₹1,599.00</del>
-                        <span>₹1,299.00</span>
+                                            <span id="variantPrice">₹1,200.00</span>
                                     </div>
                 
                 <p class="text-muted mb-4">A beautiful 3-panel canvas print depicting a warm abstract sunset. Mounted on premium solid wooden frames.</p>
@@ -134,15 +133,50 @@
                 <!-- Stock Status -->
                 <div class="mb-4">
                     <span class="fw-bold">Availability: </span>
-                                            <span class="text-success"><i class="bi bi-check-circle-fill"></i> In Stock (15 units left)</span>
+                                            <span class="text-success" id="variantStock">
+                            <i class="bi bi-check-circle-fill"></i> In Stock (15 units left)
+                        </span>
                                     </div>
 
                 <!-- Cart Form -->
                                     <form action="/cart/" method="POST" class="mb-3" id="addToCartForm">
-        <input type="hidden" name="csrf_token" value="952a9718865e05a49137ac948f54ed57a7ca9e23bdf272fb530684a2239a5ab1">                        <input type="hidden" name="product_id" value="7">
+        <input type="hidden" name="csrf_token" value="bd270dc4bef58abed309b655228efd78bfd97cbe113000571115cfa91df67566">                        <input type="hidden" name="product_id" value="7">
                         <input type="hidden" name="action" value="add">
 
-                        
+                                                    <input type="hidden" name="variant_id" id="variantId" value="101">
+
+                            <div class="mb-3 variant-picker">
+                                <label class="form-label fw-bold text-uppercase small letter-spacing-1">Size (inches)</label>
+                                <div class="d-flex flex-wrap gap-2" id="sizeOptions">
+                                                                            <input type="radio" class="btn-check" name="size" id="size0"
+                                               value="12x12" checked>
+                                        <label class="btn btn-outline-gold btn-sm" for="size0">12x12</label>
+                                                                            <input type="radio" class="btn-check" name="size" id="size1"
+                                               value="12x18" >
+                                        <label class="btn btn-outline-gold btn-sm" for="size1">12x18</label>
+                                                                            <input type="radio" class="btn-check" name="size" id="size2"
+                                               value="18x24" >
+                                        <label class="btn btn-outline-gold btn-sm" for="size2">18x24</label>
+                                                                            <input type="radio" class="btn-check" name="size" id="size3"
+                                               value="24x36" >
+                                        <label class="btn btn-outline-gold btn-sm" for="size3">24x36</label>
+                                                                    </div>
+                            </div>
+
+                                                                                        <div class="mb-3 variant-picker">
+                                    <label class="form-label fw-bold text-uppercase small letter-spacing-1">Framing</label>
+                                    <div class="d-flex flex-wrap gap-2" id="ledOptions">
+                                                                                    <input type="radio" class="btn-check" name="led" id="opt1"
+                                                   value="1" checked>
+                                            <label class="btn btn-outline-gold btn-sm" for="opt1">
+                                                <i class="bi bi-easel me-1"></i>With Frame                                            </label>
+                                                                                    <input type="radio" class="btn-check" name="led" id="opt0"
+                                                   value="0" >
+                                            <label class="btn btn-outline-gold btn-sm" for="opt0">
+                                                <i class="bi bi-easel me-1"></i>Without Frame                                            </label>
+                                                                            </div>
+                                </div>
+                                                    
                         <div class="row g-2 align-items-center">
                             <div class="col-auto">
                                 <label for="quantity" class="visually-hidden">Quantity</label>
@@ -159,6 +193,7 @@
                         </div>
                     </form>
 
+                                            <script>window.TGD_VARIANTS = {"12x12|1":{"id":101,"price":1200,"label":"₹1,200.00","stock":15},"12x12|0":{"id":102,"price":800,"label":"₹800.00","stock":15},"12x18|1":{"id":103,"price":1800,"label":"₹1,800.00","stock":15},"12x18|0":{"id":104,"price":1200,"label":"₹1,200.00","stock":15},"18x24|1":{"id":105,"price":3600,"label":"₹3,600.00","stock":15},"18x24|0":{"id":106,"price":2400,"label":"₹2,400.00","stock":15},"24x36|1":{"id":107,"price":7200,"label":"₹7,200.00","stock":15},"24x36|0":{"id":108,"price":4800,"label":"₹4,800.00","stock":15}};</script>
                                     
                 <!-- WhatsApp Customization / Inquiry Button -->
                 <div class="mb-4">
